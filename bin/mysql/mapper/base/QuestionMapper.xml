@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.Question">
+	
+<resultMap id="Question_Result"  type="com.loveart.post.entity.Question">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="description" column="description" jdbcType="LONGVARCHAR"/>
+	<result property="views" column="views" jdbcType="BIGINT"/>
+	<result property="answers" column="answers" jdbcType="BIGINT"/>
+	<result property="isPrivacy" column="is_privacy" jdbcType="VARCHAR"/>
+	<result property="isLegal" column="is_legal" jdbcType="VARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="description != null">
+			 AND description = #{description,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="answers != null">
+			 AND answers = #{answers,jdbcType=BIGINT}
+		</if>
+		<if test="isPrivacy != null">
+			 AND is_privacy = #{isPrivacy,jdbcType=VARCHAR}
+		</if>
+		<if test="isLegal != null">
+			 AND is_legal = #{isLegal,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Question">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_question (
+			sid,
+			title,		description,		views,		answers,		is_privacy,
+			is_legal,		sortt,		remark,		del_flag,		split_db_key,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{title,jdbcType=VARCHAR},	#{description,jdbcType=LONGVARCHAR},	#{views,jdbcType=BIGINT},	#{answers,jdbcType=BIGINT},	#{isPrivacy,jdbcType=VARCHAR},	#{isLegal,jdbcType=VARCHAR},	#{sortt,jdbcType=INTEGER},	#{remark,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_question (
+			sid,
+			title,		description,		views,		answers,		is_privacy,
+			is_legal,		sortt,		remark,		del_flag,		split_db_key,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.title,jdbcType=VARCHAR},	#{item.description,jdbcType=LONGVARCHAR},	#{item.views,jdbcType=BIGINT},	#{item.answers,jdbcType=BIGINT},	#{item.isPrivacy,jdbcType=VARCHAR},	#{item.isLegal,jdbcType=VARCHAR},	#{item.sortt,jdbcType=INTEGER},	#{item.remark,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Question">
+UPDATE
+	tb_question
+	<set>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="description != null">
+			description = #{description,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="views != null">
+			views = #{views,jdbcType=BIGINT},
+		</if>
+		<if test="answers != null">
+			answers = #{answers,jdbcType=BIGINT},
+		</if>
+		<if test="isPrivacy != null">
+			is_privacy = #{isPrivacy,jdbcType=VARCHAR},
+		</if>
+		<if test="isLegal != null">
+			is_legal = #{isLegal,jdbcType=VARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_question
+	<set>
+		<if test="item.title != null">
+			title = #{item.title,jdbcType=VARCHAR},
+		</if>
+		<if test="item.description != null">
+			description = #{item.description,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.views != null">
+			views = #{item.views,jdbcType=BIGINT},
+		</if>
+		<if test="item.answers != null">
+			answers = #{item.answers,jdbcType=BIGINT},
+		</if>
+		<if test="item.isPrivacy != null">
+			is_privacy = #{item.isPrivacy,jdbcType=VARCHAR},
+		</if>
+		<if test="item.isLegal != null">
+			is_legal = #{item.isLegal,jdbcType=VARCHAR},
+		</if>
+		<if test="item.sortt != null">
+			sortt = #{item.sortt,jdbcType=INTEGER},
+		</if>
+		<if test="item.remark != null">
+			remark = #{item.remark,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_question
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_question
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="description != null">
+			 AND description = #{description,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="answers != null">
+			 AND answers = #{answers,jdbcType=BIGINT}
+		</if>
+		<if test="isPrivacy != null">
+			 AND is_privacy = #{isPrivacy,jdbcType=VARCHAR}
+		</if>
+		<if test="isLegal != null">
+			 AND is_legal = #{isLegal,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Question_Result">
+	SELECT 
+		sid,	title,	description,	views,	answers,	is_privacy,	is_legal,	sortt,	remark,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_question
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_question
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

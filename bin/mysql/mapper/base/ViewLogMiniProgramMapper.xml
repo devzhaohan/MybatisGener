@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.ViewLogMiniProgram">
+	
+<resultMap id="ViewLogMiniProgram_Result"  type="com.loveart.post.entity.ViewLogMiniProgram">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="sessionId" column="session_id" jdbcType="VARCHAR"/>
+	<result property="wxUnionid" column="wx_unionid" jdbcType="VARCHAR"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="path" column="path" jdbcType="VARCHAR"/>
+	<result property="scene" column="scene" jdbcType="VARCHAR"/>
+	<result property="query" column="query" jdbcType="VARCHAR"/>
+	<result property="shareTicketErrmsg" column="share_ticket_errmsg" jdbcType="VARCHAR"/>
+	<result property="shareTicketEncryptedData" column="share_ticket_encrypted_data" jdbcType="LONGTEXT"/>
+	<result property="shareTicketIv" column="share_ticket_iv" jdbcType="VARCHAR"/>
+	<result property="referrerinfo" column="referrerinfo" jdbcType="LONGTEXT"/>
+	<result property="referrerinfoAppid" column="referrerinfo_appid" jdbcType="VARCHAR"/>
+	<result property="referrerinfoExtraData" column="referrerinfo_extra_data" jdbcType="LONGTEXT"/>
+	<result property="appMetaName" column="app_meta_name" jdbcType="VARCHAR"/>
+	<result property="viewTime" column="view_time" jdbcType="TIMESTAMP"/>
+	<result property="logStartMethod" column="log_start_method" jdbcType="VARCHAR"/>
+	<result property="dayDt" column="day_dt" jdbcType="VARCHAR"/>
+	<result property="logSource" column="log_source" jdbcType="VARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="sessionId != null">
+			 AND session_id = #{sessionId,jdbcType=VARCHAR}
+		</if>
+		<if test="wxUnionid != null">
+			 AND wx_unionid = #{wxUnionid,jdbcType=VARCHAR}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="path != null">
+			 AND path = #{path,jdbcType=VARCHAR}
+		</if>
+		<if test="scene != null">
+			 AND scene = #{scene,jdbcType=VARCHAR}
+		</if>
+		<if test="query != null">
+			 AND query = #{query,jdbcType=VARCHAR}
+		</if>
+		<if test="shareTicketErrmsg != null">
+			 AND share_ticket_errmsg = #{shareTicketErrmsg,jdbcType=VARCHAR}
+		</if>
+		<if test="shareTicketEncryptedData != null">
+			 AND share_ticket_encrypted_data = #{shareTicketEncryptedData,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="shareTicketIv != null">
+			 AND share_ticket_iv = #{shareTicketIv,jdbcType=VARCHAR}
+		</if>
+		<if test="referrerinfo != null">
+			 AND referrerinfo = #{referrerinfo,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="referrerinfoAppid != null">
+			 AND referrerinfo_appid = #{referrerinfoAppid,jdbcType=VARCHAR}
+		</if>
+		<if test="referrerinfoExtraData != null">
+			 AND referrerinfo_extra_data = #{referrerinfoExtraData,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="appMetaName != null">
+			 AND app_meta_name = #{appMetaName,jdbcType=VARCHAR}
+		</if>
+		<if test="viewTime != null">
+			 AND view_time = #{viewTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="logStartMethod != null">
+			 AND log_start_method = #{logStartMethod,jdbcType=VARCHAR}
+		</if>
+		<if test="dayDt != null">
+			 AND day_dt = #{dayDt,jdbcType=VARCHAR}
+		</if>
+		<if test="logSource != null">
+			 AND log_source = #{logSource,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.ViewLogMiniProgram">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_view_log_mini_program (
+			sid,
+			session_id,		wx_unionid,		uid,		path,		scene,
+			query,		share_ticket_errmsg,		share_ticket_encrypted_data,		share_ticket_iv,		referrerinfo,
+			referrerinfo_appid,		referrerinfo_extra_data,		app_meta_name,		view_time,		log_start_method,
+			day_dt,		log_source,		sortt,		split_db_key,		del_flag,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{sessionId,jdbcType=VARCHAR},	#{wxUnionid,jdbcType=VARCHAR},	#{uid,jdbcType=BIGINT},	#{path,jdbcType=VARCHAR},	#{scene,jdbcType=VARCHAR},	#{query,jdbcType=VARCHAR},	#{shareTicketErrmsg,jdbcType=VARCHAR},	#{shareTicketEncryptedData,jdbcType=LONGVARCHAR},	#{shareTicketIv,jdbcType=VARCHAR},	#{referrerinfo,jdbcType=LONGVARCHAR},	#{referrerinfoAppid,jdbcType=VARCHAR},	#{referrerinfoExtraData,jdbcType=LONGVARCHAR},	#{appMetaName,jdbcType=VARCHAR},	#{viewTime,jdbcType=TIMESTAMP},	#{logStartMethod,jdbcType=VARCHAR},	#{dayDt,jdbcType=VARCHAR},	#{logSource,jdbcType=VARCHAR},	#{sortt,jdbcType=INTEGER},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_view_log_mini_program (
+			sid,
+			session_id,		wx_unionid,		uid,		path,		scene,
+			query,		share_ticket_errmsg,		share_ticket_encrypted_data,		share_ticket_iv,		referrerinfo,
+			referrerinfo_appid,		referrerinfo_extra_data,		app_meta_name,		view_time,		log_start_method,
+			day_dt,		log_source,		sortt,		split_db_key,		del_flag,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.sessionId,jdbcType=VARCHAR},	#{item.wxUnionid,jdbcType=VARCHAR},	#{item.uid,jdbcType=BIGINT},	#{item.path,jdbcType=VARCHAR},	#{item.scene,jdbcType=VARCHAR},	#{item.query,jdbcType=VARCHAR},	#{item.shareTicketErrmsg,jdbcType=VARCHAR},	#{item.shareTicketEncryptedData,jdbcType=LONGVARCHAR},	#{item.shareTicketIv,jdbcType=VARCHAR},	#{item.referrerinfo,jdbcType=LONGVARCHAR},	#{item.referrerinfoAppid,jdbcType=VARCHAR},	#{item.referrerinfoExtraData,jdbcType=LONGVARCHAR},	#{item.appMetaName,jdbcType=VARCHAR},	#{item.viewTime,jdbcType=TIMESTAMP},	#{item.logStartMethod,jdbcType=VARCHAR},	#{item.dayDt,jdbcType=VARCHAR},	#{item.logSource,jdbcType=VARCHAR},	#{item.sortt,jdbcType=INTEGER},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.ViewLogMiniProgram">
+UPDATE
+	tb_view_log_mini_program
+	<set>
+		<if test="sessionId != null">
+			session_id = #{sessionId,jdbcType=VARCHAR},
+		</if>
+		<if test="wxUnionid != null">
+			wx_unionid = #{wxUnionid,jdbcType=VARCHAR},
+		</if>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="path != null">
+			path = #{path,jdbcType=VARCHAR},
+		</if>
+		<if test="scene != null">
+			scene = #{scene,jdbcType=VARCHAR},
+		</if>
+		<if test="query != null">
+			query = #{query,jdbcType=VARCHAR},
+		</if>
+		<if test="shareTicketErrmsg != null">
+			share_ticket_errmsg = #{shareTicketErrmsg,jdbcType=VARCHAR},
+		</if>
+		<if test="shareTicketEncryptedData != null">
+			share_ticket_encrypted_data = #{shareTicketEncryptedData,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="shareTicketIv != null">
+			share_ticket_iv = #{shareTicketIv,jdbcType=VARCHAR},
+		</if>
+		<if test="referrerinfo != null">
+			referrerinfo = #{referrerinfo,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="referrerinfoAppid != null">
+			referrerinfo_appid = #{referrerinfoAppid,jdbcType=VARCHAR},
+		</if>
+		<if test="referrerinfoExtraData != null">
+			referrerinfo_extra_data = #{referrerinfoExtraData,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="appMetaName != null">
+			app_meta_name = #{appMetaName,jdbcType=VARCHAR},
+		</if>
+		<if test="viewTime != null">
+			view_time = #{viewTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="logStartMethod != null">
+			log_start_method = #{logStartMethod,jdbcType=VARCHAR},
+		</if>
+		<if test="dayDt != null">
+			day_dt = #{dayDt,jdbcType=VARCHAR},
+		</if>
+		<if test="logSource != null">
+			log_source = #{logSource,jdbcType=VARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_view_log_mini_program
+	<set>
+		<if test="item.sessionId != null">
+			session_id = #{item.sessionId,jdbcType=VARCHAR},
+		</if>
+		<if test="item.wxUnionid != null">
+			wx_unionid = #{item.wxUnionid,jdbcType=VARCHAR},
+		</if>
+		<if test="item.uid != null">
+			uid = #{item.uid,jdbcType=BIGINT},
+		</if>
+		<if test="item.path != null">
+			path = #{item.path,jdbcType=VARCHAR},
+		</if>
+		<if test="item.scene != null">
+			scene = #{item.scene,jdbcType=VARCHAR},
+		</if>
+		<if test="item.query != null">
+			query = #{item.query,jdbcType=VARCHAR},
+		</if>
+		<if test="item.shareTicketErrmsg != null">
+			share_ticket_errmsg = #{item.shareTicketErrmsg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.shareTicketEncryptedData != null">
+			share_ticket_encrypted_data = #{item.shareTicketEncryptedData,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.shareTicketIv != null">
+			share_ticket_iv = #{item.shareTicketIv,jdbcType=VARCHAR},
+		</if>
+		<if test="item.referrerinfo != null">
+			referrerinfo = #{item.referrerinfo,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.referrerinfoAppid != null">
+			referrerinfo_appid = #{item.referrerinfoAppid,jdbcType=VARCHAR},
+		</if>
+		<if test="item.referrerinfoExtraData != null">
+			referrerinfo_extra_data = #{item.referrerinfoExtraData,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.appMetaName != null">
+			app_meta_name = #{item.appMetaName,jdbcType=VARCHAR},
+		</if>
+		<if test="item.viewTime != null">
+			view_time = #{item.viewTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.logStartMethod != null">
+			log_start_method = #{item.logStartMethod,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dayDt != null">
+			day_dt = #{item.dayDt,jdbcType=VARCHAR},
+		</if>
+		<if test="item.logSource != null">
+			log_source = #{item.logSource,jdbcType=VARCHAR},
+		</if>
+		<if test="item.sortt != null">
+			sortt = #{item.sortt,jdbcType=INTEGER},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_view_log_mini_program
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_view_log_mini_program
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="sessionId != null">
+			 AND session_id = #{sessionId,jdbcType=VARCHAR}
+		</if>
+		<if test="wxUnionid != null">
+			 AND wx_unionid = #{wxUnionid,jdbcType=VARCHAR}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="path != null">
+			 AND path = #{path,jdbcType=VARCHAR}
+		</if>
+		<if test="scene != null">
+			 AND scene = #{scene,jdbcType=VARCHAR}
+		</if>
+		<if test="query != null">
+			 AND query = #{query,jdbcType=VARCHAR}
+		</if>
+		<if test="shareTicketErrmsg != null">
+			 AND share_ticket_errmsg = #{shareTicketErrmsg,jdbcType=VARCHAR}
+		</if>
+		<if test="shareTicketEncryptedData != null">
+			 AND share_ticket_encrypted_data = #{shareTicketEncryptedData,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="shareTicketIv != null">
+			 AND share_ticket_iv = #{shareTicketIv,jdbcType=VARCHAR}
+		</if>
+		<if test="referrerinfo != null">
+			 AND referrerinfo = #{referrerinfo,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="referrerinfoAppid != null">
+			 AND referrerinfo_appid = #{referrerinfoAppid,jdbcType=VARCHAR}
+		</if>
+		<if test="referrerinfoExtraData != null">
+			 AND referrerinfo_extra_data = #{referrerinfoExtraData,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="appMetaName != null">
+			 AND app_meta_name = #{appMetaName,jdbcType=VARCHAR}
+		</if>
+		<if test="viewTime != null">
+			 AND view_time = #{viewTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="logStartMethod != null">
+			 AND log_start_method = #{logStartMethod,jdbcType=VARCHAR}
+		</if>
+		<if test="dayDt != null">
+			 AND day_dt = #{dayDt,jdbcType=VARCHAR}
+		</if>
+		<if test="logSource != null">
+			 AND log_source = #{logSource,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="ViewLogMiniProgram_Result">
+	SELECT 
+		sid,	session_id,	wx_unionid,	uid,	path,	scene,	query,	share_ticket_errmsg,	share_ticket_encrypted_data,	share_ticket_iv,	referrerinfo,	referrerinfo_appid,	referrerinfo_extra_data,	app_meta_name,	view_time,	log_start_method,	day_dt,	log_source,	sortt,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_view_log_mini_program
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_view_log_mini_program
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

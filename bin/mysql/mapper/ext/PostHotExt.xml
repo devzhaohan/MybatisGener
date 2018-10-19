@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.PostHot">
+	
+<resultMap id="PostHot_Result"  type="com.loveart.post.entity.PostHot">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="postId" column="post_id" jdbcType="BIGINT"/>
+	<result property="postUid" column="post_uid" jdbcType="BIGINT"/>
+	<result property="tplId" column="tpl_id" jdbcType="VARCHAR"/>
+	<result property="isVisible" column="is_visible" jdbcType="VARCHAR"/>
+	<result property="upCount" column="up_count" jdbcType="BIGINT"/>
+	<result property="upValue" column="up_value" jdbcType="BIGINT"/>
+	<result property="postSplitDbKey" column="post_split_db_key" jdbcType="VARCHAR"/>
+	<result property="tempHiddenExpire" column="temp_hidden_expire" jdbcType="TIMESTAMP"/>
+	<result property="sortt" column="sortt" jdbcType="BIGINT"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="postId != null">
+			 AND post_id = #{postId,jdbcType=BIGINT}
+		</if>
+		<if test="postUid != null">
+			 AND post_uid = #{postUid,jdbcType=BIGINT}
+		</if>
+		<if test="tplId != null">
+			 AND tpl_id = #{tplId,jdbcType=VARCHAR}
+		</if>
+		<if test="isVisible != null">
+			 AND is_visible = #{isVisible,jdbcType=VARCHAR}
+		</if>
+		<if test="upCount != null">
+			 AND up_count = #{upCount,jdbcType=BIGINT}
+		</if>
+		<if test="upValue != null">
+			 AND up_value = #{upValue,jdbcType=BIGINT}
+		</if>
+		<if test="postSplitDbKey != null">
+			 AND post_split_db_key = #{postSplitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="tempHiddenExpire != null">
+			 AND temp_hidden_expire = #{tempHiddenExpire,jdbcType=TIMESTAMP}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.PostHot">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_post_hot (
+			sid,
+			post_id,		post_uid,		tpl_id,		is_visible,		up_count,
+			up_value,		post_split_db_key,		temp_hidden_expire,		sortt,		split_db_key,
+			del_flag,		create_by,		create_dt,		update_by,		update_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{postId,jdbcType=BIGINT},	#{postUid,jdbcType=BIGINT},	#{tplId,jdbcType=VARCHAR},	#{isVisible,jdbcType=VARCHAR},	#{upCount,jdbcType=BIGINT},	#{upValue,jdbcType=BIGINT},	#{postSplitDbKey,jdbcType=VARCHAR},	#{tempHiddenExpire,jdbcType=TIMESTAMP},	#{sortt,jdbcType=BIGINT},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.PostHot">
+UPDATE
+	tb_post_hot
+	<set>
+		<if test="postId != null">
+			post_id = #{postId,jdbcType=BIGINT},
+		</if>
+		<if test="postUid != null">
+			post_uid = #{postUid,jdbcType=BIGINT},
+		</if>
+		<if test="tplId != null">
+			tpl_id = #{tplId,jdbcType=VARCHAR},
+		</if>
+		<if test="isVisible != null">
+			is_visible = #{isVisible,jdbcType=VARCHAR},
+		</if>
+		<if test="upCount != null">
+			up_count = #{upCount,jdbcType=BIGINT},
+		</if>
+		<if test="upValue != null">
+			up_value = #{upValue,jdbcType=BIGINT},
+		</if>
+		<if test="postSplitDbKey != null">
+			post_split_db_key = #{postSplitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="tempHiddenExpire != null">
+			temp_hidden_expire = #{tempHiddenExpire,jdbcType=TIMESTAMP},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=BIGINT},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_post_hot
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_post_hot
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="postId != null">
+			 AND post_id = #{postId,jdbcType=BIGINT}
+		</if>
+		<if test="postUid != null">
+			 AND post_uid = #{postUid,jdbcType=BIGINT}
+		</if>
+		<if test="tplId != null">
+			 AND tpl_id = #{tplId,jdbcType=VARCHAR}
+		</if>
+		<if test="isVisible != null">
+			 AND is_visible = #{isVisible,jdbcType=VARCHAR}
+		</if>
+		<if test="upCount != null">
+			 AND up_count = #{upCount,jdbcType=BIGINT}
+		</if>
+		<if test="upValue != null">
+			 AND up_value = #{upValue,jdbcType=BIGINT}
+		</if>
+		<if test="postSplitDbKey != null">
+			 AND post_split_db_key = #{postSplitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="tempHiddenExpire != null">
+			 AND temp_hidden_expire = #{tempHiddenExpire,jdbcType=TIMESTAMP}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="PostHot_Result">
+	SELECT 
+		sid,	post_id,	post_uid,	tpl_id,	is_visible,	up_count,	up_value,	post_split_db_key,	temp_hidden_expire,	sortt,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_post_hot
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

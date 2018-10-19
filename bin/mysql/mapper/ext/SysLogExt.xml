@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.SysLog">
+	
+<resultMap id="SysLog_Result"  type="com.loveart.post.entity.SysLog">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="sysCode" column="sys_code" jdbcType="VARCHAR"/>
+	<result property="sysIp" column="sys_ip" jdbcType="TIMESTAMP"/>
+	<result property="src" column="src" jdbcType="VARCHAR"/>
+	<result property="srcIp" column="src_ip" jdbcType="VARCHAR"/>
+	<result property="dest" column="dest" jdbcType="VARCHAR"/>
+	<result property="destIp" column="dest_ip" jdbcType="VARCHAR"/>
+	<result property="type" column="type" jdbcType="VARCHAR"/>
+	<result property="level" column="level" jdbcType="VARCHAR"/>
+	<result property="name" column="name" jdbcType="VARCHAR"/>
+	<result property="date" column="date" jdbcType="TIMESTAMP"/>
+	<result property="content" column="content" jdbcType="LONGVARCHAR"/>
+	<result property="key1" column="key1" jdbcType="VARCHAR"/>
+	<result property="key2" column="key2" jdbcType="VARCHAR"/>
+	<result property="key3" column="key3" jdbcType="VARCHAR"/>
+	<result property="key4" column="key4" jdbcType="VARCHAR"/>
+	<result property="key5" column="key5" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="sysCode != null">
+			 AND sys_code = #{sysCode,jdbcType=VARCHAR}
+		</if>
+		<if test="sysIp != null">
+			 AND sys_ip = #{sysIp,jdbcType=TIMESTAMP}
+		</if>
+		<if test="src != null">
+			 AND src = #{src,jdbcType=VARCHAR}
+		</if>
+		<if test="srcIp != null">
+			 AND src_ip = #{srcIp,jdbcType=VARCHAR}
+		</if>
+		<if test="dest != null">
+			 AND dest = #{dest,jdbcType=VARCHAR}
+		</if>
+		<if test="destIp != null">
+			 AND dest_ip = #{destIp,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null">
+			 AND type = #{type,jdbcType=VARCHAR}
+		</if>
+		<if test="level != null">
+			 AND level = #{level,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+			 AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="date != null">
+			 AND date = #{date,jdbcType=TIMESTAMP}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="key1 != null">
+			 AND key1 = #{key1,jdbcType=VARCHAR}
+		</if>
+		<if test="key2 != null">
+			 AND key2 = #{key2,jdbcType=VARCHAR}
+		</if>
+		<if test="key3 != null">
+			 AND key3 = #{key3,jdbcType=VARCHAR}
+		</if>
+		<if test="key4 != null">
+			 AND key4 = #{key4,jdbcType=VARCHAR}
+		</if>
+		<if test="key5 != null">
+			 AND key5 = #{key5,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.SysLog">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_sys_log (
+			sid,
+			sys_code,		sys_ip,		src,		src_ip,		dest,
+			dest_ip,		type,		level,		name,		date,
+			content,		key1,		key2,		key3,		key4,
+			key5)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{sysCode,jdbcType=VARCHAR},	#{sysIp,jdbcType=TIMESTAMP},	#{src,jdbcType=VARCHAR},	#{srcIp,jdbcType=VARCHAR},	#{dest,jdbcType=VARCHAR},	#{destIp,jdbcType=VARCHAR},	#{type,jdbcType=VARCHAR},	#{level,jdbcType=VARCHAR},	#{name,jdbcType=VARCHAR},	#{date,jdbcType=TIMESTAMP},	#{content,jdbcType=LONGVARCHAR},	#{key1,jdbcType=VARCHAR},	#{key2,jdbcType=VARCHAR},	#{key3,jdbcType=VARCHAR},	#{key4,jdbcType=VARCHAR},	#{key5,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.SysLog">
+UPDATE
+	tb_sys_log
+	<set>
+		<if test="sysCode != null">
+			sys_code = #{sysCode,jdbcType=VARCHAR},
+		</if>
+		<if test="sysIp != null">
+			sys_ip = #{sysIp,jdbcType=TIMESTAMP},
+		</if>
+		<if test="src != null">
+			src = #{src,jdbcType=VARCHAR},
+		</if>
+		<if test="srcIp != null">
+			src_ip = #{srcIp,jdbcType=VARCHAR},
+		</if>
+		<if test="dest != null">
+			dest = #{dest,jdbcType=VARCHAR},
+		</if>
+		<if test="destIp != null">
+			dest_ip = #{destIp,jdbcType=VARCHAR},
+		</if>
+		<if test="type != null">
+			type = #{type,jdbcType=VARCHAR},
+		</if>
+		<if test="level != null">
+			level = #{level,jdbcType=VARCHAR},
+		</if>
+		<if test="name != null">
+			name = #{name,jdbcType=VARCHAR},
+		</if>
+		<if test="date != null">
+			date = #{date,jdbcType=TIMESTAMP},
+		</if>
+		<if test="content != null">
+			content = #{content,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="key1 != null">
+			key1 = #{key1,jdbcType=VARCHAR},
+		</if>
+		<if test="key2 != null">
+			key2 = #{key2,jdbcType=VARCHAR},
+		</if>
+		<if test="key3 != null">
+			key3 = #{key3,jdbcType=VARCHAR},
+		</if>
+		<if test="key4 != null">
+			key4 = #{key4,jdbcType=VARCHAR},
+		</if>
+		<if test="key5 != null">
+			key5 = #{key5,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_sys_log
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_sys_log
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="sysCode != null">
+			 AND sys_code = #{sysCode,jdbcType=VARCHAR}
+		</if>
+		<if test="sysIp != null">
+			 AND sys_ip = #{sysIp,jdbcType=TIMESTAMP}
+		</if>
+		<if test="src != null">
+			 AND src = #{src,jdbcType=VARCHAR}
+		</if>
+		<if test="srcIp != null">
+			 AND src_ip = #{srcIp,jdbcType=VARCHAR}
+		</if>
+		<if test="dest != null">
+			 AND dest = #{dest,jdbcType=VARCHAR}
+		</if>
+		<if test="destIp != null">
+			 AND dest_ip = #{destIp,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null">
+			 AND type = #{type,jdbcType=VARCHAR}
+		</if>
+		<if test="level != null">
+			 AND level = #{level,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+			 AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="date != null">
+			 AND date = #{date,jdbcType=TIMESTAMP}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="key1 != null">
+			 AND key1 = #{key1,jdbcType=VARCHAR}
+		</if>
+		<if test="key2 != null">
+			 AND key2 = #{key2,jdbcType=VARCHAR}
+		</if>
+		<if test="key3 != null">
+			 AND key3 = #{key3,jdbcType=VARCHAR}
+		</if>
+		<if test="key4 != null">
+			 AND key4 = #{key4,jdbcType=VARCHAR}
+		</if>
+		<if test="key5 != null">
+			 AND key5 = #{key5,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="SysLog_Result">
+	SELECT 
+		sid,	sys_code,	sys_ip,	src,	src_ip,	dest,	dest_ip,	type,	level,	name,	date,	content,	key1,	key2,	key3,	key4,	key5
+	FROM 	tb_sys_log
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

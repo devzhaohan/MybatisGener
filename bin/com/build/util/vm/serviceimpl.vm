@@ -1,0 +1,19 @@
+package ${model.servicePackage};
+
+import common.service.BaseService;
+import common.dao.mybatis.IBaseMyBatisMapper;
+import ${model.entity}.${model.entityName};
+import ${model.servicePackage}.I${model.entityName}Service;
+
+public class ${model.entityName}Service extends BaseService<${model.entityName}> implements I${model.entityName}Service {
+	private IBaseMyBatisMapper<${model.entityName}> ${model.entityFirstName}Mapper;
+
+	public IBaseMyBatisMapper<${model.entityName}> get${model.entityName}Mapper() {
+		return ${model.entityFirstName}Mapper;
+	}
+
+	public void set${model.entityName}Mapper(IBaseMyBatisMapper<${model.entityName}> ${model.entityFirstName}Mapper) {
+		this.${model.entityFirstName}Mapper = ${model.entityFirstName}Mapper;
+	}
+
+}

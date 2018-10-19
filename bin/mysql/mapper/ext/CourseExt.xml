@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.Course">
+	
+<resultMap id="Course_Result"  type="com.loveart.post.entity.Course">
+	<result property="sid" column="sid" jdbcType="INTEGER"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="isPublish" column="is_publish" jdbcType="VARCHAR"/>
+	<result property="coverImg" column="cover_img" jdbcType="VARCHAR"/>
+	<result property="coverImgThumbs" column="cover_img_thumbs" jdbcType="VARCHAR"/>
+	<result property="intro" column="intro" jdbcType="VARCHAR"/>
+	<result property="detailIntro" column="detail_intro" jdbcType="LONGVARCHAR"/>
+	<result property="managerWeixinNum" column="manager_weixin_num" jdbcType="VARCHAR"/>
+	<result property="lessonContentType" column="lesson_content_type" jdbcType="VARCHAR"/>
+	<result property="contentType" column="content_type" jdbcType="VARCHAR"/>
+	<result property="courseType" column="course_type" jdbcType="VARCHAR"/>
+	<result property="userAgreement" column="user_agreement" jdbcType="LONGVARCHAR"/>
+	<result property="infoSuitedPeople" column="info_suited_people" jdbcType="LONGVARCHAR"/>
+	<result property="infoShoppingNotice" column="info_shopping_notice" jdbcType="VARCHAR"/>
+	<result property="rateResult" column="rate_result" jdbcType="FLOAT"/>
+	<result property="rateCount" column="rate_count" jdbcType="VARCHAR"/>
+	<result property="isFinish" column="is_finish" jdbcType="VARCHAR"/>
+	<result property="availableLessonCount" column="available_lesson_count" jdbcType="INTEGER"/>
+	<result property="lessonCount" column="lesson_count" jdbcType="INTEGER"/>
+	<result property="lessonTotalDurationSeconds" column="lesson_total_duration_seconds" jdbcType="BIGINT"/>
+	<result property="lessonTotalViews" column="lesson_total_views" jdbcType="BIGINT"/>
+	<result property="participates" column="participates" jdbcType="BIGINT"/>
+	<result property="participative" column="participative" jdbcType="VARCHAR"/>
+	<result property="distributionChannel" column="distribution_channel" jdbcType="VARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=INTEGER}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImgThumbs != null">
+			 AND cover_img_thumbs = #{coverImgThumbs,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=VARCHAR}
+		</if>
+		<if test="detailIntro != null">
+			 AND detail_intro = #{detailIntro,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="managerWeixinNum != null">
+			 AND manager_weixin_num = #{managerWeixinNum,jdbcType=VARCHAR}
+		</if>
+		<if test="lessonContentType != null">
+			 AND lesson_content_type = #{lessonContentType,jdbcType=VARCHAR}
+		</if>
+		<if test="contentType != null">
+			 AND content_type = #{contentType,jdbcType=VARCHAR}
+		</if>
+		<if test="courseType != null">
+			 AND course_type = #{courseType,jdbcType=VARCHAR}
+		</if>
+		<if test="userAgreement != null">
+			 AND user_agreement = #{userAgreement,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="infoSuitedPeople != null">
+			 AND info_suited_people = #{infoSuitedPeople,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="infoShoppingNotice != null">
+			 AND info_shopping_notice = #{infoShoppingNotice,jdbcType=VARCHAR}
+		</if>
+		<if test="rateResult != null">
+			 AND rate_result = #{rateResult,jdbcType=FLOAT}
+		</if>
+		<if test="rateCount != null">
+			 AND rate_count = #{rateCount,jdbcType=VARCHAR}
+		</if>
+		<if test="isFinish != null">
+			 AND is_finish = #{isFinish,jdbcType=VARCHAR}
+		</if>
+		<if test="availableLessonCount != null">
+			 AND available_lesson_count = #{availableLessonCount,jdbcType=INTEGER}
+		</if>
+		<if test="lessonCount != null">
+			 AND lesson_count = #{lessonCount,jdbcType=INTEGER}
+		</if>
+		<if test="lessonTotalDurationSeconds != null">
+			 AND lesson_total_duration_seconds = #{lessonTotalDurationSeconds,jdbcType=BIGINT}
+		</if>
+		<if test="lessonTotalViews != null">
+			 AND lesson_total_views = #{lessonTotalViews,jdbcType=BIGINT}
+		</if>
+		<if test="participates != null">
+			 AND participates = #{participates,jdbcType=BIGINT}
+		</if>
+		<if test="participative != null">
+			 AND participative = #{participative,jdbcType=VARCHAR}
+		</if>
+		<if test="distributionChannel != null">
+			 AND distribution_channel = #{distributionChannel,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Course">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_course (
+			sid,
+			title,		is_publish,		cover_img,		cover_img_thumbs,		intro,
+			detail_intro,		manager_weixin_num,		lesson_content_type,		content_type,		course_type,
+			user_agreement,		info_suited_people,		info_shopping_notice,		rate_result,		rate_count,
+			is_finish,		available_lesson_count,		lesson_count,		lesson_total_duration_seconds,		lesson_total_views,
+			participates,		participative,		distribution_channel,		sortt,		split_db_key,
+			del_flag,		create_by,		create_dt,		update_by,		update_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=INTEGER},	#{title,jdbcType=VARCHAR},	#{isPublish,jdbcType=VARCHAR},	#{coverImg,jdbcType=VARCHAR},	#{coverImgThumbs,jdbcType=VARCHAR},	#{intro,jdbcType=VARCHAR},	#{detailIntro,jdbcType=LONGVARCHAR},	#{managerWeixinNum,jdbcType=VARCHAR},	#{lessonContentType,jdbcType=VARCHAR},	#{contentType,jdbcType=VARCHAR},	#{courseType,jdbcType=VARCHAR},	#{userAgreement,jdbcType=LONGVARCHAR},	#{infoSuitedPeople,jdbcType=LONGVARCHAR},	#{infoShoppingNotice,jdbcType=VARCHAR},	#{rateResult,jdbcType=FLOAT},	#{rateCount,jdbcType=VARCHAR},	#{isFinish,jdbcType=VARCHAR},	#{availableLessonCount,jdbcType=INTEGER},	#{lessonCount,jdbcType=INTEGER},	#{lessonTotalDurationSeconds,jdbcType=BIGINT},	#{lessonTotalViews,jdbcType=BIGINT},	#{participates,jdbcType=BIGINT},	#{participative,jdbcType=VARCHAR},	#{distributionChannel,jdbcType=VARCHAR},	#{sortt,jdbcType=INTEGER},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Course">
+UPDATE
+	tb_course
+	<set>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="isPublish != null">
+			is_publish = #{isPublish,jdbcType=VARCHAR},
+		</if>
+		<if test="coverImg != null">
+			cover_img = #{coverImg,jdbcType=VARCHAR},
+		</if>
+		<if test="coverImgThumbs != null">
+			cover_img_thumbs = #{coverImgThumbs,jdbcType=VARCHAR},
+		</if>
+		<if test="intro != null">
+			intro = #{intro,jdbcType=VARCHAR},
+		</if>
+		<if test="detailIntro != null">
+			detail_intro = #{detailIntro,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="managerWeixinNum != null">
+			manager_weixin_num = #{managerWeixinNum,jdbcType=VARCHAR},
+		</if>
+		<if test="lessonContentType != null">
+			lesson_content_type = #{lessonContentType,jdbcType=VARCHAR},
+		</if>
+		<if test="contentType != null">
+			content_type = #{contentType,jdbcType=VARCHAR},
+		</if>
+		<if test="courseType != null">
+			course_type = #{courseType,jdbcType=VARCHAR},
+		</if>
+		<if test="userAgreement != null">
+			user_agreement = #{userAgreement,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="infoSuitedPeople != null">
+			info_suited_people = #{infoSuitedPeople,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="infoShoppingNotice != null">
+			info_shopping_notice = #{infoShoppingNotice,jdbcType=VARCHAR},
+		</if>
+		<if test="rateResult != null">
+			rate_result = #{rateResult,jdbcType=FLOAT},
+		</if>
+		<if test="rateCount != null">
+			rate_count = #{rateCount,jdbcType=VARCHAR},
+		</if>
+		<if test="isFinish != null">
+			is_finish = #{isFinish,jdbcType=VARCHAR},
+		</if>
+		<if test="availableLessonCount != null">
+			available_lesson_count = #{availableLessonCount,jdbcType=INTEGER},
+		</if>
+		<if test="lessonCount != null">
+			lesson_count = #{lessonCount,jdbcType=INTEGER},
+		</if>
+		<if test="lessonTotalDurationSeconds != null">
+			lesson_total_duration_seconds = #{lessonTotalDurationSeconds,jdbcType=BIGINT},
+		</if>
+		<if test="lessonTotalViews != null">
+			lesson_total_views = #{lessonTotalViews,jdbcType=BIGINT},
+		</if>
+		<if test="participates != null">
+			participates = #{participates,jdbcType=BIGINT},
+		</if>
+		<if test="participative != null">
+			participative = #{participative,jdbcType=VARCHAR},
+		</if>
+		<if test="distributionChannel != null">
+			distribution_channel = #{distributionChannel,jdbcType=VARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_course
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_course
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=INTEGER}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImgThumbs != null">
+			 AND cover_img_thumbs = #{coverImgThumbs,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=VARCHAR}
+		</if>
+		<if test="detailIntro != null">
+			 AND detail_intro = #{detailIntro,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="managerWeixinNum != null">
+			 AND manager_weixin_num = #{managerWeixinNum,jdbcType=VARCHAR}
+		</if>
+		<if test="lessonContentType != null">
+			 AND lesson_content_type = #{lessonContentType,jdbcType=VARCHAR}
+		</if>
+		<if test="contentType != null">
+			 AND content_type = #{contentType,jdbcType=VARCHAR}
+		</if>
+		<if test="courseType != null">
+			 AND course_type = #{courseType,jdbcType=VARCHAR}
+		</if>
+		<if test="userAgreement != null">
+			 AND user_agreement = #{userAgreement,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="infoSuitedPeople != null">
+			 AND info_suited_people = #{infoSuitedPeople,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="infoShoppingNotice != null">
+			 AND info_shopping_notice = #{infoShoppingNotice,jdbcType=VARCHAR}
+		</if>
+		<if test="rateResult != null">
+			 AND rate_result = #{rateResult,jdbcType=FLOAT}
+		</if>
+		<if test="rateCount != null">
+			 AND rate_count = #{rateCount,jdbcType=VARCHAR}
+		</if>
+		<if test="isFinish != null">
+			 AND is_finish = #{isFinish,jdbcType=VARCHAR}
+		</if>
+		<if test="availableLessonCount != null">
+			 AND available_lesson_count = #{availableLessonCount,jdbcType=INTEGER}
+		</if>
+		<if test="lessonCount != null">
+			 AND lesson_count = #{lessonCount,jdbcType=INTEGER}
+		</if>
+		<if test="lessonTotalDurationSeconds != null">
+			 AND lesson_total_duration_seconds = #{lessonTotalDurationSeconds,jdbcType=BIGINT}
+		</if>
+		<if test="lessonTotalViews != null">
+			 AND lesson_total_views = #{lessonTotalViews,jdbcType=BIGINT}
+		</if>
+		<if test="participates != null">
+			 AND participates = #{participates,jdbcType=BIGINT}
+		</if>
+		<if test="participative != null">
+			 AND participative = #{participative,jdbcType=VARCHAR}
+		</if>
+		<if test="distributionChannel != null">
+			 AND distribution_channel = #{distributionChannel,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Course_Result">
+	SELECT 
+		sid,	title,	is_publish,	cover_img,	cover_img_thumbs,	intro,	detail_intro,	manager_weixin_num,	lesson_content_type,	content_type,	course_type,	user_agreement,	info_suited_people,	info_shopping_notice,	rate_result,	rate_count,	is_finish,	available_lesson_count,	lesson_count,	lesson_total_duration_seconds,	lesson_total_views,	participates,	participative,	distribution_channel,	sortt,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_course
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

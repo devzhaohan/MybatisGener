@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   title="${model.entityFirstName}信息编辑"
+			   width="680" height="250">
+	<fx:Script>
+
+	</fx:Script>
+	
+	<fx:Declarations>
+
+	</fx:Declarations>
+		<mx:Form width="100%" height="100%">
+		#foreach($item in $model.propList)
+			#if(($velocityCount - 1) % 3 == 0)
+				#if($velocityCount != 1)
+	</mx:FormItem>
+				#end
+	<mx:FormItem  direction="horizontal"  horizontalAlign="right" width="100%">
+			#end
+		<mx:FormItem label="$item.name:" width="30%" labelWidth="60">
+				<s:TextInput id="$item.name" />
+		</mx:FormItem>
+		#end
+		</mx:FormItem>
+			<mx:FormItem  direction="horizontal" width="100%" horizontalAlign="center" paddingTop="10">
+				<s:Button label="保存" id="saveButton" />
+				<s:Button label="重置" id="resetButton" />
+				<s:Button label="关闭" id="closeButton" />
+			</mx:FormItem>
+		</mx:Form>
+</s:TitleWindow>

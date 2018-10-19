@@ -1,0 +1,9 @@
+package ${model.servicePackage};
+
+import common.service.IBaseService;
+import  ${model.entity}.${model.entityName};
+
+public interface I${model.entityName}Service extends IBaseService<${model.entityName}>  {
+
+}
+

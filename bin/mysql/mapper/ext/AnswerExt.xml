@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.Answer">
+	
+<resultMap id="Answer_Result"  type="com.loveart.post.entity.Answer">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="questionId" column="question_id" jdbcType="BIGINT"/>
+	<result property="content" column="content" jdbcType="LONGTEXT"/>
+	<result property="invitationUid" column="invitation_uid" jdbcType="BIGINT"/>
+	<result property="likes" column="likes" jdbcType="BIGINT"/>
+	<result property="dislikes" column="dislikes" jdbcType="BIGINT"/>
+	<result property="views" column="views" jdbcType="BIGINT"/>
+	<result property="comments" column="comments" jdbcType="BIGINT"/>
+	<result property="isPrivacy" column="is_privacy" jdbcType="VARCHAR"/>
+	<result property="isLegal" column="is_legal" jdbcType="VARCHAR"/>
+	<result property="isPerfunctory" column="is_perfunctory" jdbcType="VARCHAR"/>
+	<result property="isAnonymous" column="is_anonymous" jdbcType="VARCHAR"/>
+	<result property="prority" column="prority" jdbcType="INTEGER"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="questionId != null">
+			 AND question_id = #{questionId,jdbcType=BIGINT}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="invitationUid != null">
+			 AND invitation_uid = #{invitationUid,jdbcType=BIGINT}
+		</if>
+		<if test="likes != null">
+			 AND likes = #{likes,jdbcType=BIGINT}
+		</if>
+		<if test="dislikes != null">
+			 AND dislikes = #{dislikes,jdbcType=BIGINT}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="comments != null">
+			 AND comments = #{comments,jdbcType=BIGINT}
+		</if>
+		<if test="isPrivacy != null">
+			 AND is_privacy = #{isPrivacy,jdbcType=VARCHAR}
+		</if>
+		<if test="isLegal != null">
+			 AND is_legal = #{isLegal,jdbcType=VARCHAR}
+		</if>
+		<if test="isPerfunctory != null">
+			 AND is_perfunctory = #{isPerfunctory,jdbcType=VARCHAR}
+		</if>
+		<if test="isAnonymous != null">
+			 AND is_anonymous = #{isAnonymous,jdbcType=VARCHAR}
+		</if>
+		<if test="prority != null">
+			 AND prority = #{prority,jdbcType=INTEGER}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Answer">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_answer (
+			sid,
+			question_id,		content,		invitation_uid,		likes,		dislikes,
+			views,		comments,		is_privacy,		is_legal,		is_perfunctory,
+			is_anonymous,		prority,		sortt,		remark,		del_flag,
+			split_db_key,		create_by,		create_dt,		update_by,		update_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{questionId,jdbcType=BIGINT},	#{content,jdbcType=LONGVARCHAR},	#{invitationUid,jdbcType=BIGINT},	#{likes,jdbcType=BIGINT},	#{dislikes,jdbcType=BIGINT},	#{views,jdbcType=BIGINT},	#{comments,jdbcType=BIGINT},	#{isPrivacy,jdbcType=VARCHAR},	#{isLegal,jdbcType=VARCHAR},	#{isPerfunctory,jdbcType=VARCHAR},	#{isAnonymous,jdbcType=VARCHAR},	#{prority,jdbcType=INTEGER},	#{sortt,jdbcType=INTEGER},	#{remark,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Answer">
+UPDATE
+	tb_answer
+	<set>
+		<if test="questionId != null">
+			question_id = #{questionId,jdbcType=BIGINT},
+		</if>
+		<if test="content != null">
+			content = #{content,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="invitationUid != null">
+			invitation_uid = #{invitationUid,jdbcType=BIGINT},
+		</if>
+		<if test="likes != null">
+			likes = #{likes,jdbcType=BIGINT},
+		</if>
+		<if test="dislikes != null">
+			dislikes = #{dislikes,jdbcType=BIGINT},
+		</if>
+		<if test="views != null">
+			views = #{views,jdbcType=BIGINT},
+		</if>
+		<if test="comments != null">
+			comments = #{comments,jdbcType=BIGINT},
+		</if>
+		<if test="isPrivacy != null">
+			is_privacy = #{isPrivacy,jdbcType=VARCHAR},
+		</if>
+		<if test="isLegal != null">
+			is_legal = #{isLegal,jdbcType=VARCHAR},
+		</if>
+		<if test="isPerfunctory != null">
+			is_perfunctory = #{isPerfunctory,jdbcType=VARCHAR},
+		</if>
+		<if test="isAnonymous != null">
+			is_anonymous = #{isAnonymous,jdbcType=VARCHAR},
+		</if>
+		<if test="prority != null">
+			prority = #{prority,jdbcType=INTEGER},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_answer
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_answer
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="questionId != null">
+			 AND question_id = #{questionId,jdbcType=BIGINT}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="invitationUid != null">
+			 AND invitation_uid = #{invitationUid,jdbcType=BIGINT}
+		</if>
+		<if test="likes != null">
+			 AND likes = #{likes,jdbcType=BIGINT}
+		</if>
+		<if test="dislikes != null">
+			 AND dislikes = #{dislikes,jdbcType=BIGINT}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="comments != null">
+			 AND comments = #{comments,jdbcType=BIGINT}
+		</if>
+		<if test="isPrivacy != null">
+			 AND is_privacy = #{isPrivacy,jdbcType=VARCHAR}
+		</if>
+		<if test="isLegal != null">
+			 AND is_legal = #{isLegal,jdbcType=VARCHAR}
+		</if>
+		<if test="isPerfunctory != null">
+			 AND is_perfunctory = #{isPerfunctory,jdbcType=VARCHAR}
+		</if>
+		<if test="isAnonymous != null">
+			 AND is_anonymous = #{isAnonymous,jdbcType=VARCHAR}
+		</if>
+		<if test="prority != null">
+			 AND prority = #{prority,jdbcType=INTEGER}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Answer_Result">
+	SELECT 
+		sid,	question_id,	content,	invitation_uid,	likes,	dislikes,	views,	comments,	is_privacy,	is_legal,	is_perfunctory,	is_anonymous,	prority,	sortt,	remark,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_answer
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

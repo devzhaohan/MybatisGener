@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.AloProject">
+	
+<resultMap id="AloProject_Result"  type="com.loveart.post.entity.AloProject">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="appCode" column="app_code" jdbcType="VARCHAR"/>
+	<result property="appName" column="app_name" jdbcType="VARCHAR"/>
+	<result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="sortSn" column="sort_sn" jdbcType="INTEGER"/>
+	<result property="appLogoUrl" column="app_logo_url" jdbcType="VARCHAR"/>
+	<result property="headLogoUrl" column="head_logo_url" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="appCode != null">
+			 AND app_code = #{appCode,jdbcType=VARCHAR}
+		</if>
+		<if test="appName != null">
+			 AND app_name = #{appName,jdbcType=VARCHAR}
+		</if>
+		<if test="remarks != null">
+			 AND remarks = #{remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="sortSn != null">
+			 AND sort_sn = #{sortSn,jdbcType=INTEGER}
+		</if>
+		<if test="appLogoUrl != null">
+			 AND app_logo_url = #{appLogoUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="headLogoUrl != null">
+			 AND head_logo_url = #{headLogoUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.AloProject">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_alo_project (
+			sid,
+			app_code,		app_name,		remarks,		del_flag,		sort_sn,
+			app_logo_url,		head_logo_url,		split_db_key,		create_dt,		create_by,
+			update_dt,		update_by,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{appCode,jdbcType=VARCHAR},	#{appName,jdbcType=VARCHAR},	#{remarks,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{sortSn,jdbcType=INTEGER},	#{appLogoUrl,jdbcType=VARCHAR},	#{headLogoUrl,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createDt,jdbcType=TIMESTAMP},	#{createBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_alo_project (
+			sid,
+			app_code,		app_name,		remarks,		del_flag,		sort_sn,
+			app_logo_url,		head_logo_url,		split_db_key,		create_dt,		create_by,
+			update_dt,		update_by,		versionn)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.appCode,jdbcType=VARCHAR},	#{item.appName,jdbcType=VARCHAR},	#{item.remarks,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.sortSn,jdbcType=INTEGER},	#{item.appLogoUrl,jdbcType=VARCHAR},	#{item.headLogoUrl,jdbcType=VARCHAR},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.createBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.AloProject">
+UPDATE
+	tb_alo_project
+	<set>
+		<if test="appCode != null">
+			app_code = #{appCode,jdbcType=VARCHAR},
+		</if>
+		<if test="appName != null">
+			app_name = #{appName,jdbcType=VARCHAR},
+		</if>
+		<if test="remarks != null">
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="sortSn != null">
+			sort_sn = #{sortSn,jdbcType=INTEGER},
+		</if>
+		<if test="appLogoUrl != null">
+			app_logo_url = #{appLogoUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="headLogoUrl != null">
+			head_logo_url = #{headLogoUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_alo_project
+	<set>
+		<if test="item.appCode != null">
+			app_code = #{item.appCode,jdbcType=VARCHAR},
+		</if>
+		<if test="item.appName != null">
+			app_name = #{item.appName,jdbcType=VARCHAR},
+		</if>
+		<if test="item.remarks != null">
+			remarks = #{item.remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.sortSn != null">
+			sort_sn = #{item.sortSn,jdbcType=INTEGER},
+		</if>
+		<if test="item.appLogoUrl != null">
+			app_logo_url = #{item.appLogoUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="item.headLogoUrl != null">
+			head_logo_url = #{item.headLogoUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_alo_project
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_alo_project
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="appCode != null">
+			 AND app_code = #{appCode,jdbcType=VARCHAR}
+		</if>
+		<if test="appName != null">
+			 AND app_name = #{appName,jdbcType=VARCHAR}
+		</if>
+		<if test="remarks != null">
+			 AND remarks = #{remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="sortSn != null">
+			 AND sort_sn = #{sortSn,jdbcType=INTEGER}
+		</if>
+		<if test="appLogoUrl != null">
+			 AND app_logo_url = #{appLogoUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="headLogoUrl != null">
+			 AND head_logo_url = #{headLogoUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="AloProject_Result">
+	SELECT 
+		sid,	app_code,	app_name,	remarks,	del_flag,	sort_sn,	app_logo_url,	head_logo_url,	split_db_key,	create_dt,	create_by,	update_dt,	update_by,	versionn
+	FROM 	tb_alo_project
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_alo_project
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

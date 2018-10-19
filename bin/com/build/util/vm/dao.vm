@@ -1,0 +1,9 @@
+package ${model.daoPackage};
+
+import com.hp.common.dao.DaoBase;
+
+import ${model.entityPackage}.${model.entityName};
+
+public interface ${model.entityName}Dao extends DaoBase<${model.entityName}> {
+
+}

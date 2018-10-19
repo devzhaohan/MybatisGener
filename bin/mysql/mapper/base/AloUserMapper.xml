@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.AloUser">
+	
+<resultMap id="AloUser_Result"  type="com.loveart.post.entity.AloUser">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="loginId" column="login_id" jdbcType="VARCHAR"/>
+	<result property="salt" column="salt" jdbcType="VARCHAR"/>
+	<result property="passwd" column="passwd" jdbcType="VARCHAR"/>
+	<result property="realName" column="real_name" jdbcType="VARCHAR"/>
+	<result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+	<result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+	<result property="gender" column="gender" jdbcType="VARCHAR"/>
+	<result property="email" column="email" jdbcType="VARCHAR"/>
+	<result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+	<result property="regSource" column="reg_source" jdbcType="VARCHAR"/>
+	<result property="regSourceParam" column="reg_source_param" jdbcType="LONGVARCHAR"/>
+	<result property="state" column="state" jdbcType="VARCHAR"/>
+	<result property="stateMsg" column="state_msg" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="loginId != null">
+			 AND login_id = #{loginId,jdbcType=VARCHAR}
+		</if>
+		<if test="salt != null">
+			 AND salt = #{salt,jdbcType=VARCHAR}
+		</if>
+		<if test="passwd != null">
+			 AND passwd = #{passwd,jdbcType=VARCHAR}
+		</if>
+		<if test="realName != null">
+			 AND real_name = #{realName,jdbcType=VARCHAR}
+		</if>
+		<if test="nickName != null">
+			 AND nick_name = #{nickName,jdbcType=VARCHAR}
+		</if>
+		<if test="avatarUrl != null">
+			 AND avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="gender != null">
+			 AND gender = #{gender,jdbcType=VARCHAR}
+		</if>
+		<if test="email != null">
+			 AND email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="mobile != null">
+			 AND mobile = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="regSource != null">
+			 AND reg_source = #{regSource,jdbcType=VARCHAR}
+		</if>
+		<if test="regSourceParam != null">
+			 AND reg_source_param = #{regSourceParam,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="state != null">
+			 AND state = #{state,jdbcType=VARCHAR}
+		</if>
+		<if test="stateMsg != null">
+			 AND state_msg = #{stateMsg,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.AloUser">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_alo_user (
+			sid,
+			login_id,		salt,		passwd,		real_name,		nick_name,
+			avatar_url,		gender,		email,		mobile,		reg_source,
+			reg_source_param,		state,		state_msg,		del_flag,		split_db_key,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{loginId,jdbcType=VARCHAR},	#{salt,jdbcType=VARCHAR},	#{passwd,jdbcType=VARCHAR},	#{realName,jdbcType=VARCHAR},	#{nickName,jdbcType=VARCHAR},	#{avatarUrl,jdbcType=VARCHAR},	#{gender,jdbcType=VARCHAR},	#{email,jdbcType=VARCHAR},	#{mobile,jdbcType=VARCHAR},	#{regSource,jdbcType=VARCHAR},	#{regSourceParam,jdbcType=LONGVARCHAR},	#{state,jdbcType=VARCHAR},	#{stateMsg,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_alo_user (
+			sid,
+			login_id,		salt,		passwd,		real_name,		nick_name,
+			avatar_url,		gender,		email,		mobile,		reg_source,
+			reg_source_param,		state,		state_msg,		del_flag,		split_db_key,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.loginId,jdbcType=VARCHAR},	#{item.salt,jdbcType=VARCHAR},	#{item.passwd,jdbcType=VARCHAR},	#{item.realName,jdbcType=VARCHAR},	#{item.nickName,jdbcType=VARCHAR},	#{item.avatarUrl,jdbcType=VARCHAR},	#{item.gender,jdbcType=VARCHAR},	#{item.email,jdbcType=VARCHAR},	#{item.mobile,jdbcType=VARCHAR},	#{item.regSource,jdbcType=VARCHAR},	#{item.regSourceParam,jdbcType=LONGVARCHAR},	#{item.state,jdbcType=VARCHAR},	#{item.stateMsg,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.AloUser">
+UPDATE
+	tb_alo_user
+	<set>
+		<if test="loginId != null">
+			login_id = #{loginId,jdbcType=VARCHAR},
+		</if>
+		<if test="salt != null">
+			salt = #{salt,jdbcType=VARCHAR},
+		</if>
+		<if test="passwd != null">
+			passwd = #{passwd,jdbcType=VARCHAR},
+		</if>
+		<if test="realName != null">
+			real_name = #{realName,jdbcType=VARCHAR},
+		</if>
+		<if test="nickName != null">
+			nick_name = #{nickName,jdbcType=VARCHAR},
+		</if>
+		<if test="avatarUrl != null">
+			avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="gender != null">
+			gender = #{gender,jdbcType=VARCHAR},
+		</if>
+		<if test="email != null">
+			email = #{email,jdbcType=VARCHAR},
+		</if>
+		<if test="mobile != null">
+			mobile = #{mobile,jdbcType=VARCHAR},
+		</if>
+		<if test="regSource != null">
+			reg_source = #{regSource,jdbcType=VARCHAR},
+		</if>
+		<if test="regSourceParam != null">
+			reg_source_param = #{regSourceParam,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="state != null">
+			state = #{state,jdbcType=VARCHAR},
+		</if>
+		<if test="stateMsg != null">
+			state_msg = #{stateMsg,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_alo_user
+	<set>
+		<if test="item.loginId != null">
+			login_id = #{item.loginId,jdbcType=VARCHAR},
+		</if>
+		<if test="item.salt != null">
+			salt = #{item.salt,jdbcType=VARCHAR},
+		</if>
+		<if test="item.passwd != null">
+			passwd = #{item.passwd,jdbcType=VARCHAR},
+		</if>
+		<if test="item.realName != null">
+			real_name = #{item.realName,jdbcType=VARCHAR},
+		</if>
+		<if test="item.nickName != null">
+			nick_name = #{item.nickName,jdbcType=VARCHAR},
+		</if>
+		<if test="item.avatarUrl != null">
+			avatar_url = #{item.avatarUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="item.gender != null">
+			gender = #{item.gender,jdbcType=VARCHAR},
+		</if>
+		<if test="item.email != null">
+			email = #{item.email,jdbcType=VARCHAR},
+		</if>
+		<if test="item.mobile != null">
+			mobile = #{item.mobile,jdbcType=VARCHAR},
+		</if>
+		<if test="item.regSource != null">
+			reg_source = #{item.regSource,jdbcType=VARCHAR},
+		</if>
+		<if test="item.regSourceParam != null">
+			reg_source_param = #{item.regSourceParam,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.state != null">
+			state = #{item.state,jdbcType=VARCHAR},
+		</if>
+		<if test="item.stateMsg != null">
+			state_msg = #{item.stateMsg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_alo_user
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_alo_user
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="loginId != null">
+			 AND login_id = #{loginId,jdbcType=VARCHAR}
+		</if>
+		<if test="salt != null">
+			 AND salt = #{salt,jdbcType=VARCHAR}
+		</if>
+		<if test="passwd != null">
+			 AND passwd = #{passwd,jdbcType=VARCHAR}
+		</if>
+		<if test="realName != null">
+			 AND real_name = #{realName,jdbcType=VARCHAR}
+		</if>
+		<if test="nickName != null">
+			 AND nick_name = #{nickName,jdbcType=VARCHAR}
+		</if>
+		<if test="avatarUrl != null">
+			 AND avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="gender != null">
+			 AND gender = #{gender,jdbcType=VARCHAR}
+		</if>
+		<if test="email != null">
+			 AND email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="mobile != null">
+			 AND mobile = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="regSource != null">
+			 AND reg_source = #{regSource,jdbcType=VARCHAR}
+		</if>
+		<if test="regSourceParam != null">
+			 AND reg_source_param = #{regSourceParam,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="state != null">
+			 AND state = #{state,jdbcType=VARCHAR}
+		</if>
+		<if test="stateMsg != null">
+			 AND state_msg = #{stateMsg,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="AloUser_Result">
+	SELECT 
+		sid,	login_id,	salt,	passwd,	real_name,	nick_name,	avatar_url,	gender,	email,	mobile,	reg_source,	reg_source_param,	state,	state_msg,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_alo_user
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_alo_user
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

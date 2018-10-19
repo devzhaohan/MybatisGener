@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.FinTransLog">
+	
+<resultMap id="FinTransLog_Result"  type="com.loveart.post.entity.FinTransLog">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="accountId" column="account_id" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="tradeType" column="trade_type" jdbcType="VARCHAR"/>
+	<result property="tradeNo" column="trade_no" jdbcType="VARCHAR"/>
+	<result property="tradeTime" column="trade_time" jdbcType="TIMESTAMP"/>
+	<result property="amountType" column="amount_type" jdbcType="VARCHAR"/>
+	<result property="amount" column="amount" jdbcType="INTEGER"/>
+	<result property="balance" column="balance" jdbcType="INTEGER"/>
+	<result property="advance" column="advance" jdbcType="INTEGER"/>
+	<result property="tradeFinish" column="trade_finish" jdbcType="VARCHAR"/>
+	<result property="tradeSuccess" column="trade_success" jdbcType="VARCHAR"/>
+	<result property="frozenBalance" column="frozen_balance" jdbcType="INTEGER"/>
+	<result property="frozenAdvance" column="frozen_advance" jdbcType="INTEGER"/>
+	<result property="tradeRemark" column="trade_remark" jdbcType="VARCHAR"/>
+	<result property="tradeParams" column="trade_params" jdbcType="LONGVARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="accountId != null">
+			 AND account_id = #{accountId,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="tradeType != null">
+			 AND trade_type = #{tradeType,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeNo != null">
+			 AND trade_no = #{tradeNo,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeTime != null">
+			 AND trade_time = #{tradeTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="amountType != null">
+			 AND amount_type = #{amountType,jdbcType=VARCHAR}
+		</if>
+		<if test="amount != null">
+			 AND amount = #{amount,jdbcType=INTEGER}
+		</if>
+		<if test="balance != null">
+			 AND balance = #{balance,jdbcType=INTEGER}
+		</if>
+		<if test="advance != null">
+			 AND advance = #{advance,jdbcType=INTEGER}
+		</if>
+		<if test="tradeFinish != null">
+			 AND trade_finish = #{tradeFinish,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeSuccess != null">
+			 AND trade_success = #{tradeSuccess,jdbcType=VARCHAR}
+		</if>
+		<if test="frozenBalance != null">
+			 AND frozen_balance = #{frozenBalance,jdbcType=INTEGER}
+		</if>
+		<if test="frozenAdvance != null">
+			 AND frozen_advance = #{frozenAdvance,jdbcType=INTEGER}
+		</if>
+		<if test="tradeRemark != null">
+			 AND trade_remark = #{tradeRemark,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeParams != null">
+			 AND trade_params = #{tradeParams,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.FinTransLog">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_fin_trans_log (
+			sid,
+			account_id,		uid,		trade_type,		trade_no,		trade_time,
+			amount_type,		amount,		balance,		advance,		trade_finish,
+			trade_success,		frozen_balance,		frozen_advance,		trade_remark,		trade_params,
+			del_flag,		split_db_key,		create_by,		create_dt,		update_by,
+			update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{accountId,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{tradeType,jdbcType=VARCHAR},	#{tradeNo,jdbcType=VARCHAR},	#{tradeTime,jdbcType=TIMESTAMP},	#{amountType,jdbcType=VARCHAR},	#{amount,jdbcType=INTEGER},	#{balance,jdbcType=INTEGER},	#{advance,jdbcType=INTEGER},	#{tradeFinish,jdbcType=VARCHAR},	#{tradeSuccess,jdbcType=VARCHAR},	#{frozenBalance,jdbcType=INTEGER},	#{frozenAdvance,jdbcType=INTEGER},	#{tradeRemark,jdbcType=VARCHAR},	#{tradeParams,jdbcType=LONGVARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_fin_trans_log (
+			sid,
+			account_id,		uid,		trade_type,		trade_no,		trade_time,
+			amount_type,		amount,		balance,		advance,		trade_finish,
+			trade_success,		frozen_balance,		frozen_advance,		trade_remark,		trade_params,
+			del_flag,		split_db_key,		create_by,		create_dt,		update_by,
+			update_dt,		versionn)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.accountId,jdbcType=BIGINT},	#{item.uid,jdbcType=BIGINT},	#{item.tradeType,jdbcType=VARCHAR},	#{item.tradeNo,jdbcType=VARCHAR},	#{item.tradeTime,jdbcType=TIMESTAMP},	#{item.amountType,jdbcType=VARCHAR},	#{item.amount,jdbcType=INTEGER},	#{item.balance,jdbcType=INTEGER},	#{item.advance,jdbcType=INTEGER},	#{item.tradeFinish,jdbcType=VARCHAR},	#{item.tradeSuccess,jdbcType=VARCHAR},	#{item.frozenBalance,jdbcType=INTEGER},	#{item.frozenAdvance,jdbcType=INTEGER},	#{item.tradeRemark,jdbcType=VARCHAR},	#{item.tradeParams,jdbcType=LONGVARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.FinTransLog">
+UPDATE
+	tb_fin_trans_log
+	<set>
+		<if test="accountId != null">
+			account_id = #{accountId,jdbcType=BIGINT},
+		</if>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="tradeType != null">
+			trade_type = #{tradeType,jdbcType=VARCHAR},
+		</if>
+		<if test="tradeNo != null">
+			trade_no = #{tradeNo,jdbcType=VARCHAR},
+		</if>
+		<if test="tradeTime != null">
+			trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="amountType != null">
+			amount_type = #{amountType,jdbcType=VARCHAR},
+		</if>
+		<if test="amount != null">
+			amount = #{amount,jdbcType=INTEGER},
+		</if>
+		<if test="balance != null">
+			balance = #{balance,jdbcType=INTEGER},
+		</if>
+		<if test="advance != null">
+			advance = #{advance,jdbcType=INTEGER},
+		</if>
+		<if test="tradeFinish != null">
+			trade_finish = #{tradeFinish,jdbcType=VARCHAR},
+		</if>
+		<if test="tradeSuccess != null">
+			trade_success = #{tradeSuccess,jdbcType=VARCHAR},
+		</if>
+		<if test="frozenBalance != null">
+			frozen_balance = #{frozenBalance,jdbcType=INTEGER},
+		</if>
+		<if test="frozenAdvance != null">
+			frozen_advance = #{frozenAdvance,jdbcType=INTEGER},
+		</if>
+		<if test="tradeRemark != null">
+			trade_remark = #{tradeRemark,jdbcType=VARCHAR},
+		</if>
+		<if test="tradeParams != null">
+			trade_params = #{tradeParams,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_fin_trans_log
+	<set>
+		<if test="item.accountId != null">
+			account_id = #{item.accountId,jdbcType=BIGINT},
+		</if>
+		<if test="item.uid != null">
+			uid = #{item.uid,jdbcType=BIGINT},
+		</if>
+		<if test="item.tradeType != null">
+			trade_type = #{item.tradeType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.tradeNo != null">
+			trade_no = #{item.tradeNo,jdbcType=VARCHAR},
+		</if>
+		<if test="item.tradeTime != null">
+			trade_time = #{item.tradeTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.amountType != null">
+			amount_type = #{item.amountType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.amount != null">
+			amount = #{item.amount,jdbcType=INTEGER},
+		</if>
+		<if test="item.balance != null">
+			balance = #{item.balance,jdbcType=INTEGER},
+		</if>
+		<if test="item.advance != null">
+			advance = #{item.advance,jdbcType=INTEGER},
+		</if>
+		<if test="item.tradeFinish != null">
+			trade_finish = #{item.tradeFinish,jdbcType=VARCHAR},
+		</if>
+		<if test="item.tradeSuccess != null">
+			trade_success = #{item.tradeSuccess,jdbcType=VARCHAR},
+		</if>
+		<if test="item.frozenBalance != null">
+			frozen_balance = #{item.frozenBalance,jdbcType=INTEGER},
+		</if>
+		<if test="item.frozenAdvance != null">
+			frozen_advance = #{item.frozenAdvance,jdbcType=INTEGER},
+		</if>
+		<if test="item.tradeRemark != null">
+			trade_remark = #{item.tradeRemark,jdbcType=VARCHAR},
+		</if>
+		<if test="item.tradeParams != null">
+			trade_params = #{item.tradeParams,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_fin_trans_log
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_fin_trans_log
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="accountId != null">
+			 AND account_id = #{accountId,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="tradeType != null">
+			 AND trade_type = #{tradeType,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeNo != null">
+			 AND trade_no = #{tradeNo,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeTime != null">
+			 AND trade_time = #{tradeTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="amountType != null">
+			 AND amount_type = #{amountType,jdbcType=VARCHAR}
+		</if>
+		<if test="amount != null">
+			 AND amount = #{amount,jdbcType=INTEGER}
+		</if>
+		<if test="balance != null">
+			 AND balance = #{balance,jdbcType=INTEGER}
+		</if>
+		<if test="advance != null">
+			 AND advance = #{advance,jdbcType=INTEGER}
+		</if>
+		<if test="tradeFinish != null">
+			 AND trade_finish = #{tradeFinish,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeSuccess != null">
+			 AND trade_success = #{tradeSuccess,jdbcType=VARCHAR}
+		</if>
+		<if test="frozenBalance != null">
+			 AND frozen_balance = #{frozenBalance,jdbcType=INTEGER}
+		</if>
+		<if test="frozenAdvance != null">
+			 AND frozen_advance = #{frozenAdvance,jdbcType=INTEGER}
+		</if>
+		<if test="tradeRemark != null">
+			 AND trade_remark = #{tradeRemark,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeParams != null">
+			 AND trade_params = #{tradeParams,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="FinTransLog_Result">
+	SELECT 
+		sid,	account_id,	uid,	trade_type,	trade_no,	trade_time,	amount_type,	amount,	balance,	advance,	trade_finish,	trade_success,	frozen_balance,	frozen_advance,	trade_remark,	trade_params,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_fin_trans_log
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_fin_trans_log
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

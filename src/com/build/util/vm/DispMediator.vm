@@ -1,0 +1,113 @@
+package  ${model.flexMainPackage}.${model.entityLowCase}.view
+{
+	import base.mvc.BaseConst;
+	import base.mvc.BaseDispMediator;
+	import base.mvc.utils.OperationDescriptor;
+	
+	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
+	
+	import ${model.flexMainPackage}.${model.entityLowCase}.${model.entityName}Detail;
+	import ${model.flexMainPackage}.${model.entityLowCase}.${model.entityName}Edit;
+	import ${model.flexMainPackage}.${model.entityLowCase}.${model.entityName}Main;
+	
+	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
+	import mx.events.CloseEvent;
+	import mx.managers.PopUpManager;
+	
+	import org.puremvc.as3.multicore.interfaces.INotification;
+	
+	
+	public class ${model.entityName}DispMediator extends BaseDispMediator
+	{
+		public static const NAME:String="${model.flexMainPackage}.${model.entityFirstName}.view.${model.entityName}DispMediator";
+		
+		private var i:${model.entityName}Edit;
+		
+		public function ${model.entityName}DispMediator(index:${model.entityName}Main, name:String=null)
+		{
+			super(index, NAME);
+			this.index = index;
+		}
+		
+		override protected function onUserDefined(op:OperationDescriptor):void
+		{
+			openEditWin(null);
+		}		
+		
+		
+		override protected function onSuccess(op:OperationDescriptor):void{
+			var target:String=op.targetComponent;
+			switch (target){
+				case  "findByPage":
+					findByPage(op.getObject());
+					break;
+				case  "findAll":
+					initDataGrid(op.getArrayCollection());	
+					break;
+				case "edit":
+					openEditWin(op.getObject());
+					break;
+				case "detail":
+					openDetailWin(op.getObject());
+					break;
+				case "delete":
+					execDeleteRefresh();
+					break;
+			}
+		}
+		
+		override protected function onFailure(op:OperationDescriptor):void
+		{
+			super.onFailure(op);
+		}
+		
+		private function findByPage(result:Object):void{
+			this.index.dataList = result.resultList;
+		}
+		
+		private function execDeleteRefresh():void{
+			this.sendNotification(BaseConst.NTF_OP_EXE_BEGIN,null,"${model.entityFirstName}Service/findAll/findAll");	
+		}
+		
+		private function onUserCreateFunction():void{
+			openEditWin(null);
+		}
+		
+		private function initDataGrid(data:ArrayCollection):void{
+			this.index.dataList = data;
+		}
+		
+		private function openDetailWin(ob:Object):void{
+			var detail:${model.entityName}Detail = new ${model.entityName}Detail();
+			PopUpManager.addPopUp(detail,index as DisplayObject,true);
+			PopUpManager.centerPopUp(detail);
+		}
+		
+		private function openEditWin(ob:Object):void{
+			i= new ${model.entityName}Edit();
+			PopUpManager.addPopUp(i,index as DisplayObject,true);
+			PopUpManager.centerPopUp(i);
+			if(null != ob){
+				
+			}
+			i.saveButton.addEventListener(MouseEvent.CLICK,submitClickHandler);
+			i.closeButton.addEventListener(MouseEvent.CLICK,clickWindowHandler);
+			i.addEventListener(CloseEvent.CLOSE,closeWindowHandler);
+		}
+		
+		private function submitClickHandler(event:MouseEvent):void{
+			Alert.show("submit click ! ");
+		}
+		
+		private function clickWindowHandler(event:MouseEvent):void{
+			PopUpManager.removePopUp(i);
+		}
+		
+		private function closeWindowHandler(event:CloseEvent):void{
+			PopUpManager.removePopUp(i);
+		}
+	
+	}
+}

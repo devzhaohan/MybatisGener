@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.RcSmsSendLog">
+	
+<resultMap id="RcSmsSendLog_Result"  type="com.loveart.post.entity.RcSmsSendLog">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+	<result property="smsTemplateCode" column="sms_template_code" jdbcType="VARCHAR"/>
+	<result property="templateMsg" column="template_msg" jdbcType="LONGVARCHAR"/>
+	<result property="requestIp" column="request_ip" jdbcType="VARCHAR"/>
+	<result property="sendSuccess" column="send_success" jdbcType="VARCHAR"/>
+	<result property="errorMsg" column="error_msg" jdbcType="LONGVARCHAR"/>
+	<result property="dailyTotalCount" column="daily_total_count" jdbcType="VARCHAR"/>
+	<result property="queryRspCode" column="query_rsp_code" jdbcType="VARCHAR"/>
+	<result property="queryRspMsg" column="query_rsp_msg" jdbcType="VARCHAR"/>
+	<result property="sendRspCode" column="send_rsp_code" jdbcType="VARCHAR"/>
+	<result property="sendRspMsg" column="send_rsp_msg" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="mobile != null">
+			 AND mobile = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="smsTemplateCode != null">
+			 AND sms_template_code = #{smsTemplateCode,jdbcType=VARCHAR}
+		</if>
+		<if test="templateMsg != null">
+			 AND template_msg = #{templateMsg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="requestIp != null">
+			 AND request_ip = #{requestIp,jdbcType=VARCHAR}
+		</if>
+		<if test="sendSuccess != null">
+			 AND send_success = #{sendSuccess,jdbcType=VARCHAR}
+		</if>
+		<if test="errorMsg != null">
+			 AND error_msg = #{errorMsg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="dailyTotalCount != null">
+			 AND daily_total_count = #{dailyTotalCount,jdbcType=VARCHAR}
+		</if>
+		<if test="queryRspCode != null">
+			 AND query_rsp_code = #{queryRspCode,jdbcType=VARCHAR}
+		</if>
+		<if test="queryRspMsg != null">
+			 AND query_rsp_msg = #{queryRspMsg,jdbcType=VARCHAR}
+		</if>
+		<if test="sendRspCode != null">
+			 AND send_rsp_code = #{sendRspCode,jdbcType=VARCHAR}
+		</if>
+		<if test="sendRspMsg != null">
+			 AND send_rsp_msg = #{sendRspMsg,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.RcSmsSendLog">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_rc_sms_send_log (
+			sid,
+			uid,		mobile,		sms_template_code,		template_msg,		request_ip,
+			send_success,		error_msg,		daily_total_count,		query_rsp_code,		query_rsp_msg,
+			send_rsp_code,		send_rsp_msg,		del_flag,		create_by,		create_dt,
+			update_by,		update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{mobile,jdbcType=VARCHAR},	#{smsTemplateCode,jdbcType=VARCHAR},	#{templateMsg,jdbcType=LONGVARCHAR},	#{requestIp,jdbcType=VARCHAR},	#{sendSuccess,jdbcType=VARCHAR},	#{errorMsg,jdbcType=LONGVARCHAR},	#{dailyTotalCount,jdbcType=VARCHAR},	#{queryRspCode,jdbcType=VARCHAR},	#{queryRspMsg,jdbcType=VARCHAR},	#{sendRspCode,jdbcType=VARCHAR},	#{sendRspMsg,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_rc_sms_send_log (
+			sid,
+			uid,		mobile,		sms_template_code,		template_msg,		request_ip,
+			send_success,		error_msg,		daily_total_count,		query_rsp_code,		query_rsp_msg,
+			send_rsp_code,		send_rsp_msg,		del_flag,		create_by,		create_dt,
+			update_by,		update_dt,		versionn)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.uid,jdbcType=BIGINT},	#{item.mobile,jdbcType=VARCHAR},	#{item.smsTemplateCode,jdbcType=VARCHAR},	#{item.templateMsg,jdbcType=LONGVARCHAR},	#{item.requestIp,jdbcType=VARCHAR},	#{item.sendSuccess,jdbcType=VARCHAR},	#{item.errorMsg,jdbcType=LONGVARCHAR},	#{item.dailyTotalCount,jdbcType=VARCHAR},	#{item.queryRspCode,jdbcType=VARCHAR},	#{item.queryRspMsg,jdbcType=VARCHAR},	#{item.sendRspCode,jdbcType=VARCHAR},	#{item.sendRspMsg,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.RcSmsSendLog">
+UPDATE
+	tb_rc_sms_send_log
+	<set>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="mobile != null">
+			mobile = #{mobile,jdbcType=VARCHAR},
+		</if>
+		<if test="smsTemplateCode != null">
+			sms_template_code = #{smsTemplateCode,jdbcType=VARCHAR},
+		</if>
+		<if test="templateMsg != null">
+			template_msg = #{templateMsg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="requestIp != null">
+			request_ip = #{requestIp,jdbcType=VARCHAR},
+		</if>
+		<if test="sendSuccess != null">
+			send_success = #{sendSuccess,jdbcType=VARCHAR},
+		</if>
+		<if test="errorMsg != null">
+			error_msg = #{errorMsg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="dailyTotalCount != null">
+			daily_total_count = #{dailyTotalCount,jdbcType=VARCHAR},
+		</if>
+		<if test="queryRspCode != null">
+			query_rsp_code = #{queryRspCode,jdbcType=VARCHAR},
+		</if>
+		<if test="queryRspMsg != null">
+			query_rsp_msg = #{queryRspMsg,jdbcType=VARCHAR},
+		</if>
+		<if test="sendRspCode != null">
+			send_rsp_code = #{sendRspCode,jdbcType=VARCHAR},
+		</if>
+		<if test="sendRspMsg != null">
+			send_rsp_msg = #{sendRspMsg,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_rc_sms_send_log
+	<set>
+		<if test="item.uid != null">
+			uid = #{item.uid,jdbcType=BIGINT},
+		</if>
+		<if test="item.mobile != null">
+			mobile = #{item.mobile,jdbcType=VARCHAR},
+		</if>
+		<if test="item.smsTemplateCode != null">
+			sms_template_code = #{item.smsTemplateCode,jdbcType=VARCHAR},
+		</if>
+		<if test="item.templateMsg != null">
+			template_msg = #{item.templateMsg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.requestIp != null">
+			request_ip = #{item.requestIp,jdbcType=VARCHAR},
+		</if>
+		<if test="item.sendSuccess != null">
+			send_success = #{item.sendSuccess,jdbcType=VARCHAR},
+		</if>
+		<if test="item.errorMsg != null">
+			error_msg = #{item.errorMsg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.dailyTotalCount != null">
+			daily_total_count = #{item.dailyTotalCount,jdbcType=VARCHAR},
+		</if>
+		<if test="item.queryRspCode != null">
+			query_rsp_code = #{item.queryRspCode,jdbcType=VARCHAR},
+		</if>
+		<if test="item.queryRspMsg != null">
+			query_rsp_msg = #{item.queryRspMsg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.sendRspCode != null">
+			send_rsp_code = #{item.sendRspCode,jdbcType=VARCHAR},
+		</if>
+		<if test="item.sendRspMsg != null">
+			send_rsp_msg = #{item.sendRspMsg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_rc_sms_send_log
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_rc_sms_send_log
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="mobile != null">
+			 AND mobile = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="smsTemplateCode != null">
+			 AND sms_template_code = #{smsTemplateCode,jdbcType=VARCHAR}
+		</if>
+		<if test="templateMsg != null">
+			 AND template_msg = #{templateMsg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="requestIp != null">
+			 AND request_ip = #{requestIp,jdbcType=VARCHAR}
+		</if>
+		<if test="sendSuccess != null">
+			 AND send_success = #{sendSuccess,jdbcType=VARCHAR}
+		</if>
+		<if test="errorMsg != null">
+			 AND error_msg = #{errorMsg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="dailyTotalCount != null">
+			 AND daily_total_count = #{dailyTotalCount,jdbcType=VARCHAR}
+		</if>
+		<if test="queryRspCode != null">
+			 AND query_rsp_code = #{queryRspCode,jdbcType=VARCHAR}
+		</if>
+		<if test="queryRspMsg != null">
+			 AND query_rsp_msg = #{queryRspMsg,jdbcType=VARCHAR}
+		</if>
+		<if test="sendRspCode != null">
+			 AND send_rsp_code = #{sendRspCode,jdbcType=VARCHAR}
+		</if>
+		<if test="sendRspMsg != null">
+			 AND send_rsp_msg = #{sendRspMsg,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="RcSmsSendLog_Result">
+	SELECT 
+		sid,	uid,	mobile,	sms_template_code,	template_msg,	request_ip,	send_success,	error_msg,	daily_total_count,	query_rsp_code,	query_rsp_msg,	send_rsp_code,	send_rsp_msg,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_rc_sms_send_log
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_rc_sms_send_log
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.ForumPost">
+	
+<resultMap id="ForumPost_Result"  type="com.loveart.post.entity.ForumPost">
+	<result property="sid" column="sid" jdbcType="INTEGER"/>
+	<result property="subjectSid" column="subject_sid" jdbcType="INTEGER"/>
+	<result property="tags" column="tags" jdbcType="VARCHAR"/>
+	<result property="status" column="status" jdbcType="VARCHAR"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="content" column="content" jdbcType="LONGTEXT"/>
+	<result property="brief" column="brief" jdbcType="VARCHAR"/>
+	<result property="coverImg" column="cover_img" jdbcType="VARCHAR"/>
+	<result property="picUrls" column="pic_urls" jdbcType="LONGVARCHAR"/>
+	<result property="manSort" column="man_sort" jdbcType="INTEGER"/>
+	<result property="isVisible" column="is_visible" jdbcType="VARCHAR"/>
+	<result property="isComment" column="is_comment" jdbcType="VARCHAR"/>
+	<result property="isAttachment" column="is_attachment" jdbcType="VARCHAR"/>
+	<result property="replycredit" column="replycredit" jdbcType="INTEGER"/>
+	<result property="allowcomment" column="allowcomment" jdbcType="VARCHAR"/>
+	<result property="views" column="views" jdbcType="BIGINT"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=INTEGER}
+		</if>
+		<if test="subjectSid != null">
+			 AND subject_sid = #{subjectSid,jdbcType=INTEGER}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			 AND status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="brief != null">
+			 AND brief = #{brief,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="picUrls != null">
+			 AND pic_urls = #{picUrls,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="manSort != null">
+			 AND man_sort = #{manSort,jdbcType=INTEGER}
+		</if>
+		<if test="isVisible != null">
+			 AND is_visible = #{isVisible,jdbcType=VARCHAR}
+		</if>
+		<if test="isComment != null">
+			 AND is_comment = #{isComment,jdbcType=VARCHAR}
+		</if>
+		<if test="isAttachment != null">
+			 AND is_attachment = #{isAttachment,jdbcType=VARCHAR}
+		</if>
+		<if test="replycredit != null">
+			 AND replycredit = #{replycredit,jdbcType=INTEGER}
+		</if>
+		<if test="allowcomment != null">
+			 AND allowcomment = #{allowcomment,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=VARCHAR}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.ForumPost">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_forum_post (
+			sid,
+			subject_sid,		tags,		status,		title,		content,
+			brief,		cover_img,		pic_urls,		man_sort,		is_visible,
+			is_comment,		is_attachment,		replycredit,		allowcomment,		views,
+			del_flag,		create_by,		create_dt,		update_dt,		update_by,
+			versionn)
+ values( 
+	#{sid,jdbcType=INTEGER},	#{subjectSid,jdbcType=INTEGER},	#{tags,jdbcType=VARCHAR},	#{status,jdbcType=VARCHAR},	#{title,jdbcType=VARCHAR},	#{content,jdbcType=LONGVARCHAR},	#{brief,jdbcType=VARCHAR},	#{coverImg,jdbcType=VARCHAR},	#{picUrls,jdbcType=LONGVARCHAR},	#{manSort,jdbcType=INTEGER},	#{isVisible,jdbcType=VARCHAR},	#{isComment,jdbcType=VARCHAR},	#{isAttachment,jdbcType=VARCHAR},	#{replycredit,jdbcType=INTEGER},	#{allowcomment,jdbcType=VARCHAR},	#{views,jdbcType=BIGINT},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=VARCHAR},	#{createDt,jdbcType=TIMESTAMP},	#{updateDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=VARCHAR},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_forum_post (
+			sid,
+			subject_sid,		tags,		status,		title,		content,
+			brief,		cover_img,		pic_urls,		man_sort,		is_visible,
+			is_comment,		is_attachment,		replycredit,		allowcomment,		views,
+			del_flag,		create_by,		create_dt,		update_dt,		update_by,
+			versionn)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=INTEGER},	#{item.subjectSid,jdbcType=INTEGER},	#{item.tags,jdbcType=VARCHAR},	#{item.status,jdbcType=VARCHAR},	#{item.title,jdbcType=VARCHAR},	#{item.content,jdbcType=LONGVARCHAR},	#{item.brief,jdbcType=VARCHAR},	#{item.coverImg,jdbcType=VARCHAR},	#{item.picUrls,jdbcType=LONGVARCHAR},	#{item.manSort,jdbcType=INTEGER},	#{item.isVisible,jdbcType=VARCHAR},	#{item.isComment,jdbcType=VARCHAR},	#{item.isAttachment,jdbcType=VARCHAR},	#{item.replycredit,jdbcType=INTEGER},	#{item.allowcomment,jdbcType=VARCHAR},	#{item.views,jdbcType=BIGINT},	#{item.delFlag,jdbcType=VARCHAR},	#{item.createBy,jdbcType=VARCHAR},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=VARCHAR},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.ForumPost">
+UPDATE
+	tb_forum_post
+	<set>
+		<if test="subjectSid != null">
+			subject_sid = #{subjectSid,jdbcType=INTEGER},
+		</if>
+		<if test="tags != null">
+			tags = #{tags,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null">
+			status = #{status,jdbcType=VARCHAR},
+		</if>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="content != null">
+			content = #{content,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="brief != null">
+			brief = #{brief,jdbcType=VARCHAR},
+		</if>
+		<if test="coverImg != null">
+			cover_img = #{coverImg,jdbcType=VARCHAR},
+		</if>
+		<if test="picUrls != null">
+			pic_urls = #{picUrls,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="manSort != null">
+			man_sort = #{manSort,jdbcType=INTEGER},
+		</if>
+		<if test="isVisible != null">
+			is_visible = #{isVisible,jdbcType=VARCHAR},
+		</if>
+		<if test="isComment != null">
+			is_comment = #{isComment,jdbcType=VARCHAR},
+		</if>
+		<if test="isAttachment != null">
+			is_attachment = #{isAttachment,jdbcType=VARCHAR},
+		</if>
+		<if test="replycredit != null">
+			replycredit = #{replycredit,jdbcType=INTEGER},
+		</if>
+		<if test="allowcomment != null">
+			allowcomment = #{allowcomment,jdbcType=VARCHAR},
+		</if>
+		<if test="views != null">
+			views = #{views,jdbcType=BIGINT},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=VARCHAR},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=VARCHAR},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_forum_post
+	<set>
+		<if test="item.subjectSid != null">
+			subject_sid = #{item.subjectSid,jdbcType=INTEGER},
+		</if>
+		<if test="item.tags != null">
+			tags = #{item.tags,jdbcType=VARCHAR},
+		</if>
+		<if test="item.status != null">
+			status = #{item.status,jdbcType=VARCHAR},
+		</if>
+		<if test="item.title != null">
+			title = #{item.title,jdbcType=VARCHAR},
+		</if>
+		<if test="item.content != null">
+			content = #{item.content,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.brief != null">
+			brief = #{item.brief,jdbcType=VARCHAR},
+		</if>
+		<if test="item.coverImg != null">
+			cover_img = #{item.coverImg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.picUrls != null">
+			pic_urls = #{item.picUrls,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.manSort != null">
+			man_sort = #{item.manSort,jdbcType=INTEGER},
+		</if>
+		<if test="item.isVisible != null">
+			is_visible = #{item.isVisible,jdbcType=VARCHAR},
+		</if>
+		<if test="item.isComment != null">
+			is_comment = #{item.isComment,jdbcType=VARCHAR},
+		</if>
+		<if test="item.isAttachment != null">
+			is_attachment = #{item.isAttachment,jdbcType=VARCHAR},
+		</if>
+		<if test="item.replycredit != null">
+			replycredit = #{item.replycredit,jdbcType=INTEGER},
+		</if>
+		<if test="item.allowcomment != null">
+			allowcomment = #{item.allowcomment,jdbcType=VARCHAR},
+		</if>
+		<if test="item.views != null">
+			views = #{item.views,jdbcType=BIGINT},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=VARCHAR},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_forum_post
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_forum_post
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=INTEGER}
+		</if>
+		<if test="subjectSid != null">
+			 AND subject_sid = #{subjectSid,jdbcType=INTEGER}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			 AND status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="brief != null">
+			 AND brief = #{brief,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="picUrls != null">
+			 AND pic_urls = #{picUrls,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="manSort != null">
+			 AND man_sort = #{manSort,jdbcType=INTEGER}
+		</if>
+		<if test="isVisible != null">
+			 AND is_visible = #{isVisible,jdbcType=VARCHAR}
+		</if>
+		<if test="isComment != null">
+			 AND is_comment = #{isComment,jdbcType=VARCHAR}
+		</if>
+		<if test="isAttachment != null">
+			 AND is_attachment = #{isAttachment,jdbcType=VARCHAR}
+		</if>
+		<if test="replycredit != null">
+			 AND replycredit = #{replycredit,jdbcType=INTEGER}
+		</if>
+		<if test="allowcomment != null">
+			 AND allowcomment = #{allowcomment,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=VARCHAR}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="ForumPost_Result">
+	SELECT 
+		sid,	subject_sid,	tags,	status,	title,	content,	brief,	cover_img,	pic_urls,	man_sort,	is_visible,	is_comment,	is_attachment,	replycredit,	allowcomment,	views,	del_flag,	create_by,	create_dt,	update_dt,	update_by,	versionn
+	FROM 	tb_forum_post
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_forum_post
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

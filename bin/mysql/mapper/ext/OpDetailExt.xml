@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.OpDetail">
+	
+<resultMap id="OpDetail_Result"  type="com.loveart.post.entity.OpDetail">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="outerCssUrl" column="outer_css_url" jdbcType="VARCHAR"/>
+	<result property="outerJsUrl" column="outer_js_url" jdbcType="VARCHAR"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="content" column="content" jdbcType="LONGTEXT"/>
+	<result property="expiration" column="expiration" jdbcType="TIMESTAMP"/>
+	<result property="views" column="views" jdbcType="BIGINT"/>
+	<result property="uses" column="uses" jdbcType="VARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="BIGINT"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="outerCssUrl != null">
+			 AND outer_css_url = #{outerCssUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="outerJsUrl != null">
+			 AND outer_js_url = #{outerJsUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="expiration != null">
+			 AND expiration = #{expiration,jdbcType=TIMESTAMP}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="uses != null">
+			 AND uses = #{uses,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.OpDetail">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_op_detail (
+			sid,
+			outer_css_url,		outer_js_url,		title,		remark,		content,
+			expiration,		views,		uses,		sortt,		del_flag,
+			split_db_key,		create_by,		create_dt,		update_by,		update_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{outerCssUrl,jdbcType=VARCHAR},	#{outerJsUrl,jdbcType=VARCHAR},	#{title,jdbcType=VARCHAR},	#{remark,jdbcType=VARCHAR},	#{content,jdbcType=LONGVARCHAR},	#{expiration,jdbcType=TIMESTAMP},	#{views,jdbcType=BIGINT},	#{uses,jdbcType=VARCHAR},	#{sortt,jdbcType=BIGINT},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.OpDetail">
+UPDATE
+	tb_op_detail
+	<set>
+		<if test="outerCssUrl != null">
+			outer_css_url = #{outerCssUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="outerJsUrl != null">
+			outer_js_url = #{outerJsUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="content != null">
+			content = #{content,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="expiration != null">
+			expiration = #{expiration,jdbcType=TIMESTAMP},
+		</if>
+		<if test="views != null">
+			views = #{views,jdbcType=BIGINT},
+		</if>
+		<if test="uses != null">
+			uses = #{uses,jdbcType=VARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=BIGINT},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_op_detail
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_op_detail
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="outerCssUrl != null">
+			 AND outer_css_url = #{outerCssUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="outerJsUrl != null">
+			 AND outer_js_url = #{outerJsUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="expiration != null">
+			 AND expiration = #{expiration,jdbcType=TIMESTAMP}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="uses != null">
+			 AND uses = #{uses,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="OpDetail_Result">
+	SELECT 
+		sid,	outer_css_url,	outer_js_url,	title,	remark,	content,	expiration,	views,	uses,	sortt,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_op_detail
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

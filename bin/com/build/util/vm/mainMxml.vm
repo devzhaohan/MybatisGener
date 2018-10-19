@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" 
+		   xmlns:cbox="common.checkbox.*"
+		   xmlns:ctrl="common.ui.*"
+		   xmlns:flexlib="http://code.google.com/p/flexlib/"
+		   xmlns:groupbox="common.groupbox.*"
+		   width="100%" height="100%" layout="vertical" initialize="init()"
+		   paddingLeft="10" paddingRight="10">
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		.linkButtonWindowShade {
+			headerClass:ClassReference('mx.controls.LinkButton');
+			drop-shadow-enabled:true;
+			background-alpha:.7;
+		}         
+	</fx:Style>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import common.checkbox.*;
+			
+			//表格中的结果集
+			[Bindable]
+			public var dataList:ArrayCollection;
+			
+			//被选中的值id
+			public var selectId:int = 0;
+			protected function ${model.entityFirstName}GridClickHandler(event:MouseEvent):void
+			{
+				if(${model.entityFirstName}Grid.selectedItem != null){
+					selectId = ${model.entityFirstName}Grid.selectedItem.userId;
+				}
+			}
+			
+			private function init():void
+			{
+				var facade:${model.entityName}Facade=${model.entityName}Facade.getInstance(${model.entityName}Facade.NAME) as ${model.entityName}Facade;
+				facade.startUp(this);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<mx:DateFormatter id="df"  formatString="YYYY-MM-DD HH:NN:SS" />
+	</fx:Declarations>
+		<groupbox:GroupBox title="查询信息" 
+					   skinClass="common.groupbox.GroupBoxSkin" 
+					  width="100%" id="gb1">
+		<flexlib:WindowShade id="ws1"
+							 tabChildren="{ws1.opened}"
+							 styleName="linkButtonWindowShade"
+							 label="查询区域" textAlign="left"
+							 width="100%">
+			<mx:Form width="100%" height="100%">
+				<mx:FormItem  direction="horizontal" width="100%" horizontalAlign="right">
+					<mx:FormItem label="姓 名:" width="30%" labelWidth="80">
+						<s:TextInput id="userName" />
+					</mx:FormItem>
+					<mx:FormItem label="创建开始日期:" width="30%" labelWidth="80">
+						<mx:DateField  id="startCreateDate"  formatString="YYYY-MM-DD" />
+					</mx:FormItem>
+				</mx:FormItem>
+				<mx:FormItem  direction="horizontal"  horizontalAlign="right" width="100%">
+					<mx:FormItem label="所属机构:" width="30%" labelWidth="80">
+						<s:TextInput id="logName" />
+					</mx:FormItem>
+					<mx:FormItem label="创建结束日期:" width="30%" labelWidth="80">
+						<mx:DateField  id="endCreateDate" formatString="YYYY-MM-DD" />
+					</mx:FormItem>
+				</mx:FormItem>
+				<mx:FormItem  direction="horizontal" horizontalAlign="center" width="60%" paddingTop="10">
+					<s:Button  label="查询" id="selectBtn"/>
+					<s:Button  label="重置" id="resetBtn"/>
+				</mx:FormItem>
+			</mx:Form>
+		</flexlib:WindowShade>
+	</groupbox:GroupBox>
+			<mx:ControlBar width="100%" height="40" borderStyle="inset">
+				<s:Button  label="新增" id="insert"/>
+				<s:Button  label="修改" enabled="{${model.entityFirstName}Grid.selectedIndex==-1?false:true}" id="edit"/>
+				<s:Button  label="查看" enabled="{${model.entityFirstName}Grid.selectedIndex==-1?false:true}" id="detail"/>
+				<s:Button  label="删除" enabled="{${model.entityFirstName}Grid.selectedIndex==-1?false:true}" id="link_delete"/>
+			</mx:ControlBar>
+			<mx:DataGrid id="${model.entityFirstName}Grid" dataProvider="{dataList}" width="100%" height="90%" left="5" right="5" top="10" bottom="5" doubleClickEnabled="true"
+						 
+						 >
+				<mx:columns>
+					<cbox:CheckBoxColumn dataField="sid" width="25" id="select${model.entityName}"    
+							 draggable="false" resizable="false" sortable="false"  
+							headerRenderer="{new ClassFactory(CheckBoxHeaderRenderer)}"  
+							itemRenderer="{new ClassFactory(CheckBoxItemRenderer)}"  
+							/>  
+						#foreach($item in $model.propList)
+							<mx:DataGridColumn headerText="${item.name}" dataField="${item.name}"/>
+						#end
+				</mx:columns>
+			</mx:DataGrid>
+	<ctrl:pageButton left="10" right="10"  bottom="5" id="${model.entityFirstName}Page" 
+						 dataGrid="{this.${model.entityFirstName}Grid}" serviceName="${model.entityFirstName}Service" methodName="findByPage" 
+						 returnMethodName="resultPageDatas" rowSize="10" pageheight="10%" pagewidth="90%"/>
+	
+</mx:Module>
+

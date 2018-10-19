@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.RcLikes">
+	
+<resultMap id="RcLikes_Result"  type="com.loveart.post.entity.RcLikes">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="objType" column="obj_type" jdbcType="VARCHAR"/>
+	<result property="sumNum" column="sum_num" jdbcType="INTEGER"/>
+	<result property="dataDay" column="data_day" jdbcType="DATE"/>
+	<result property="countDt" column="count_dt" jdbcType="TIMESTAMP"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="objType != null">
+			 AND obj_type = #{objType,jdbcType=VARCHAR}
+		</if>
+		<if test="sumNum != null">
+			 AND sum_num = #{sumNum,jdbcType=INTEGER}
+		</if>
+		<if test="dataDay != null">
+			 AND data_day = #{dataDay,jdbcType=DATE}
+		</if>
+		<if test="countDt != null">
+			 AND count_dt = #{countDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.RcLikes">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_rc_likes (
+			sid,
+			uid,		obj_type,		sum_num,		data_day,		count_dt,
+			del_flag,		split_db_key,		create_by,		create_dt,		update_by,
+			update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{objType,jdbcType=VARCHAR},	#{sumNum,jdbcType=INTEGER},	#{dataDay,jdbcType=DATE},	#{countDt,jdbcType=TIMESTAMP},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.RcLikes">
+UPDATE
+	tb_rc_likes
+	<set>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="objType != null">
+			obj_type = #{objType,jdbcType=VARCHAR},
+		</if>
+		<if test="sumNum != null">
+			sum_num = #{sumNum,jdbcType=INTEGER},
+		</if>
+		<if test="dataDay != null">
+			data_day = #{dataDay,jdbcType=DATE},
+		</if>
+		<if test="countDt != null">
+			count_dt = #{countDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_rc_likes
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_rc_likes
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="objType != null">
+			 AND obj_type = #{objType,jdbcType=VARCHAR}
+		</if>
+		<if test="sumNum != null">
+			 AND sum_num = #{sumNum,jdbcType=INTEGER}
+		</if>
+		<if test="dataDay != null">
+			 AND data_day = #{dataDay,jdbcType=DATE}
+		</if>
+		<if test="countDt != null">
+			 AND count_dt = #{countDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="RcLikes_Result">
+	SELECT 
+		sid,	uid,	obj_type,	sum_num,	data_day,	count_dt,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_rc_likes
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

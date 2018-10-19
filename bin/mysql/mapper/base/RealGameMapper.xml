@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.RealGame">
+	
+<resultMap id="RealGame_Result"  type="com.loveart.post.entity.RealGame">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="shareCardImg" column="share_card_img" jdbcType="VARCHAR"/>
+	<result property="cover" column="cover" jdbcType="VARCHAR"/>
+	<result property="tags" column="tags" jdbcType="VARCHAR"/>
+	<result property="city" column="city" jdbcType="VARCHAR"/>
+	<result property="durationDay" column="duration_day" jdbcType="INTEGER"/>
+	<result property="deadDt" column="dead_dt" jdbcType="TIMESTAMP"/>
+	<result property="startDt" column="start_dt" jdbcType="TIMESTAMP"/>
+	<result property="endDt" column="end_dt" jdbcType="TIMESTAMP"/>
+	<result property="detail" column="detail" jdbcType="LONGTEXT"/>
+	<result property="bannerImg" column="banner_img" jdbcType="LONGTEXT"/>
+	<result property="leaderUids" column="leader_uids" jdbcType="VARCHAR"/>
+	<result property="managerWeixinNum" column="manager_weixin_num" jdbcType="VARCHAR"/>
+	<result property="infoShoppingNotice" column="info_shopping_notice" jdbcType="LONGVARCHAR"/>
+	<result property="quotaNum" column="quota_num" jdbcType="INTEGER"/>
+	<result property="quotaLeftNum" column="quota_left_num" jdbcType="INTEGER"/>
+	<result property="isPublish" column="is_publish" jdbcType="VARCHAR"/>
+	<result property="publishDt" column="publish_dt" jdbcType="TIMESTAMP"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+	<result property="column25" column="column_25" jdbcType="CHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="shareCardImg != null">
+			 AND share_card_img = #{shareCardImg,jdbcType=VARCHAR}
+		</if>
+		<if test="cover != null">
+			 AND cover = #{cover,jdbcType=VARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="city != null">
+			 AND city = #{city,jdbcType=VARCHAR}
+		</if>
+		<if test="durationDay != null">
+			 AND duration_day = #{durationDay,jdbcType=INTEGER}
+		</if>
+		<if test="deadDt != null">
+			 AND dead_dt = #{deadDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="startDt != null">
+			 AND start_dt = #{startDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="endDt != null">
+			 AND end_dt = #{endDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="detail != null">
+			 AND detail = #{detail,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="bannerImg != null">
+			 AND banner_img = #{bannerImg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="leaderUids != null">
+			 AND leader_uids = #{leaderUids,jdbcType=VARCHAR}
+		</if>
+		<if test="managerWeixinNum != null">
+			 AND manager_weixin_num = #{managerWeixinNum,jdbcType=VARCHAR}
+		</if>
+		<if test="infoShoppingNotice != null">
+			 AND info_shopping_notice = #{infoShoppingNotice,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="quotaNum != null">
+			 AND quota_num = #{quotaNum,jdbcType=INTEGER}
+		</if>
+		<if test="quotaLeftNum != null">
+			 AND quota_left_num = #{quotaLeftNum,jdbcType=INTEGER}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="publishDt != null">
+			 AND publish_dt = #{publishDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+		<if test="column25 != null">
+			 AND column_25 = #{column25,jdbcType=CHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.RealGame">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_real_game (
+			sid,
+			title,		share_card_img,		cover,		tags,		city,
+			duration_day,		dead_dt,		start_dt,		end_dt,		detail,
+			banner_img,		leader_uids,		manager_weixin_num,		info_shopping_notice,		quota_num,
+			quota_left_num,		is_publish,		publish_dt,		sortt,		del_flag,
+			create_by,		create_dt,		update_by,		update_dt,		versionn,
+			column_25)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{title,jdbcType=VARCHAR},	#{shareCardImg,jdbcType=VARCHAR},	#{cover,jdbcType=VARCHAR},	#{tags,jdbcType=VARCHAR},	#{city,jdbcType=VARCHAR},	#{durationDay,jdbcType=INTEGER},	#{deadDt,jdbcType=TIMESTAMP},	#{startDt,jdbcType=TIMESTAMP},	#{endDt,jdbcType=TIMESTAMP},	#{detail,jdbcType=LONGVARCHAR},	#{bannerImg,jdbcType=LONGVARCHAR},	#{leaderUids,jdbcType=VARCHAR},	#{managerWeixinNum,jdbcType=VARCHAR},	#{infoShoppingNotice,jdbcType=LONGVARCHAR},	#{quotaNum,jdbcType=INTEGER},	#{quotaLeftNum,jdbcType=INTEGER},	#{isPublish,jdbcType=VARCHAR},	#{publishDt,jdbcType=TIMESTAMP},	#{sortt,jdbcType=INTEGER},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR},	#{column25,jdbcType=CHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_real_game (
+			sid,
+			title,		share_card_img,		cover,		tags,		city,
+			duration_day,		dead_dt,		start_dt,		end_dt,		detail,
+			banner_img,		leader_uids,		manager_weixin_num,		info_shopping_notice,		quota_num,
+			quota_left_num,		is_publish,		publish_dt,		sortt,		del_flag,
+			create_by,		create_dt,		update_by,		update_dt,		versionn,
+			column_25)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.title,jdbcType=VARCHAR},	#{item.shareCardImg,jdbcType=VARCHAR},	#{item.cover,jdbcType=VARCHAR},	#{item.tags,jdbcType=VARCHAR},	#{item.city,jdbcType=VARCHAR},	#{item.durationDay,jdbcType=INTEGER},	#{item.deadDt,jdbcType=TIMESTAMP},	#{item.startDt,jdbcType=TIMESTAMP},	#{item.endDt,jdbcType=TIMESTAMP},	#{item.detail,jdbcType=LONGVARCHAR},	#{item.bannerImg,jdbcType=LONGVARCHAR},	#{item.leaderUids,jdbcType=VARCHAR},	#{item.managerWeixinNum,jdbcType=VARCHAR},	#{item.infoShoppingNotice,jdbcType=LONGVARCHAR},	#{item.quotaNum,jdbcType=INTEGER},	#{item.quotaLeftNum,jdbcType=INTEGER},	#{item.isPublish,jdbcType=VARCHAR},	#{item.publishDt,jdbcType=TIMESTAMP},	#{item.sortt,jdbcType=INTEGER},	#{item.delFlag,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR},	#{item.column25,jdbcType=CHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.RealGame">
+UPDATE
+	tb_real_game
+	<set>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="shareCardImg != null">
+			share_card_img = #{shareCardImg,jdbcType=VARCHAR},
+		</if>
+		<if test="cover != null">
+			cover = #{cover,jdbcType=VARCHAR},
+		</if>
+		<if test="tags != null">
+			tags = #{tags,jdbcType=VARCHAR},
+		</if>
+		<if test="city != null">
+			city = #{city,jdbcType=VARCHAR},
+		</if>
+		<if test="durationDay != null">
+			duration_day = #{durationDay,jdbcType=INTEGER},
+		</if>
+		<if test="deadDt != null">
+			dead_dt = #{deadDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="startDt != null">
+			start_dt = #{startDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="endDt != null">
+			end_dt = #{endDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="detail != null">
+			detail = #{detail,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="bannerImg != null">
+			banner_img = #{bannerImg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="leaderUids != null">
+			leader_uids = #{leaderUids,jdbcType=VARCHAR},
+		</if>
+		<if test="managerWeixinNum != null">
+			manager_weixin_num = #{managerWeixinNum,jdbcType=VARCHAR},
+		</if>
+		<if test="infoShoppingNotice != null">
+			info_shopping_notice = #{infoShoppingNotice,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="quotaNum != null">
+			quota_num = #{quotaNum,jdbcType=INTEGER},
+		</if>
+		<if test="quotaLeftNum != null">
+			quota_left_num = #{quotaLeftNum,jdbcType=INTEGER},
+		</if>
+		<if test="isPublish != null">
+			is_publish = #{isPublish,jdbcType=VARCHAR},
+		</if>
+		<if test="publishDt != null">
+			publish_dt = #{publishDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR},
+		</if>
+		<if test="column25 != null">
+			column_25 = #{column25,jdbcType=CHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_real_game
+	<set>
+		<if test="item.title != null">
+			title = #{item.title,jdbcType=VARCHAR},
+		</if>
+		<if test="item.shareCardImg != null">
+			share_card_img = #{item.shareCardImg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.cover != null">
+			cover = #{item.cover,jdbcType=VARCHAR},
+		</if>
+		<if test="item.tags != null">
+			tags = #{item.tags,jdbcType=VARCHAR},
+		</if>
+		<if test="item.city != null">
+			city = #{item.city,jdbcType=VARCHAR},
+		</if>
+		<if test="item.durationDay != null">
+			duration_day = #{item.durationDay,jdbcType=INTEGER},
+		</if>
+		<if test="item.deadDt != null">
+			dead_dt = #{item.deadDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.startDt != null">
+			start_dt = #{item.startDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.endDt != null">
+			end_dt = #{item.endDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.detail != null">
+			detail = #{item.detail,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.bannerImg != null">
+			banner_img = #{item.bannerImg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.leaderUids != null">
+			leader_uids = #{item.leaderUids,jdbcType=VARCHAR},
+		</if>
+		<if test="item.managerWeixinNum != null">
+			manager_weixin_num = #{item.managerWeixinNum,jdbcType=VARCHAR},
+		</if>
+		<if test="item.infoShoppingNotice != null">
+			info_shopping_notice = #{item.infoShoppingNotice,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.quotaNum != null">
+			quota_num = #{item.quotaNum,jdbcType=INTEGER},
+		</if>
+		<if test="item.quotaLeftNum != null">
+			quota_left_num = #{item.quotaLeftNum,jdbcType=INTEGER},
+		</if>
+		<if test="item.isPublish != null">
+			is_publish = #{item.isPublish,jdbcType=VARCHAR},
+		</if>
+		<if test="item.publishDt != null">
+			publish_dt = #{item.publishDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.sortt != null">
+			sortt = #{item.sortt,jdbcType=INTEGER},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR},
+		</if>
+		<if test="item.column25 != null">
+			column_25 = #{item.column25,jdbcType=CHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_real_game
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_real_game
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="shareCardImg != null">
+			 AND share_card_img = #{shareCardImg,jdbcType=VARCHAR}
+		</if>
+		<if test="cover != null">
+			 AND cover = #{cover,jdbcType=VARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="city != null">
+			 AND city = #{city,jdbcType=VARCHAR}
+		</if>
+		<if test="durationDay != null">
+			 AND duration_day = #{durationDay,jdbcType=INTEGER}
+		</if>
+		<if test="deadDt != null">
+			 AND dead_dt = #{deadDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="startDt != null">
+			 AND start_dt = #{startDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="endDt != null">
+			 AND end_dt = #{endDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="detail != null">
+			 AND detail = #{detail,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="bannerImg != null">
+			 AND banner_img = #{bannerImg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="leaderUids != null">
+			 AND leader_uids = #{leaderUids,jdbcType=VARCHAR}
+		</if>
+		<if test="managerWeixinNum != null">
+			 AND manager_weixin_num = #{managerWeixinNum,jdbcType=VARCHAR}
+		</if>
+		<if test="infoShoppingNotice != null">
+			 AND info_shopping_notice = #{infoShoppingNotice,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="quotaNum != null">
+			 AND quota_num = #{quotaNum,jdbcType=INTEGER}
+		</if>
+		<if test="quotaLeftNum != null">
+			 AND quota_left_num = #{quotaLeftNum,jdbcType=INTEGER}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="publishDt != null">
+			 AND publish_dt = #{publishDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+		<if test="column25 != null">
+			 AND column_25 = #{column25,jdbcType=CHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="RealGame_Result">
+	SELECT 
+		sid,	title,	share_card_img,	cover,	tags,	city,	duration_day,	dead_dt,	start_dt,	end_dt,	detail,	banner_img,	leader_uids,	manager_weixin_num,	info_shopping_notice,	quota_num,	quota_left_num,	is_publish,	publish_dt,	sortt,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn,	column_25
+	FROM 	tb_real_game
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_real_game
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.ForumSubjectRUser">
+	
+<resultMap id="ForumSubjectRUser_Result"  type="com.loveart.post.entity.ForumSubjectRUser">
+	<result property="sid" column="sid" jdbcType="INTEGER"/>
+	<result property="loginId" column="login_id" jdbcType="VARCHAR"/>
+	<result property="subjectSid" column="subject_sid" jdbcType="INTEGER"/>
+	<result property="userType" column="user_type" jdbcType="INTEGER"/>
+	<result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=INTEGER}
+		</if>
+		<if test="loginId != null">
+			 AND login_id = #{loginId,jdbcType=VARCHAR}
+		</if>
+		<if test="subjectSid != null">
+			 AND subject_sid = #{subjectSid,jdbcType=INTEGER}
+		</if>
+		<if test="userType != null">
+			 AND user_type = #{userType,jdbcType=INTEGER}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.ForumSubjectRUser">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_forum_subject_r_user (
+			sid,
+			login_id,		subject_sid,		user_type,		create_by,		create_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=INTEGER},	#{loginId,jdbcType=VARCHAR},	#{subjectSid,jdbcType=INTEGER},	#{userType,jdbcType=INTEGER},	#{createBy,jdbcType=VARCHAR},	#{createDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.ForumSubjectRUser">
+UPDATE
+	tb_forum_subject_r_user
+	<set>
+		<if test="loginId != null">
+			login_id = #{loginId,jdbcType=VARCHAR},
+		</if>
+		<if test="subjectSid != null">
+			subject_sid = #{subjectSid,jdbcType=INTEGER},
+		</if>
+		<if test="userType != null">
+			user_type = #{userType,jdbcType=INTEGER},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=VARCHAR},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_forum_subject_r_user
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_forum_subject_r_user
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=INTEGER}
+		</if>
+		<if test="loginId != null">
+			 AND login_id = #{loginId,jdbcType=VARCHAR}
+		</if>
+		<if test="subjectSid != null">
+			 AND subject_sid = #{subjectSid,jdbcType=INTEGER}
+		</if>
+		<if test="userType != null">
+			 AND user_type = #{userType,jdbcType=INTEGER}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="ForumSubjectRUser_Result">
+	SELECT 
+		sid,	login_id,	subject_sid,	user_type,	create_by,	create_dt,	versionn
+	FROM 	tb_forum_subject_r_user
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

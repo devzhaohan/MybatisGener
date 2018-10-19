@@ -1,0 +1,72 @@
+<project name="GenCommonBuildCode" basedir="D:\workspace\GenCommonBuildCode" default="build">
+
+	<property file="${basedir}\build.properties"/>
+	
+	<property name="project.name" value="GenCommonBuildCode" />
+	<property name="src.dir" value="${basedir}\src" />
+	<property name="bin.dir" value="${basedir}\bin" />
+	<property name="lib.dir" value="${basedir}\lib" />
+	<property name="genTarget.package" value="${genTarget.package}" />
+
+	<path id="master-classpath">
+		<pathelement path="${bin.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<target name="logo" description="display the logo">
+		<splash imageurl="file:${src.dir}com/build/logo.gif" showduration="0" />
+	</target>
+
+	<taskdef name="dataAccessBuilder" classname="com.build.tasks.DataAccessBuilderTask">
+   <classpath refid="master-classpath" />
+	</taskdef>
+	<taskdef name="build" classname="com.build.tasks.BuildTask">
+		<classpath refid="master-classpath" />
+	</taskdef>
+	<taskdef name="param" classname="com.build.tasks.ParamTask">
+		<classpath refid="master-classpath" />
+	</taskdef>
+
+	<target name="build" depends="logo">
+		<dataAccessBuilder basedir="${src.dir}" entity="${entity.package}" pattern="${entity.pattern}">
+			<build className="com.build.util.DaoBuilder">
+				<param name="overwrite" value="${overwrite}" />
+				<!-- JDBC -->
+				<param name="dbDriverClassName" value="${dbDriverClassName}"/>
+				<param name="dbUrl" value="${dbUrl}"/>
+				<param name="dbUsername" value="${dbUsername}"/>
+				<param name="dbPassword" value="${dbPassword}"/>
+				<!-- DAO -->
+				<param name="basedao" value="${baseDao}" />
+				<param name="buildRoot" value="${buildRoot}" />
+				<param name="buildBase" value="${buildBase}" />
+				<param name="bulidDaoImpl" value="${bulidDaoImpl}"/>
+				<param name="basePackage" value="${genTarget.package}.dao.ibatis" />
+				<param name="daoPackage" value="${genTarget.package}.dao" />
+				
+				<!-- SERVICE -->
+				<param name="buildService" value="${buildService}" />
+				<param name="servicePackage" value="${genTarget.package}.service${service.package.ext}" />
+           		<param name="buildServiceTest" value="${buildServiceTest}"/>
+				<!-- Action -->
+				<param name="buildAction" value="${buildAction}" />
+				<param name="actionName" value="${actionName}" />
+				<param name="actionPackage" value="${genTarget.package}.web" />
+				<param name="entity.package" value="${entity.package}" />
+				<!--jsp -->
+				<param name="bulidJSP" value="${bulidJSP}" />
+				<param name="bulidStruts" value="${bulidStruts}" />
+				<param name="colCount" value="${colCount}"/>
+				<!-- flex ui-->
+				<param name="flexUiPath" value="${entity.flexUiPath}" />
+				<param name="buildMxml" value="${buildMxml}" />
+				<param name="buildMediator" value="${buildMediator}" />
+				<param name="flexBeanPackage" value="${entity.flexPath}" />
+				<param name="flexMainPackage" value="${entity.flexMainPath}" />
+			</build>
+			</dataAccessBuilder>
+		</target>
+
+	</project>

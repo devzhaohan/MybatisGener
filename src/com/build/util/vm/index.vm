@@ -1,0 +1,45 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="q" uri="/query-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<sx:head />
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title></title>
+<link href="${pageContext.request.contextPath}/styles/general.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/styles/main.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/transport.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/prototype.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/pageset.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/checkboxjs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/postSubimt.js"></script>
+</head>
+<s:if test="#request.method=='delete'">
+<script type="text/javascript">
+	setPage("1","${model.entityFirstName}ResultsDiv");
+</script>
+</s:if>
+<h1>
+	<span class="action-span"><a href="input.action">添加</a></span>
+	<span><a href="${pageContext.request.contextPath}">主页</a>  - 列表 </span>
+</h1>
+<!-- 菜单搜索 -->
+<div class="form-div">
+  <form action="findByPage.action" name="searchForm" id="searchForm" method="post">
+    <img src="${pageContext.request.contextPath}/images/icon_search.gif" alt="SEARCH" border="0" width="26" height="22">
+        <!-- 一级菜单 -->
+    <!-- 关键字 -->
+    	关键字(用户名) <input class="text" name="qm.likename" size="15" type="text">
+    <input value=" 搜索 " class="button" type="button" onclick="postSearchForm('searchForm','${model.entityFirstName}ResultsDiv');">
+  </form>
+</div>
+<s:url id="listUrl" action="findByPage" />
+<sx:div id="${model.entityFirstName}ResultsDiv" theme="ajax" cssClass="resultsDiv" 
+	href="%{listUrl}" executeScripts="true" />
+ 
+<s:url id="deleteUrlId" action="delete" />
+<input type="button" class="button"
+	onclick="if(!atleaseOneCheck('_sid')){alert('至少需要选择一项!');return false;};if(confirm('您确定要删除吗?')){
+	postDeleteForm('<s:property value="#deleteUrlId"/>','listForm','${model.entityFirstName}ResultsDiv')}"
+	value='删除所选'/>

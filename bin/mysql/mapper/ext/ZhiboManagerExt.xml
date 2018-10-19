@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.ZhiboManager">
+	
+<resultMap id="ZhiboManager_Result"  type="com.loveart.post.entity.ZhiboManager">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="zhiboId" column="zhibo_id" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="role" column="role" jdbcType="VARCHAR"/>
+	<result property="onMic" column="on_mic" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="zhiboId != null">
+			 AND zhibo_id = #{zhiboId,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="role != null">
+			 AND role = #{role,jdbcType=VARCHAR}
+		</if>
+		<if test="onMic != null">
+			 AND on_mic = #{onMic,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.ZhiboManager">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_zhibo_manager (
+			sid,
+			zhibo_id,		uid,		role,		on_mic,		del_flag,
+			create_dt,		update_dt,		update_by,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{zhiboId,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{role,jdbcType=VARCHAR},	#{onMic,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createDt,jdbcType=TIMESTAMP},	#{updateDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.ZhiboManager">
+UPDATE
+	tb_zhibo_manager
+	<set>
+		<if test="zhiboId != null">
+			zhibo_id = #{zhiboId,jdbcType=BIGINT},
+		</if>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="role != null">
+			role = #{role,jdbcType=VARCHAR},
+		</if>
+		<if test="onMic != null">
+			on_mic = #{onMic,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_zhibo_manager
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_zhibo_manager
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="zhiboId != null">
+			 AND zhibo_id = #{zhiboId,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="role != null">
+			 AND role = #{role,jdbcType=VARCHAR}
+		</if>
+		<if test="onMic != null">
+			 AND on_mic = #{onMic,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="ZhiboManager_Result">
+	SELECT 
+		sid,	zhibo_id,	uid,	role,	on_mic,	del_flag,	create_dt,	update_dt,	update_by,	versionn
+	FROM 	tb_zhibo_manager
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

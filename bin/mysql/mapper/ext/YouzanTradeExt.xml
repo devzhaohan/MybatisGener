@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.YouzanTrade">
+	
+<resultMap id="YouzanTrade_Result"  type="com.loveart.post.entity.YouzanTrade">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="tid" column="tid" jdbcType="VARCHAR"/>
+	<result property="tradeType" column="trade_type" jdbcType="VARCHAR"/>
+	<result property="kdtId" column="kdt_id" jdbcType="VARCHAR"/>
+	<result property="kdtName" column="kdt_name" jdbcType="VARCHAR"/>
+	<result property="status" column="status" jdbcType="VARCHAR"/>
+	<result property="msg" column="msg" jdbcType="LONGVARCHAR"/>
+	<result property="orderTitle" column="order_title" jdbcType="VARCHAR"/>
+	<result property="isProductHandled" column="is_product_handled" jdbcType="VARCHAR"/>
+	<result property="productNo" column="product_no" jdbcType="VARCHAR"/>
+	<result property="productType" column="product_type" jdbcType="VARCHAR"/>
+	<result property="productTargetId" column="product_target_id" jdbcType="BIGINT"/>
+	<result property="buyerUnionId" column="buyer_union_id" jdbcType="VARCHAR"/>
+	<result property="buyerFansId" column="buyer_fans_id" jdbcType="BIGINT"/>
+	<result property="buyerBuyerId" column="buyer_buyer_id" jdbcType="BIGINT"/>
+	<result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="tid != null">
+			 AND tid = #{tid,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeType != null">
+			 AND trade_type = #{tradeType,jdbcType=VARCHAR}
+		</if>
+		<if test="kdtId != null">
+			 AND kdt_id = #{kdtId,jdbcType=VARCHAR}
+		</if>
+		<if test="kdtName != null">
+			 AND kdt_name = #{kdtName,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			 AND status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="msg != null">
+			 AND msg = #{msg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="orderTitle != null">
+			 AND order_title = #{orderTitle,jdbcType=VARCHAR}
+		</if>
+		<if test="isProductHandled != null">
+			 AND is_product_handled = #{isProductHandled,jdbcType=VARCHAR}
+		</if>
+		<if test="productNo != null">
+			 AND product_no = #{productNo,jdbcType=VARCHAR}
+		</if>
+		<if test="productType != null">
+			 AND product_type = #{productType,jdbcType=VARCHAR}
+		</if>
+		<if test="productTargetId != null">
+			 AND product_target_id = #{productTargetId,jdbcType=BIGINT}
+		</if>
+		<if test="buyerUnionId != null">
+			 AND buyer_union_id = #{buyerUnionId,jdbcType=VARCHAR}
+		</if>
+		<if test="buyerFansId != null">
+			 AND buyer_fans_id = #{buyerFansId,jdbcType=BIGINT}
+		</if>
+		<if test="buyerBuyerId != null">
+			 AND buyer_buyer_id = #{buyerBuyerId,jdbcType=BIGINT}
+		</if>
+		<if test="mobile != null">
+			 AND mobile = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.YouzanTrade">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_youzan_trade (
+			sid,
+			tid,		trade_type,		kdt_id,		kdt_name,		status,
+			msg,		order_title,		is_product_handled,		product_no,		product_type,
+			product_target_id,		buyer_union_id,		buyer_fans_id,		buyer_buyer_id,		mobile,
+			remark,		del_flag,		split_db_key,		create_by,		create_dt,
+			update_by,		update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{tid,jdbcType=VARCHAR},	#{tradeType,jdbcType=VARCHAR},	#{kdtId,jdbcType=VARCHAR},	#{kdtName,jdbcType=VARCHAR},	#{status,jdbcType=VARCHAR},	#{msg,jdbcType=LONGVARCHAR},	#{orderTitle,jdbcType=VARCHAR},	#{isProductHandled,jdbcType=VARCHAR},	#{productNo,jdbcType=VARCHAR},	#{productType,jdbcType=VARCHAR},	#{productTargetId,jdbcType=BIGINT},	#{buyerUnionId,jdbcType=VARCHAR},	#{buyerFansId,jdbcType=BIGINT},	#{buyerBuyerId,jdbcType=BIGINT},	#{mobile,jdbcType=VARCHAR},	#{remark,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.YouzanTrade">
+UPDATE
+	tb_youzan_trade
+	<set>
+		<if test="tid != null">
+			tid = #{tid,jdbcType=VARCHAR},
+		</if>
+		<if test="tradeType != null">
+			trade_type = #{tradeType,jdbcType=VARCHAR},
+		</if>
+		<if test="kdtId != null">
+			kdt_id = #{kdtId,jdbcType=VARCHAR},
+		</if>
+		<if test="kdtName != null">
+			kdt_name = #{kdtName,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null">
+			status = #{status,jdbcType=VARCHAR},
+		</if>
+		<if test="msg != null">
+			msg = #{msg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="orderTitle != null">
+			order_title = #{orderTitle,jdbcType=VARCHAR},
+		</if>
+		<if test="isProductHandled != null">
+			is_product_handled = #{isProductHandled,jdbcType=VARCHAR},
+		</if>
+		<if test="productNo != null">
+			product_no = #{productNo,jdbcType=VARCHAR},
+		</if>
+		<if test="productType != null">
+			product_type = #{productType,jdbcType=VARCHAR},
+		</if>
+		<if test="productTargetId != null">
+			product_target_id = #{productTargetId,jdbcType=BIGINT},
+		</if>
+		<if test="buyerUnionId != null">
+			buyer_union_id = #{buyerUnionId,jdbcType=VARCHAR},
+		</if>
+		<if test="buyerFansId != null">
+			buyer_fans_id = #{buyerFansId,jdbcType=BIGINT},
+		</if>
+		<if test="buyerBuyerId != null">
+			buyer_buyer_id = #{buyerBuyerId,jdbcType=BIGINT},
+		</if>
+		<if test="mobile != null">
+			mobile = #{mobile,jdbcType=VARCHAR},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_youzan_trade
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_youzan_trade
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="tid != null">
+			 AND tid = #{tid,jdbcType=VARCHAR}
+		</if>
+		<if test="tradeType != null">
+			 AND trade_type = #{tradeType,jdbcType=VARCHAR}
+		</if>
+		<if test="kdtId != null">
+			 AND kdt_id = #{kdtId,jdbcType=VARCHAR}
+		</if>
+		<if test="kdtName != null">
+			 AND kdt_name = #{kdtName,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			 AND status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="msg != null">
+			 AND msg = #{msg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="orderTitle != null">
+			 AND order_title = #{orderTitle,jdbcType=VARCHAR}
+		</if>
+		<if test="isProductHandled != null">
+			 AND is_product_handled = #{isProductHandled,jdbcType=VARCHAR}
+		</if>
+		<if test="productNo != null">
+			 AND product_no = #{productNo,jdbcType=VARCHAR}
+		</if>
+		<if test="productType != null">
+			 AND product_type = #{productType,jdbcType=VARCHAR}
+		</if>
+		<if test="productTargetId != null">
+			 AND product_target_id = #{productTargetId,jdbcType=BIGINT}
+		</if>
+		<if test="buyerUnionId != null">
+			 AND buyer_union_id = #{buyerUnionId,jdbcType=VARCHAR}
+		</if>
+		<if test="buyerFansId != null">
+			 AND buyer_fans_id = #{buyerFansId,jdbcType=BIGINT}
+		</if>
+		<if test="buyerBuyerId != null">
+			 AND buyer_buyer_id = #{buyerBuyerId,jdbcType=BIGINT}
+		</if>
+		<if test="mobile != null">
+			 AND mobile = #{mobile,jdbcType=VARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="YouzanTrade_Result">
+	SELECT 
+		sid,	tid,	trade_type,	kdt_id,	kdt_name,	status,	msg,	order_title,	is_product_handled,	product_no,	product_type,	product_target_id,	buyer_union_id,	buyer_fans_id,	buyer_buyer_id,	mobile,	remark,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_youzan_trade
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

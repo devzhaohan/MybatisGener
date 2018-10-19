@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.EvFriendUnlockLpReach">
+	
+<resultMap id="EvFriendUnlockLpReach_Result"  type="com.loveart.post.entity.EvFriendUnlockLpReach">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="shareSerialNo" column="share_serial_no" jdbcType="VARCHAR"/>
+	<result property="shareUid" column="share_uid" jdbcType="BIGINT"/>
+	<result property="reachUid" column="reach_uid" jdbcType="BIGINT"/>
+	<result property="objId" column="obj_id" jdbcType="BIGINT"/>
+	<result property="isHelped" column="is_helped" jdbcType="VARCHAR"/>
+	<result property="clickMainBtn" column="click_main_btn" jdbcType="VARCHAR"/>
+	<result property="clickHungAroung" column="click_hung_aroung" jdbcType="VARCHAR"/>
+	<result property="readRules" column="read_rules" jdbcType="VARCHAR"/>
+	<result property="reachTime" column="reach_time" jdbcType="TIMESTAMP"/>
+	<result property="dId" column="d_id" jdbcType="VARCHAR"/>
+	<result property="leaveTime" column="leave_time" jdbcType="TIMESTAMP"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="shareSerialNo != null">
+			 AND share_serial_no = #{shareSerialNo,jdbcType=VARCHAR}
+		</if>
+		<if test="shareUid != null">
+			 AND share_uid = #{shareUid,jdbcType=BIGINT}
+		</if>
+		<if test="reachUid != null">
+			 AND reach_uid = #{reachUid,jdbcType=BIGINT}
+		</if>
+		<if test="objId != null">
+			 AND obj_id = #{objId,jdbcType=BIGINT}
+		</if>
+		<if test="isHelped != null">
+			 AND is_helped = #{isHelped,jdbcType=VARCHAR}
+		</if>
+		<if test="clickMainBtn != null">
+			 AND click_main_btn = #{clickMainBtn,jdbcType=VARCHAR}
+		</if>
+		<if test="clickHungAroung != null">
+			 AND click_hung_aroung = #{clickHungAroung,jdbcType=VARCHAR}
+		</if>
+		<if test="readRules != null">
+			 AND read_rules = #{readRules,jdbcType=VARCHAR}
+		</if>
+		<if test="reachTime != null">
+			 AND reach_time = #{reachTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="dId != null">
+			 AND d_id = #{dId,jdbcType=VARCHAR}
+		</if>
+		<if test="leaveTime != null">
+			 AND leave_time = #{leaveTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.EvFriendUnlockLpReach">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_ev_friend_unlock_lp_reach (
+			sid,
+			share_serial_no,		share_uid,		reach_uid,		obj_id,		is_helped,
+			click_main_btn,		click_hung_aroung,		read_rules,		reach_time,		d_id,
+			leave_time,		del_flag,		create_by,		create_dt,		update_by,
+			update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{shareSerialNo,jdbcType=VARCHAR},	#{shareUid,jdbcType=BIGINT},	#{reachUid,jdbcType=BIGINT},	#{objId,jdbcType=BIGINT},	#{isHelped,jdbcType=VARCHAR},	#{clickMainBtn,jdbcType=VARCHAR},	#{clickHungAroung,jdbcType=VARCHAR},	#{readRules,jdbcType=VARCHAR},	#{reachTime,jdbcType=TIMESTAMP},	#{dId,jdbcType=VARCHAR},	#{leaveTime,jdbcType=TIMESTAMP},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.EvFriendUnlockLpReach">
+UPDATE
+	tb_ev_friend_unlock_lp_reach
+	<set>
+		<if test="shareSerialNo != null">
+			share_serial_no = #{shareSerialNo,jdbcType=VARCHAR},
+		</if>
+		<if test="shareUid != null">
+			share_uid = #{shareUid,jdbcType=BIGINT},
+		</if>
+		<if test="reachUid != null">
+			reach_uid = #{reachUid,jdbcType=BIGINT},
+		</if>
+		<if test="objId != null">
+			obj_id = #{objId,jdbcType=BIGINT},
+		</if>
+		<if test="isHelped != null">
+			is_helped = #{isHelped,jdbcType=VARCHAR},
+		</if>
+		<if test="clickMainBtn != null">
+			click_main_btn = #{clickMainBtn,jdbcType=VARCHAR},
+		</if>
+		<if test="clickHungAroung != null">
+			click_hung_aroung = #{clickHungAroung,jdbcType=VARCHAR},
+		</if>
+		<if test="readRules != null">
+			read_rules = #{readRules,jdbcType=VARCHAR},
+		</if>
+		<if test="reachTime != null">
+			reach_time = #{reachTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="dId != null">
+			d_id = #{dId,jdbcType=VARCHAR},
+		</if>
+		<if test="leaveTime != null">
+			leave_time = #{leaveTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_ev_friend_unlock_lp_reach
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_ev_friend_unlock_lp_reach
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="shareSerialNo != null">
+			 AND share_serial_no = #{shareSerialNo,jdbcType=VARCHAR}
+		</if>
+		<if test="shareUid != null">
+			 AND share_uid = #{shareUid,jdbcType=BIGINT}
+		</if>
+		<if test="reachUid != null">
+			 AND reach_uid = #{reachUid,jdbcType=BIGINT}
+		</if>
+		<if test="objId != null">
+			 AND obj_id = #{objId,jdbcType=BIGINT}
+		</if>
+		<if test="isHelped != null">
+			 AND is_helped = #{isHelped,jdbcType=VARCHAR}
+		</if>
+		<if test="clickMainBtn != null">
+			 AND click_main_btn = #{clickMainBtn,jdbcType=VARCHAR}
+		</if>
+		<if test="clickHungAroung != null">
+			 AND click_hung_aroung = #{clickHungAroung,jdbcType=VARCHAR}
+		</if>
+		<if test="readRules != null">
+			 AND read_rules = #{readRules,jdbcType=VARCHAR}
+		</if>
+		<if test="reachTime != null">
+			 AND reach_time = #{reachTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="dId != null">
+			 AND d_id = #{dId,jdbcType=VARCHAR}
+		</if>
+		<if test="leaveTime != null">
+			 AND leave_time = #{leaveTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="EvFriendUnlockLpReach_Result">
+	SELECT 
+		sid,	share_serial_no,	share_uid,	reach_uid,	obj_id,	is_helped,	click_main_btn,	click_hung_aroung,	read_rules,	reach_time,	d_id,	leave_time,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_ev_friend_unlock_lp_reach
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

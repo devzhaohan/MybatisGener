@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.Group">
+	
+<resultMap id="Group_Result"  type="com.loveart.post.entity.Group">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="appMetaName" column="app_meta_name" jdbcType="VARCHAR"/>
+	<result property="openGId" column="open_g_id" jdbcType="VARCHAR"/>
+	<result property="isOffical" column="is_offical" jdbcType="VARCHAR"/>
+	<result property="hasCulling" column="has_culling" jdbcType="VARCHAR"/>
+	<result property="cullingShareImg" column="culling_share_img" jdbcType="VARCHAR"/>
+	<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+	<result property="description" column="description" jdbcType="VARCHAR"/>
+	<result property="memberCount" column="member_count" jdbcType="INTEGER"/>
+	<result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+	<result property="cullingCount" column="culling_count" jdbcType="INTEGER"/>
+	<result property="groupRulers" column="group_rulers" jdbcType="LONGTEXT"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="accusations" column="accusations" jdbcType="INTEGER"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="appMetaName != null">
+			 AND app_meta_name = #{appMetaName,jdbcType=VARCHAR}
+		</if>
+		<if test="openGId != null">
+			 AND open_g_id = #{openGId,jdbcType=VARCHAR}
+		</if>
+		<if test="isOffical != null">
+			 AND is_offical = #{isOffical,jdbcType=VARCHAR}
+		</if>
+		<if test="hasCulling != null">
+			 AND has_culling = #{hasCulling,jdbcType=VARCHAR}
+		</if>
+		<if test="cullingShareImg != null">
+			 AND culling_share_img = #{cullingShareImg,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+			 AND create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="description != null">
+			 AND description = #{description,jdbcType=VARCHAR}
+		</if>
+		<if test="memberCount != null">
+			 AND member_count = #{memberCount,jdbcType=INTEGER}
+		</if>
+		<if test="groupName != null">
+			 AND group_name = #{groupName,jdbcType=VARCHAR}
+		</if>
+		<if test="cullingCount != null">
+			 AND culling_count = #{cullingCount,jdbcType=INTEGER}
+		</if>
+		<if test="groupRulers != null">
+			 AND group_rulers = #{groupRulers,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="accusations != null">
+			 AND accusations = #{accusations,jdbcType=INTEGER}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Group">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_group (
+			sid,
+			app_meta_name,		open_g_id,		is_offical,		has_culling,		culling_share_img,
+			create_time,		description,		member_count,		group_name,		culling_count,
+			group_rulers,		remark,		accusations,		sortt,		del_flag,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{appMetaName,jdbcType=VARCHAR},	#{openGId,jdbcType=VARCHAR},	#{isOffical,jdbcType=VARCHAR},	#{hasCulling,jdbcType=VARCHAR},	#{cullingShareImg,jdbcType=VARCHAR},	#{createTime,jdbcType=TIMESTAMP},	#{description,jdbcType=VARCHAR},	#{memberCount,jdbcType=INTEGER},	#{groupName,jdbcType=VARCHAR},	#{cullingCount,jdbcType=INTEGER},	#{groupRulers,jdbcType=LONGVARCHAR},	#{remark,jdbcType=VARCHAR},	#{accusations,jdbcType=INTEGER},	#{sortt,jdbcType=INTEGER},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_group (
+			sid,
+			app_meta_name,		open_g_id,		is_offical,		has_culling,		culling_share_img,
+			create_time,		description,		member_count,		group_name,		culling_count,
+			group_rulers,		remark,		accusations,		sortt,		del_flag,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.appMetaName,jdbcType=VARCHAR},	#{item.openGId,jdbcType=VARCHAR},	#{item.isOffical,jdbcType=VARCHAR},	#{item.hasCulling,jdbcType=VARCHAR},	#{item.cullingShareImg,jdbcType=VARCHAR},	#{item.createTime,jdbcType=TIMESTAMP},	#{item.description,jdbcType=VARCHAR},	#{item.memberCount,jdbcType=INTEGER},	#{item.groupName,jdbcType=VARCHAR},	#{item.cullingCount,jdbcType=INTEGER},	#{item.groupRulers,jdbcType=LONGVARCHAR},	#{item.remark,jdbcType=VARCHAR},	#{item.accusations,jdbcType=INTEGER},	#{item.sortt,jdbcType=INTEGER},	#{item.delFlag,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Group">
+UPDATE
+	tb_group
+	<set>
+		<if test="appMetaName != null">
+			app_meta_name = #{appMetaName,jdbcType=VARCHAR},
+		</if>
+		<if test="openGId != null">
+			open_g_id = #{openGId,jdbcType=VARCHAR},
+		</if>
+		<if test="isOffical != null">
+			is_offical = #{isOffical,jdbcType=VARCHAR},
+		</if>
+		<if test="hasCulling != null">
+			has_culling = #{hasCulling,jdbcType=VARCHAR},
+		</if>
+		<if test="cullingShareImg != null">
+			culling_share_img = #{cullingShareImg,jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null">
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="description != null">
+			description = #{description,jdbcType=VARCHAR},
+		</if>
+		<if test="memberCount != null">
+			member_count = #{memberCount,jdbcType=INTEGER},
+		</if>
+		<if test="groupName != null">
+			group_name = #{groupName,jdbcType=VARCHAR},
+		</if>
+		<if test="cullingCount != null">
+			culling_count = #{cullingCount,jdbcType=INTEGER},
+		</if>
+		<if test="groupRulers != null">
+			group_rulers = #{groupRulers,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="accusations != null">
+			accusations = #{accusations,jdbcType=INTEGER},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_group
+	<set>
+		<if test="item.appMetaName != null">
+			app_meta_name = #{item.appMetaName,jdbcType=VARCHAR},
+		</if>
+		<if test="item.openGId != null">
+			open_g_id = #{item.openGId,jdbcType=VARCHAR},
+		</if>
+		<if test="item.isOffical != null">
+			is_offical = #{item.isOffical,jdbcType=VARCHAR},
+		</if>
+		<if test="item.hasCulling != null">
+			has_culling = #{item.hasCulling,jdbcType=VARCHAR},
+		</if>
+		<if test="item.cullingShareImg != null">
+			culling_share_img = #{item.cullingShareImg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createTime != null">
+			create_time = #{item.createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.description != null">
+			description = #{item.description,jdbcType=VARCHAR},
+		</if>
+		<if test="item.memberCount != null">
+			member_count = #{item.memberCount,jdbcType=INTEGER},
+		</if>
+		<if test="item.groupName != null">
+			group_name = #{item.groupName,jdbcType=VARCHAR},
+		</if>
+		<if test="item.cullingCount != null">
+			culling_count = #{item.cullingCount,jdbcType=INTEGER},
+		</if>
+		<if test="item.groupRulers != null">
+			group_rulers = #{item.groupRulers,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.remark != null">
+			remark = #{item.remark,jdbcType=VARCHAR},
+		</if>
+		<if test="item.accusations != null">
+			accusations = #{item.accusations,jdbcType=INTEGER},
+		</if>
+		<if test="item.sortt != null">
+			sortt = #{item.sortt,jdbcType=INTEGER},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_group
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_group
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="appMetaName != null">
+			 AND app_meta_name = #{appMetaName,jdbcType=VARCHAR}
+		</if>
+		<if test="openGId != null">
+			 AND open_g_id = #{openGId,jdbcType=VARCHAR}
+		</if>
+		<if test="isOffical != null">
+			 AND is_offical = #{isOffical,jdbcType=VARCHAR}
+		</if>
+		<if test="hasCulling != null">
+			 AND has_culling = #{hasCulling,jdbcType=VARCHAR}
+		</if>
+		<if test="cullingShareImg != null">
+			 AND culling_share_img = #{cullingShareImg,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+			 AND create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="description != null">
+			 AND description = #{description,jdbcType=VARCHAR}
+		</if>
+		<if test="memberCount != null">
+			 AND member_count = #{memberCount,jdbcType=INTEGER}
+		</if>
+		<if test="groupName != null">
+			 AND group_name = #{groupName,jdbcType=VARCHAR}
+		</if>
+		<if test="cullingCount != null">
+			 AND culling_count = #{cullingCount,jdbcType=INTEGER}
+		</if>
+		<if test="groupRulers != null">
+			 AND group_rulers = #{groupRulers,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="accusations != null">
+			 AND accusations = #{accusations,jdbcType=INTEGER}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Group_Result">
+	SELECT 
+		sid,	app_meta_name,	open_g_id,	is_offical,	has_culling,	culling_share_img,	create_time,	description,	member_count,	group_name,	culling_count,	group_rulers,	remark,	accusations,	sortt,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_group
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_group
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

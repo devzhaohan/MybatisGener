@@ -1,0 +1,17 @@
+package ${model.actionPackage};
+import common.base.web.BaseGenAction;
+import ${model.entity}.${model.entityName};
+
+import ${model.servicePackage}.${model.entityName}Service;
+
+@SuppressWarnings("serial")
+public class ${model.entityName}Action extends BaseGenAction<${model.entityName}> {
+	private I${model.entityName}Service ${model.entityFirstName}Service;
+
+	public I${model.entityName}Service get${model.entityName}Service() {
+		return ${model.entityFirstName}Service;
+	}
+	public void set${model.entityName}Service(I${model.entityName}Service ${model.entityFirstName}Service) {
+		this.${model.entityFirstName}Service = ${model.entityFirstName}Service;
+	}
+}

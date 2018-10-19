@@ -1,0 +1,66 @@
+package ${model.flexMainPackage}.${model.entityLowCase}.view
+{
+	import base.mvc.BaseConst;
+	import base.mvc.BaseCtrlMediator;
+	import base.util.PopUpManagerUtil;
+	
+	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
+	
+	import ${model.flexMainPackage}.${model.entityLowCase}.${model.entityName}Main;
+	
+	import mx.controls.Alert;
+	import mx.core.IFlexDisplayObject;
+	import mx.events.CloseEvent;
+	import mx.events.FlexEvent;
+	import mx.events.ModuleEvent;
+	import mx.managers.PopUpManager;
+	import mx.states.OverrideBase;
+	
+	public class ${model.entityName}CtrlMediator extends BaseCtrlMediator
+	{
+		public static const NAME:String="${model.flexMainPackage}.${model.entityLowCase}.view.${model.entityName}CtrlMediator";
+		
+		public function ${model.entityName}CtrlMediator(index:${model.entityName}Main, name:String=null)
+		{
+			super(index, NAME);
+			this.index = index;
+		}
+		
+		
+		override protected function init():void{
+			index.addEventListener(FlexEvent.CREATION_COMPLETE,initDateHandler);
+			index.insert.addEventListener(MouseEvent.CLICK,insertClickHandler);
+			//index.refresh.addEventListener(MouseEvent.CLICK,refreshClickHandler);
+			index.edit.addEventListener(MouseEvent.CLICK,editClickHandler);
+			index.detail.addEventListener(MouseEvent.CLICK,detailClickHandler);
+			index.link_delete.addEventListener(MouseEvent.CLICK,deleteClickHandler);
+		}
+		
+		private function editClickHandler(event:MouseEvent):void{
+			this.sendNotification(BaseConst.NTF_OP_EXE_BEGIN,index.selectId,"${model.entityFirstName}Service/findByPrimaryKey/edit");	
+		}
+		private function detailClickHandler(event:MouseEvent):void{
+			this.sendNotification(BaseConst.NTF_OP_EXE_BEGIN,index.selectId,"${model.entityFirstName}Service/findByPrimaryKey/detail");	
+		}
+		private function deleteClickHandler(event:MouseEvent):void{
+			this.sendNotification(BaseConst.NTF_OP_EXE_BEGIN,index.selectId,"${model.entityFirstName}Service/deleteByPrimaryKey/delete");	
+		}		
+		private function initDateHandler(event:FlexEvent):void{
+			var params:Array =  new Array();
+			params.push(new Object());
+			params.push(1);
+			params.push(100);
+			this.sendNotification(BaseConst.NTF_OP_EXE_BEGIN,params,"${model.entityFirstName}Service/findByPage/findByPage");	
+		}
+		
+		private function refreshClickHandler(event:MouseEvent):void{
+			this.sendNotification(BaseConst.NTF_OP_EXE_BEGIN,null,"${model.entityFirstName}Service/findAll/findAll");	
+		}
+		
+		private function insertClickHandler(event:MouseEvent):void{
+			this.sendNotification(BaseConst.NTF_OP_EXE_USER_DEFINED);
+		}
+		
+	}
+}

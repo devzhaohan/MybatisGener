@@ -1,0 +1,38 @@
+package ${model.servicePackage}.test;
+
+import common.test.BaseSpringTest;
+import ${model.entity}.${model.entityName};
+import ${model.servicePackage}.${model.entityName}Service;
+
+public class ${model.entityName}ServiceTest extends BaseSpringTest {
+
+	private ${model.entityName}Service ${model.entityFirstName}Service;
+
+	public ${model.entityName}ServiceTest() throws Exception {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public void onSetUp() throws Exception {
+		super.onSetUp();
+		${model.entityFirstName}Service = (${model.entityName}Service)this.findBean("${model.entityFirstName}Service");
+		//获取bean对象
+	}
+	public void prepareData(){
+		this.jdbcTemplate.execute("DELETE FROM 数据表的名称");
+		//this.jdbcTemplate.execute("INSERT INTO TMS_BASE_MAT (" +
+		//		"SID,CREATED_BY,CREATED_DT,VERSION,MAT_ID,MAT_Name) " +
+		//		"VALUES(1000,'test',sysdate,1,'1111','物料1')");	
+		${model.entityName} ${model.entityFirstName} = new ${model.entityName}();
+		${model.entityFirstName}.setSid(1000l);
+	    //根据实际情况添加测试属性；	
+	    ${model.entityFirstName}Service.insert(${model.entityFirstName});
+	}
+	
+	public void testFind(){
+		prepareData();		
+		${model.entityName} ${model.entityFirstName}=${model.entityFirstName}Service.findByPrimaryKey(1000L);	
+		assertEquals(Long.valueOf(1000), ${model.entityFirstName}.getSid());		
+	}
+	
+}

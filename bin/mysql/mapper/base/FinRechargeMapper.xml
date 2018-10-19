@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.FinRecharge">
+	
+<resultMap id="FinRecharge_Result"  type="com.loveart.post.entity.FinRecharge">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="accountId" column="account_id" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="rechargeType" column="recharge_type" jdbcType="VARCHAR"/>
+	<result property="serialNo" column="serial_no" jdbcType="VARCHAR"/>
+	<result property="amount" column="amount" jdbcType="INTEGER"/>
+	<result property="channelConfirmAmount" column="channel_confirm_amount" jdbcType="INTEGER"/>
+	<result property="appId" column="app_id" jdbcType="VARCHAR"/>
+	<result property="rechargePaymentType" column="recharge_payment_type" jdbcType="VARCHAR"/>
+	<result property="payChannel" column="pay_channel" jdbcType="VARCHAR"/>
+	<result property="wxOpenid" column="wx_openid" jdbcType="VARCHAR"/>
+	<result property="wxPrepayId" column="wx_prepay_id" jdbcType="VARCHAR"/>
+	<result property="outTradeNo" column="out_trade_no" jdbcType="VARCHAR"/>
+	<result property="submitRemark" column="submit_remark" jdbcType="VARCHAR"/>
+	<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+	<result property="auditorUid" column="auditor_uid" jdbcType="BIGINT"/>
+	<result property="auditorConfirmTime" column="auditor_confirm_time" jdbcType="TIMESTAMP"/>
+	<result property="auditRemark" column="audit_remark" jdbcType="LONGVARCHAR"/>
+	<result property="userConfirmTime" column="user_confirm_time" jdbcType="TIMESTAMP"/>
+	<result property="channelConfirmTime" column="channel_confirm_time" jdbcType="TIMESTAMP"/>
+	<result property="rechargeParams" column="recharge_params" jdbcType="LONGVARCHAR"/>
+	<result property="state" column="state" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+	<result property="column25" column="column_25" jdbcType="CHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="accountId != null">
+			 AND account_id = #{accountId,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="rechargeType != null">
+			 AND recharge_type = #{rechargeType,jdbcType=VARCHAR}
+		</if>
+		<if test="serialNo != null">
+			 AND serial_no = #{serialNo,jdbcType=VARCHAR}
+		</if>
+		<if test="amount != null">
+			 AND amount = #{amount,jdbcType=INTEGER}
+		</if>
+		<if test="channelConfirmAmount != null">
+			 AND channel_confirm_amount = #{channelConfirmAmount,jdbcType=INTEGER}
+		</if>
+		<if test="appId != null">
+			 AND app_id = #{appId,jdbcType=VARCHAR}
+		</if>
+		<if test="rechargePaymentType != null">
+			 AND recharge_payment_type = #{rechargePaymentType,jdbcType=VARCHAR}
+		</if>
+		<if test="payChannel != null">
+			 AND pay_channel = #{payChannel,jdbcType=VARCHAR}
+		</if>
+		<if test="wxOpenid != null">
+			 AND wx_openid = #{wxOpenid,jdbcType=VARCHAR}
+		</if>
+		<if test="wxPrepayId != null">
+			 AND wx_prepay_id = #{wxPrepayId,jdbcType=VARCHAR}
+		</if>
+		<if test="outTradeNo != null">
+			 AND out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+		</if>
+		<if test="submitRemark != null">
+			 AND submit_remark = #{submitRemark,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+			 AND create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="auditorUid != null">
+			 AND auditor_uid = #{auditorUid,jdbcType=BIGINT}
+		</if>
+		<if test="auditorConfirmTime != null">
+			 AND auditor_confirm_time = #{auditorConfirmTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="auditRemark != null">
+			 AND audit_remark = #{auditRemark,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="userConfirmTime != null">
+			 AND user_confirm_time = #{userConfirmTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="channelConfirmTime != null">
+			 AND channel_confirm_time = #{channelConfirmTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="rechargeParams != null">
+			 AND recharge_params = #{rechargeParams,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="state != null">
+			 AND state = #{state,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+		<if test="column25 != null">
+			 AND column_25 = #{column25,jdbcType=CHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.FinRecharge">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_fin_recharge (
+			sid,
+			account_id,		uid,		recharge_type,		serial_no,		amount,
+			channel_confirm_amount,		app_id,		recharge_payment_type,		pay_channel,		wx_openid,
+			wx_prepay_id,		out_trade_no,		submit_remark,		create_time,		auditor_uid,
+			auditor_confirm_time,		audit_remark,		user_confirm_time,		channel_confirm_time,		recharge_params,
+			state,		del_flag,		split_db_key,		create_by,		create_dt,
+			update_by,		update_dt,		versionn,		column_25)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{accountId,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{rechargeType,jdbcType=VARCHAR},	#{serialNo,jdbcType=VARCHAR},	#{amount,jdbcType=INTEGER},	#{channelConfirmAmount,jdbcType=INTEGER},	#{appId,jdbcType=VARCHAR},	#{rechargePaymentType,jdbcType=VARCHAR},	#{payChannel,jdbcType=VARCHAR},	#{wxOpenid,jdbcType=VARCHAR},	#{wxPrepayId,jdbcType=VARCHAR},	#{outTradeNo,jdbcType=VARCHAR},	#{submitRemark,jdbcType=VARCHAR},	#{createTime,jdbcType=TIMESTAMP},	#{auditorUid,jdbcType=BIGINT},	#{auditorConfirmTime,jdbcType=TIMESTAMP},	#{auditRemark,jdbcType=LONGVARCHAR},	#{userConfirmTime,jdbcType=TIMESTAMP},	#{channelConfirmTime,jdbcType=TIMESTAMP},	#{rechargeParams,jdbcType=LONGVARCHAR},	#{state,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR},	#{column25,jdbcType=CHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_fin_recharge (
+			sid,
+			account_id,		uid,		recharge_type,		serial_no,		amount,
+			channel_confirm_amount,		app_id,		recharge_payment_type,		pay_channel,		wx_openid,
+			wx_prepay_id,		out_trade_no,		submit_remark,		create_time,		auditor_uid,
+			auditor_confirm_time,		audit_remark,		user_confirm_time,		channel_confirm_time,		recharge_params,
+			state,		del_flag,		split_db_key,		create_by,		create_dt,
+			update_by,		update_dt,		versionn,		column_25)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.accountId,jdbcType=BIGINT},	#{item.uid,jdbcType=BIGINT},	#{item.rechargeType,jdbcType=VARCHAR},	#{item.serialNo,jdbcType=VARCHAR},	#{item.amount,jdbcType=INTEGER},	#{item.channelConfirmAmount,jdbcType=INTEGER},	#{item.appId,jdbcType=VARCHAR},	#{item.rechargePaymentType,jdbcType=VARCHAR},	#{item.payChannel,jdbcType=VARCHAR},	#{item.wxOpenid,jdbcType=VARCHAR},	#{item.wxPrepayId,jdbcType=VARCHAR},	#{item.outTradeNo,jdbcType=VARCHAR},	#{item.submitRemark,jdbcType=VARCHAR},	#{item.createTime,jdbcType=TIMESTAMP},	#{item.auditorUid,jdbcType=BIGINT},	#{item.auditorConfirmTime,jdbcType=TIMESTAMP},	#{item.auditRemark,jdbcType=LONGVARCHAR},	#{item.userConfirmTime,jdbcType=TIMESTAMP},	#{item.channelConfirmTime,jdbcType=TIMESTAMP},	#{item.rechargeParams,jdbcType=LONGVARCHAR},	#{item.state,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR},	#{item.column25,jdbcType=CHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.FinRecharge">
+UPDATE
+	tb_fin_recharge
+	<set>
+		<if test="accountId != null">
+			account_id = #{accountId,jdbcType=BIGINT},
+		</if>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="rechargeType != null">
+			recharge_type = #{rechargeType,jdbcType=VARCHAR},
+		</if>
+		<if test="serialNo != null">
+			serial_no = #{serialNo,jdbcType=VARCHAR},
+		</if>
+		<if test="amount != null">
+			amount = #{amount,jdbcType=INTEGER},
+		</if>
+		<if test="channelConfirmAmount != null">
+			channel_confirm_amount = #{channelConfirmAmount,jdbcType=INTEGER},
+		</if>
+		<if test="appId != null">
+			app_id = #{appId,jdbcType=VARCHAR},
+		</if>
+		<if test="rechargePaymentType != null">
+			recharge_payment_type = #{rechargePaymentType,jdbcType=VARCHAR},
+		</if>
+		<if test="payChannel != null">
+			pay_channel = #{payChannel,jdbcType=VARCHAR},
+		</if>
+		<if test="wxOpenid != null">
+			wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+		</if>
+		<if test="wxPrepayId != null">
+			wx_prepay_id = #{wxPrepayId,jdbcType=VARCHAR},
+		</if>
+		<if test="outTradeNo != null">
+			out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+		</if>
+		<if test="submitRemark != null">
+			submit_remark = #{submitRemark,jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null">
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="auditorUid != null">
+			auditor_uid = #{auditorUid,jdbcType=BIGINT},
+		</if>
+		<if test="auditorConfirmTime != null">
+			auditor_confirm_time = #{auditorConfirmTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="auditRemark != null">
+			audit_remark = #{auditRemark,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="userConfirmTime != null">
+			user_confirm_time = #{userConfirmTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="channelConfirmTime != null">
+			channel_confirm_time = #{channelConfirmTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="rechargeParams != null">
+			recharge_params = #{rechargeParams,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="state != null">
+			state = #{state,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR},
+		</if>
+		<if test="column25 != null">
+			column_25 = #{column25,jdbcType=CHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_fin_recharge
+	<set>
+		<if test="item.accountId != null">
+			account_id = #{item.accountId,jdbcType=BIGINT},
+		</if>
+		<if test="item.uid != null">
+			uid = #{item.uid,jdbcType=BIGINT},
+		</if>
+		<if test="item.rechargeType != null">
+			recharge_type = #{item.rechargeType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.serialNo != null">
+			serial_no = #{item.serialNo,jdbcType=VARCHAR},
+		</if>
+		<if test="item.amount != null">
+			amount = #{item.amount,jdbcType=INTEGER},
+		</if>
+		<if test="item.channelConfirmAmount != null">
+			channel_confirm_amount = #{item.channelConfirmAmount,jdbcType=INTEGER},
+		</if>
+		<if test="item.appId != null">
+			app_id = #{item.appId,jdbcType=VARCHAR},
+		</if>
+		<if test="item.rechargePaymentType != null">
+			recharge_payment_type = #{item.rechargePaymentType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.payChannel != null">
+			pay_channel = #{item.payChannel,jdbcType=VARCHAR},
+		</if>
+		<if test="item.wxOpenid != null">
+			wx_openid = #{item.wxOpenid,jdbcType=VARCHAR},
+		</if>
+		<if test="item.wxPrepayId != null">
+			wx_prepay_id = #{item.wxPrepayId,jdbcType=VARCHAR},
+		</if>
+		<if test="item.outTradeNo != null">
+			out_trade_no = #{item.outTradeNo,jdbcType=VARCHAR},
+		</if>
+		<if test="item.submitRemark != null">
+			submit_remark = #{item.submitRemark,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createTime != null">
+			create_time = #{item.createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.auditorUid != null">
+			auditor_uid = #{item.auditorUid,jdbcType=BIGINT},
+		</if>
+		<if test="item.auditorConfirmTime != null">
+			auditor_confirm_time = #{item.auditorConfirmTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.auditRemark != null">
+			audit_remark = #{item.auditRemark,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.userConfirmTime != null">
+			user_confirm_time = #{item.userConfirmTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.channelConfirmTime != null">
+			channel_confirm_time = #{item.channelConfirmTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.rechargeParams != null">
+			recharge_params = #{item.rechargeParams,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="item.state != null">
+			state = #{item.state,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR},
+		</if>
+		<if test="item.column25 != null">
+			column_25 = #{item.column25,jdbcType=CHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_fin_recharge
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_fin_recharge
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="accountId != null">
+			 AND account_id = #{accountId,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="rechargeType != null">
+			 AND recharge_type = #{rechargeType,jdbcType=VARCHAR}
+		</if>
+		<if test="serialNo != null">
+			 AND serial_no = #{serialNo,jdbcType=VARCHAR}
+		</if>
+		<if test="amount != null">
+			 AND amount = #{amount,jdbcType=INTEGER}
+		</if>
+		<if test="channelConfirmAmount != null">
+			 AND channel_confirm_amount = #{channelConfirmAmount,jdbcType=INTEGER}
+		</if>
+		<if test="appId != null">
+			 AND app_id = #{appId,jdbcType=VARCHAR}
+		</if>
+		<if test="rechargePaymentType != null">
+			 AND recharge_payment_type = #{rechargePaymentType,jdbcType=VARCHAR}
+		</if>
+		<if test="payChannel != null">
+			 AND pay_channel = #{payChannel,jdbcType=VARCHAR}
+		</if>
+		<if test="wxOpenid != null">
+			 AND wx_openid = #{wxOpenid,jdbcType=VARCHAR}
+		</if>
+		<if test="wxPrepayId != null">
+			 AND wx_prepay_id = #{wxPrepayId,jdbcType=VARCHAR}
+		</if>
+		<if test="outTradeNo != null">
+			 AND out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+		</if>
+		<if test="submitRemark != null">
+			 AND submit_remark = #{submitRemark,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+			 AND create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="auditorUid != null">
+			 AND auditor_uid = #{auditorUid,jdbcType=BIGINT}
+		</if>
+		<if test="auditorConfirmTime != null">
+			 AND auditor_confirm_time = #{auditorConfirmTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="auditRemark != null">
+			 AND audit_remark = #{auditRemark,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="userConfirmTime != null">
+			 AND user_confirm_time = #{userConfirmTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="channelConfirmTime != null">
+			 AND channel_confirm_time = #{channelConfirmTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="rechargeParams != null">
+			 AND recharge_params = #{rechargeParams,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="state != null">
+			 AND state = #{state,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+		<if test="column25 != null">
+			 AND column_25 = #{column25,jdbcType=CHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="FinRecharge_Result">
+	SELECT 
+		sid,	account_id,	uid,	recharge_type,	serial_no,	amount,	channel_confirm_amount,	app_id,	recharge_payment_type,	pay_channel,	wx_openid,	wx_prepay_id,	out_trade_no,	submit_remark,	create_time,	auditor_uid,	auditor_confirm_time,	audit_remark,	user_confirm_time,	channel_confirm_time,	recharge_params,	state,	del_flag,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn,	column_25
+	FROM 	tb_fin_recharge
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_fin_recharge
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

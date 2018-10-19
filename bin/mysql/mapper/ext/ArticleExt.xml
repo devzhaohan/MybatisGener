@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.Article">
+	
+<resultMap id="Article_Result"  type="com.loveart.post.entity.Article">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="contentType" column="content_type" jdbcType="VARCHAR"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="content" column="content" jdbcType="LONGTEXT"/>
+	<result property="tags" column="tags" jdbcType="VARCHAR"/>
+	<result property="approvalVal" column="approval_val" jdbcType="INTEGER"/>
+	<result property="intro" column="intro" jdbcType="VARCHAR"/>
+	<result property="coverImg" column="cover_img" jdbcType="VARCHAR"/>
+	<result property="isDraft" column="is_draft" jdbcType="VARCHAR"/>
+	<result property="isPublic" column="is_public" jdbcType="VARCHAR"/>
+	<result property="isVisible" column="is_visible" jdbcType="VARCHAR"/>
+	<result property="allowComment" column="allow_comment" jdbcType="VARCHAR"/>
+	<result property="views" column="views" jdbcType="BIGINT"/>
+	<result property="comments" column="comments" jdbcType="BIGINT"/>
+	<result property="likeds" column="likeds" jdbcType="BIGINT"/>
+	<result property="tempHiddenExpire" column="temp_hidden_expire" jdbcType="TIMESTAMP"/>
+	<result property="sortt" column="sortt" jdbcType="BIGINT"/>
+	<result property="contentSource" column="content_source" jdbcType="VARCHAR"/>
+	<result property="contentSourceParam" column="content_source_param" jdbcType="LONGVARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="contentType != null">
+			 AND content_type = #{contentType,jdbcType=VARCHAR}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="approvalVal != null">
+			 AND approval_val = #{approvalVal,jdbcType=INTEGER}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="isDraft != null">
+			 AND is_draft = #{isDraft,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublic != null">
+			 AND is_public = #{isPublic,jdbcType=VARCHAR}
+		</if>
+		<if test="isVisible != null">
+			 AND is_visible = #{isVisible,jdbcType=VARCHAR}
+		</if>
+		<if test="allowComment != null">
+			 AND allow_comment = #{allowComment,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="comments != null">
+			 AND comments = #{comments,jdbcType=BIGINT}
+		</if>
+		<if test="likeds != null">
+			 AND likeds = #{likeds,jdbcType=BIGINT}
+		</if>
+		<if test="tempHiddenExpire != null">
+			 AND temp_hidden_expire = #{tempHiddenExpire,jdbcType=TIMESTAMP}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="contentSource != null">
+			 AND content_source = #{contentSource,jdbcType=VARCHAR}
+		</if>
+		<if test="contentSourceParam != null">
+			 AND content_source_param = #{contentSourceParam,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Article">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_article (
+			sid,
+			uid,		content_type,		title,		content,		tags,
+			approval_val,		intro,		cover_img,		is_draft,		is_public,
+			is_visible,		allow_comment,		views,		comments,		likeds,
+			temp_hidden_expire,		sortt,		content_source,		content_source_param,		split_db_key,
+			del_flag,		create_by,		create_dt,		update_by,		update_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{contentType,jdbcType=VARCHAR},	#{title,jdbcType=VARCHAR},	#{content,jdbcType=LONGVARCHAR},	#{tags,jdbcType=VARCHAR},	#{approvalVal,jdbcType=INTEGER},	#{intro,jdbcType=VARCHAR},	#{coverImg,jdbcType=VARCHAR},	#{isDraft,jdbcType=VARCHAR},	#{isPublic,jdbcType=VARCHAR},	#{isVisible,jdbcType=VARCHAR},	#{allowComment,jdbcType=VARCHAR},	#{views,jdbcType=BIGINT},	#{comments,jdbcType=BIGINT},	#{likeds,jdbcType=BIGINT},	#{tempHiddenExpire,jdbcType=TIMESTAMP},	#{sortt,jdbcType=BIGINT},	#{contentSource,jdbcType=VARCHAR},	#{contentSourceParam,jdbcType=LONGVARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Article">
+UPDATE
+	tb_article
+	<set>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="contentType != null">
+			content_type = #{contentType,jdbcType=VARCHAR},
+		</if>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="content != null">
+			content = #{content,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="tags != null">
+			tags = #{tags,jdbcType=VARCHAR},
+		</if>
+		<if test="approvalVal != null">
+			approval_val = #{approvalVal,jdbcType=INTEGER},
+		</if>
+		<if test="intro != null">
+			intro = #{intro,jdbcType=VARCHAR},
+		</if>
+		<if test="coverImg != null">
+			cover_img = #{coverImg,jdbcType=VARCHAR},
+		</if>
+		<if test="isDraft != null">
+			is_draft = #{isDraft,jdbcType=VARCHAR},
+		</if>
+		<if test="isPublic != null">
+			is_public = #{isPublic,jdbcType=VARCHAR},
+		</if>
+		<if test="isVisible != null">
+			is_visible = #{isVisible,jdbcType=VARCHAR},
+		</if>
+		<if test="allowComment != null">
+			allow_comment = #{allowComment,jdbcType=VARCHAR},
+		</if>
+		<if test="views != null">
+			views = #{views,jdbcType=BIGINT},
+		</if>
+		<if test="comments != null">
+			comments = #{comments,jdbcType=BIGINT},
+		</if>
+		<if test="likeds != null">
+			likeds = #{likeds,jdbcType=BIGINT},
+		</if>
+		<if test="tempHiddenExpire != null">
+			temp_hidden_expire = #{tempHiddenExpire,jdbcType=TIMESTAMP},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=BIGINT},
+		</if>
+		<if test="contentSource != null">
+			content_source = #{contentSource,jdbcType=VARCHAR},
+		</if>
+		<if test="contentSourceParam != null">
+			content_source_param = #{contentSourceParam,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_article
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_article
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="contentType != null">
+			 AND content_type = #{contentType,jdbcType=VARCHAR}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="content != null">
+			 AND content = #{content,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="approvalVal != null">
+			 AND approval_val = #{approvalVal,jdbcType=INTEGER}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="isDraft != null">
+			 AND is_draft = #{isDraft,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublic != null">
+			 AND is_public = #{isPublic,jdbcType=VARCHAR}
+		</if>
+		<if test="isVisible != null">
+			 AND is_visible = #{isVisible,jdbcType=VARCHAR}
+		</if>
+		<if test="allowComment != null">
+			 AND allow_comment = #{allowComment,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="comments != null">
+			 AND comments = #{comments,jdbcType=BIGINT}
+		</if>
+		<if test="likeds != null">
+			 AND likeds = #{likeds,jdbcType=BIGINT}
+		</if>
+		<if test="tempHiddenExpire != null">
+			 AND temp_hidden_expire = #{tempHiddenExpire,jdbcType=TIMESTAMP}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="contentSource != null">
+			 AND content_source = #{contentSource,jdbcType=VARCHAR}
+		</if>
+		<if test="contentSourceParam != null">
+			 AND content_source_param = #{contentSourceParam,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Article_Result">
+	SELECT 
+		sid,	uid,	content_type,	title,	content,	tags,	approval_val,	intro,	cover_img,	is_draft,	is_public,	is_visible,	allow_comment,	views,	comments,	likeds,	temp_hidden_expire,	sortt,	content_source,	content_source_param,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_article
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

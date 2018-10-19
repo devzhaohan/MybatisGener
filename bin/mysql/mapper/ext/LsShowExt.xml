@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.LsShow">
+	
+<resultMap id="LsShow_Result"  type="com.loveart.post.entity.LsShow">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="cover" column="cover" jdbcType="VARCHAR"/>
+	<result property="isPublish" column="is_publish" jdbcType="VARCHAR"/>
+	<result property="videoObjId" column="video_obj_id" jdbcType="VARCHAR"/>
+	<result property="duration" column="duration" jdbcType="BIGINT"/>
+	<result property="showTag" column="show_tag" jdbcType="VARCHAR"/>
+	<result property="tags" column="tags" jdbcType="VARCHAR"/>
+	<result property="briefIntro" column="brief_intro" jdbcType="VARCHAR"/>
+	<result property="videoPublishYear" column="video_publish_year" jdbcType="VARCHAR"/>
+	<result property="intro" column="intro" jdbcType="LONGVARCHAR"/>
+	<result property="source" column="source" jdbcType="VARCHAR"/>
+	<result property="views" column="views" jdbcType="BIGINT"/>
+	<result property="favorites" column="favorites" jdbcType="BIGINT"/>
+	<result property="comments" column="comments" jdbcType="BIGINT"/>
+	<result property="shares" column="shares" jdbcType="BIGINT"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="cover != null">
+			 AND cover = #{cover,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="videoObjId != null">
+			 AND video_obj_id = #{videoObjId,jdbcType=VARCHAR}
+		</if>
+		<if test="duration != null">
+			 AND duration = #{duration,jdbcType=BIGINT}
+		</if>
+		<if test="showTag != null">
+			 AND show_tag = #{showTag,jdbcType=VARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="briefIntro != null">
+			 AND brief_intro = #{briefIntro,jdbcType=VARCHAR}
+		</if>
+		<if test="videoPublishYear != null">
+			 AND video_publish_year = #{videoPublishYear,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="source != null">
+			 AND source = #{source,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="favorites != null">
+			 AND favorites = #{favorites,jdbcType=BIGINT}
+		</if>
+		<if test="comments != null">
+			 AND comments = #{comments,jdbcType=BIGINT}
+		</if>
+		<if test="shares != null">
+			 AND shares = #{shares,jdbcType=BIGINT}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.LsShow">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_ls_show (
+			sid,
+			title,		cover,		is_publish,		video_obj_id,		duration,
+			show_tag,		tags,		brief_intro,		video_publish_year,		intro,
+			source,		views,		favorites,		comments,		shares,
+			del_flag,		sortt,		split_db_key,		create_by,		create_dt,
+			update_by,		update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{title,jdbcType=VARCHAR},	#{cover,jdbcType=VARCHAR},	#{isPublish,jdbcType=VARCHAR},	#{videoObjId,jdbcType=VARCHAR},	#{duration,jdbcType=BIGINT},	#{showTag,jdbcType=VARCHAR},	#{tags,jdbcType=VARCHAR},	#{briefIntro,jdbcType=VARCHAR},	#{videoPublishYear,jdbcType=VARCHAR},	#{intro,jdbcType=LONGVARCHAR},	#{source,jdbcType=VARCHAR},	#{views,jdbcType=BIGINT},	#{favorites,jdbcType=BIGINT},	#{comments,jdbcType=BIGINT},	#{shares,jdbcType=BIGINT},	#{delFlag,jdbcType=VARCHAR},	#{sortt,jdbcType=INTEGER},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.LsShow">
+UPDATE
+	tb_ls_show
+	<set>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="cover != null">
+			cover = #{cover,jdbcType=VARCHAR},
+		</if>
+		<if test="isPublish != null">
+			is_publish = #{isPublish,jdbcType=VARCHAR},
+		</if>
+		<if test="videoObjId != null">
+			video_obj_id = #{videoObjId,jdbcType=VARCHAR},
+		</if>
+		<if test="duration != null">
+			duration = #{duration,jdbcType=BIGINT},
+		</if>
+		<if test="showTag != null">
+			show_tag = #{showTag,jdbcType=VARCHAR},
+		</if>
+		<if test="tags != null">
+			tags = #{tags,jdbcType=VARCHAR},
+		</if>
+		<if test="briefIntro != null">
+			brief_intro = #{briefIntro,jdbcType=VARCHAR},
+		</if>
+		<if test="videoPublishYear != null">
+			video_publish_year = #{videoPublishYear,jdbcType=VARCHAR},
+		</if>
+		<if test="intro != null">
+			intro = #{intro,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="source != null">
+			source = #{source,jdbcType=VARCHAR},
+		</if>
+		<if test="views != null">
+			views = #{views,jdbcType=BIGINT},
+		</if>
+		<if test="favorites != null">
+			favorites = #{favorites,jdbcType=BIGINT},
+		</if>
+		<if test="comments != null">
+			comments = #{comments,jdbcType=BIGINT},
+		</if>
+		<if test="shares != null">
+			shares = #{shares,jdbcType=BIGINT},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_ls_show
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_ls_show
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="cover != null">
+			 AND cover = #{cover,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="videoObjId != null">
+			 AND video_obj_id = #{videoObjId,jdbcType=VARCHAR}
+		</if>
+		<if test="duration != null">
+			 AND duration = #{duration,jdbcType=BIGINT}
+		</if>
+		<if test="showTag != null">
+			 AND show_tag = #{showTag,jdbcType=VARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="briefIntro != null">
+			 AND brief_intro = #{briefIntro,jdbcType=VARCHAR}
+		</if>
+		<if test="videoPublishYear != null">
+			 AND video_publish_year = #{videoPublishYear,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="source != null">
+			 AND source = #{source,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="favorites != null">
+			 AND favorites = #{favorites,jdbcType=BIGINT}
+		</if>
+		<if test="comments != null">
+			 AND comments = #{comments,jdbcType=BIGINT}
+		</if>
+		<if test="shares != null">
+			 AND shares = #{shares,jdbcType=BIGINT}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="LsShow_Result">
+	SELECT 
+		sid,	title,	cover,	is_publish,	video_obj_id,	duration,	show_tag,	tags,	brief_intro,	video_publish_year,	intro,	source,	views,	favorites,	comments,	shares,	del_flag,	sortt,	split_db_key,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_ls_show
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

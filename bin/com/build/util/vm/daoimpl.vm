@@ -1,0 +1,8 @@
+package ${model.daoPackage}.ibatis;
+import com.hp.common.dao.IBatisGenericDaoImpl;
+import ${model.entity}.${model.entityName};
+import ${model.daoPackage}.${model.entityName}Dao;
+
+public class ${model.entityName}DaoImpl extends IBatisGenericDaoImpl<${model.entityName}> implements ${model.entityName}Dao {
+
+}

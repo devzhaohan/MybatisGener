@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.RcObjViewLog">
+	
+<resultMap id="RcObjViewLog_Result"  type="com.loveart.post.entity.RcObjViewLog">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="deviceId" column="device_id" jdbcType="VARCHAR"/>
+	<result property="appScene" column="app_scene" jdbcType="VARCHAR"/>
+	<result property="pageScene" column="page_scene" jdbcType="VARCHAR"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="ipAddr" column="ip_addr" jdbcType="VARCHAR"/>
+	<result property="targetType" column="target_type" jdbcType="VARCHAR"/>
+	<result property="targetId" column="target_id" jdbcType="BIGINT"/>
+	<result property="contentType" column="content_type" jdbcType="VARCHAR"/>
+	<result property="action" column="action" jdbcType="VARCHAR"/>
+	<result property="actionTime" column="action_time" jdbcType="TIMESTAMP"/>
+	<result property="locProvince" column="loc_province" jdbcType="VARCHAR"/>
+	<result property="locCity" column="loc_city" jdbcType="VARCHAR"/>
+	<result property="locAdcode" column="loc_adcode" jdbcType="VARCHAR"/>
+	<result property="locRectangle" column="loc_rectangle" jdbcType="VARCHAR"/>
+	<result property="dClientType" column="d_client_type" jdbcType="VARCHAR"/>
+	<result property="dClientTypeName" column="d_client_type_name" jdbcType="VARCHAR"/>
+	<result property="dId" column="d_id" jdbcType="VARCHAR"/>
+	<result property="dSystem" column="d_system" jdbcType="VARCHAR"/>
+	<result property="dBrand" column="d_brand" jdbcType="VARCHAR"/>
+	<result property="dModel" column="d_model" jdbcType="VARCHAR"/>
+	<result property="dPlatform" column="d_platform" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="deviceId != null">
+			 AND device_id = #{deviceId,jdbcType=VARCHAR}
+		</if>
+		<if test="appScene != null">
+			 AND app_scene = #{appScene,jdbcType=VARCHAR}
+		</if>
+		<if test="pageScene != null">
+			 AND page_scene = #{pageScene,jdbcType=VARCHAR}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="ipAddr != null">
+			 AND ip_addr = #{ipAddr,jdbcType=VARCHAR}
+		</if>
+		<if test="targetType != null">
+			 AND target_type = #{targetType,jdbcType=VARCHAR}
+		</if>
+		<if test="targetId != null">
+			 AND target_id = #{targetId,jdbcType=BIGINT}
+		</if>
+		<if test="contentType != null">
+			 AND content_type = #{contentType,jdbcType=VARCHAR}
+		</if>
+		<if test="action != null">
+			 AND action = #{action,jdbcType=VARCHAR}
+		</if>
+		<if test="actionTime != null">
+			 AND action_time = #{actionTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="locProvince != null">
+			 AND loc_province = #{locProvince,jdbcType=VARCHAR}
+		</if>
+		<if test="locCity != null">
+			 AND loc_city = #{locCity,jdbcType=VARCHAR}
+		</if>
+		<if test="locAdcode != null">
+			 AND loc_adcode = #{locAdcode,jdbcType=VARCHAR}
+		</if>
+		<if test="locRectangle != null">
+			 AND loc_rectangle = #{locRectangle,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientType != null">
+			 AND d_client_type = #{dClientType,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientTypeName != null">
+			 AND d_client_type_name = #{dClientTypeName,jdbcType=VARCHAR}
+		</if>
+		<if test="dId != null">
+			 AND d_id = #{dId,jdbcType=VARCHAR}
+		</if>
+		<if test="dSystem != null">
+			 AND d_system = #{dSystem,jdbcType=VARCHAR}
+		</if>
+		<if test="dBrand != null">
+			 AND d_brand = #{dBrand,jdbcType=VARCHAR}
+		</if>
+		<if test="dModel != null">
+			 AND d_model = #{dModel,jdbcType=VARCHAR}
+		</if>
+		<if test="dPlatform != null">
+			 AND d_platform = #{dPlatform,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.RcObjViewLog">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_rc_obj_view_log (
+			sid,
+			device_id,		app_scene,		page_scene,		uid,		ip_addr,
+			target_type,		target_id,		content_type,		action,		action_time,
+			loc_province,		loc_city,		loc_adcode,		loc_rectangle,		d_client_type,
+			d_client_type_name,		d_id,		d_system,		d_brand,		d_model,
+			d_platform,		del_flag,		create_by,		create_dt,		update_by,
+			update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{deviceId,jdbcType=VARCHAR},	#{appScene,jdbcType=VARCHAR},	#{pageScene,jdbcType=VARCHAR},	#{uid,jdbcType=BIGINT},	#{ipAddr,jdbcType=VARCHAR},	#{targetType,jdbcType=VARCHAR},	#{targetId,jdbcType=BIGINT},	#{contentType,jdbcType=VARCHAR},	#{action,jdbcType=VARCHAR},	#{actionTime,jdbcType=TIMESTAMP},	#{locProvince,jdbcType=VARCHAR},	#{locCity,jdbcType=VARCHAR},	#{locAdcode,jdbcType=VARCHAR},	#{locRectangle,jdbcType=VARCHAR},	#{dClientType,jdbcType=VARCHAR},	#{dClientTypeName,jdbcType=VARCHAR},	#{dId,jdbcType=VARCHAR},	#{dSystem,jdbcType=VARCHAR},	#{dBrand,jdbcType=VARCHAR},	#{dModel,jdbcType=VARCHAR},	#{dPlatform,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_rc_obj_view_log (
+			sid,
+			device_id,		app_scene,		page_scene,		uid,		ip_addr,
+			target_type,		target_id,		content_type,		action,		action_time,
+			loc_province,		loc_city,		loc_adcode,		loc_rectangle,		d_client_type,
+			d_client_type_name,		d_id,		d_system,		d_brand,		d_model,
+			d_platform,		del_flag,		create_by,		create_dt,		update_by,
+			update_dt,		versionn)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.deviceId,jdbcType=VARCHAR},	#{item.appScene,jdbcType=VARCHAR},	#{item.pageScene,jdbcType=VARCHAR},	#{item.uid,jdbcType=BIGINT},	#{item.ipAddr,jdbcType=VARCHAR},	#{item.targetType,jdbcType=VARCHAR},	#{item.targetId,jdbcType=BIGINT},	#{item.contentType,jdbcType=VARCHAR},	#{item.action,jdbcType=VARCHAR},	#{item.actionTime,jdbcType=TIMESTAMP},	#{item.locProvince,jdbcType=VARCHAR},	#{item.locCity,jdbcType=VARCHAR},	#{item.locAdcode,jdbcType=VARCHAR},	#{item.locRectangle,jdbcType=VARCHAR},	#{item.dClientType,jdbcType=VARCHAR},	#{item.dClientTypeName,jdbcType=VARCHAR},	#{item.dId,jdbcType=VARCHAR},	#{item.dSystem,jdbcType=VARCHAR},	#{item.dBrand,jdbcType=VARCHAR},	#{item.dModel,jdbcType=VARCHAR},	#{item.dPlatform,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.RcObjViewLog">
+UPDATE
+	tb_rc_obj_view_log
+	<set>
+		<if test="deviceId != null">
+			device_id = #{deviceId,jdbcType=VARCHAR},
+		</if>
+		<if test="appScene != null">
+			app_scene = #{appScene,jdbcType=VARCHAR},
+		</if>
+		<if test="pageScene != null">
+			page_scene = #{pageScene,jdbcType=VARCHAR},
+		</if>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="ipAddr != null">
+			ip_addr = #{ipAddr,jdbcType=VARCHAR},
+		</if>
+		<if test="targetType != null">
+			target_type = #{targetType,jdbcType=VARCHAR},
+		</if>
+		<if test="targetId != null">
+			target_id = #{targetId,jdbcType=BIGINT},
+		</if>
+		<if test="contentType != null">
+			content_type = #{contentType,jdbcType=VARCHAR},
+		</if>
+		<if test="action != null">
+			action = #{action,jdbcType=VARCHAR},
+		</if>
+		<if test="actionTime != null">
+			action_time = #{actionTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="locProvince != null">
+			loc_province = #{locProvince,jdbcType=VARCHAR},
+		</if>
+		<if test="locCity != null">
+			loc_city = #{locCity,jdbcType=VARCHAR},
+		</if>
+		<if test="locAdcode != null">
+			loc_adcode = #{locAdcode,jdbcType=VARCHAR},
+		</if>
+		<if test="locRectangle != null">
+			loc_rectangle = #{locRectangle,jdbcType=VARCHAR},
+		</if>
+		<if test="dClientType != null">
+			d_client_type = #{dClientType,jdbcType=VARCHAR},
+		</if>
+		<if test="dClientTypeName != null">
+			d_client_type_name = #{dClientTypeName,jdbcType=VARCHAR},
+		</if>
+		<if test="dId != null">
+			d_id = #{dId,jdbcType=VARCHAR},
+		</if>
+		<if test="dSystem != null">
+			d_system = #{dSystem,jdbcType=VARCHAR},
+		</if>
+		<if test="dBrand != null">
+			d_brand = #{dBrand,jdbcType=VARCHAR},
+		</if>
+		<if test="dModel != null">
+			d_model = #{dModel,jdbcType=VARCHAR},
+		</if>
+		<if test="dPlatform != null">
+			d_platform = #{dPlatform,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_rc_obj_view_log
+	<set>
+		<if test="item.deviceId != null">
+			device_id = #{item.deviceId,jdbcType=VARCHAR},
+		</if>
+		<if test="item.appScene != null">
+			app_scene = #{item.appScene,jdbcType=VARCHAR},
+		</if>
+		<if test="item.pageScene != null">
+			page_scene = #{item.pageScene,jdbcType=VARCHAR},
+		</if>
+		<if test="item.uid != null">
+			uid = #{item.uid,jdbcType=BIGINT},
+		</if>
+		<if test="item.ipAddr != null">
+			ip_addr = #{item.ipAddr,jdbcType=VARCHAR},
+		</if>
+		<if test="item.targetType != null">
+			target_type = #{item.targetType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.targetId != null">
+			target_id = #{item.targetId,jdbcType=BIGINT},
+		</if>
+		<if test="item.contentType != null">
+			content_type = #{item.contentType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.action != null">
+			action = #{item.action,jdbcType=VARCHAR},
+		</if>
+		<if test="item.actionTime != null">
+			action_time = #{item.actionTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.locProvince != null">
+			loc_province = #{item.locProvince,jdbcType=VARCHAR},
+		</if>
+		<if test="item.locCity != null">
+			loc_city = #{item.locCity,jdbcType=VARCHAR},
+		</if>
+		<if test="item.locAdcode != null">
+			loc_adcode = #{item.locAdcode,jdbcType=VARCHAR},
+		</if>
+		<if test="item.locRectangle != null">
+			loc_rectangle = #{item.locRectangle,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dClientType != null">
+			d_client_type = #{item.dClientType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dClientTypeName != null">
+			d_client_type_name = #{item.dClientTypeName,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dId != null">
+			d_id = #{item.dId,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dSystem != null">
+			d_system = #{item.dSystem,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dBrand != null">
+			d_brand = #{item.dBrand,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dModel != null">
+			d_model = #{item.dModel,jdbcType=VARCHAR},
+		</if>
+		<if test="item.dPlatform != null">
+			d_platform = #{item.dPlatform,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_rc_obj_view_log
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_rc_obj_view_log
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="deviceId != null">
+			 AND device_id = #{deviceId,jdbcType=VARCHAR}
+		</if>
+		<if test="appScene != null">
+			 AND app_scene = #{appScene,jdbcType=VARCHAR}
+		</if>
+		<if test="pageScene != null">
+			 AND page_scene = #{pageScene,jdbcType=VARCHAR}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="ipAddr != null">
+			 AND ip_addr = #{ipAddr,jdbcType=VARCHAR}
+		</if>
+		<if test="targetType != null">
+			 AND target_type = #{targetType,jdbcType=VARCHAR}
+		</if>
+		<if test="targetId != null">
+			 AND target_id = #{targetId,jdbcType=BIGINT}
+		</if>
+		<if test="contentType != null">
+			 AND content_type = #{contentType,jdbcType=VARCHAR}
+		</if>
+		<if test="action != null">
+			 AND action = #{action,jdbcType=VARCHAR}
+		</if>
+		<if test="actionTime != null">
+			 AND action_time = #{actionTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="locProvince != null">
+			 AND loc_province = #{locProvince,jdbcType=VARCHAR}
+		</if>
+		<if test="locCity != null">
+			 AND loc_city = #{locCity,jdbcType=VARCHAR}
+		</if>
+		<if test="locAdcode != null">
+			 AND loc_adcode = #{locAdcode,jdbcType=VARCHAR}
+		</if>
+		<if test="locRectangle != null">
+			 AND loc_rectangle = #{locRectangle,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientType != null">
+			 AND d_client_type = #{dClientType,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientTypeName != null">
+			 AND d_client_type_name = #{dClientTypeName,jdbcType=VARCHAR}
+		</if>
+		<if test="dId != null">
+			 AND d_id = #{dId,jdbcType=VARCHAR}
+		</if>
+		<if test="dSystem != null">
+			 AND d_system = #{dSystem,jdbcType=VARCHAR}
+		</if>
+		<if test="dBrand != null">
+			 AND d_brand = #{dBrand,jdbcType=VARCHAR}
+		</if>
+		<if test="dModel != null">
+			 AND d_model = #{dModel,jdbcType=VARCHAR}
+		</if>
+		<if test="dPlatform != null">
+			 AND d_platform = #{dPlatform,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="RcObjViewLog_Result">
+	SELECT 
+		sid,	device_id,	app_scene,	page_scene,	uid,	ip_addr,	target_type,	target_id,	content_type,	action,	action_time,	loc_province,	loc_city,	loc_adcode,	loc_rectangle,	d_client_type,	d_client_type_name,	d_id,	d_system,	d_brand,	d_model,	d_platform,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_rc_obj_view_log
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_rc_obj_view_log
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

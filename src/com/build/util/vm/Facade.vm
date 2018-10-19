@@ -1,0 +1,30 @@
+package ${entity.flexMainPath}
+{
+	import base.mvc.BaseFacade;
+	import ${entity.viewPath}.${model.entityName}CtrMediator;
+	import ${entity.viewPath}.${model.entityName}DispMediator;
+	
+	public class ${model.entityName}Facade extends BaseFacade
+	{
+		public static const NAME:String="${entity.flexMainPath}.${model.entityName}Facade";
+		public function ${model.entityName}Facade()
+		{
+			super();
+		}
+		
+		public static function getInstance():${model.entityName}Facade
+		{
+			if(instance == null) 
+				instance = new ${model.entityName}Facade();
+			return instance as ${model.entityName}Facade;
+			
+		}
+		override public function startUp(index:Object):void
+		{
+			removeMediator(${model.entityName}CtrlMediator.NAME);
+			removeMediator(${model.entityName}DispMediator.NAME);
+			registerMediator(new ${model.entityName}CtrMediator(index as parentDemo));
+			registerMediator(new ${model.entityName}DispMediator(index as parentDemo));
+		}
+	}
+}

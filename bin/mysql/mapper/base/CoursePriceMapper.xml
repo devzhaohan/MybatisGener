@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.CoursePrice">
+	
+<resultMap id="CoursePrice_Result"  type="com.loveart.post.entity.CoursePrice">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="courseId" column="course_id" jdbcType="BIGINT"/>
+	<result property="price" column="price" jdbcType="DECIMAL"/>
+	<result property="preferential" column="preferential" jdbcType="DECIMAL"/>
+	<result property="preferentialType" column="preferential_type" jdbcType="VARCHAR"/>
+	<result property="preferentialHintType" column="preferential_hint_type" jdbcType="VARCHAR"/>
+	<result property="expiration" column="expiration" jdbcType="BIGINT"/>
+	<result property="sortt" column="sortt" jdbcType="BIGINT"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="courseId != null">
+			 AND course_id = #{courseId,jdbcType=BIGINT}
+		</if>
+		<if test="price != null">
+			 AND price = #{price,jdbcType=DECIMAL}
+		</if>
+		<if test="preferential != null">
+			 AND preferential = #{preferential,jdbcType=DECIMAL}
+		</if>
+		<if test="preferentialType != null">
+			 AND preferential_type = #{preferentialType,jdbcType=VARCHAR}
+		</if>
+		<if test="preferentialHintType != null">
+			 AND preferential_hint_type = #{preferentialHintType,jdbcType=VARCHAR}
+		</if>
+		<if test="expiration != null">
+			 AND expiration = #{expiration,jdbcType=BIGINT}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.CoursePrice">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_course_price (
+			sid,
+			course_id,		price,		preferential,		preferential_type,		preferential_hint_type,
+			expiration,		sortt,		split_db_key,		del_flag,		create_by,
+			create_dt,		update_by,		update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{courseId,jdbcType=BIGINT},	#{price,jdbcType=DECIMAL},	#{preferential,jdbcType=DECIMAL},	#{preferentialType,jdbcType=VARCHAR},	#{preferentialHintType,jdbcType=VARCHAR},	#{expiration,jdbcType=BIGINT},	#{sortt,jdbcType=BIGINT},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_course_price (
+			sid,
+			course_id,		price,		preferential,		preferential_type,		preferential_hint_type,
+			expiration,		sortt,		split_db_key,		del_flag,		create_by,
+			create_dt,		update_by,		update_dt,		versionn)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.courseId,jdbcType=BIGINT},	#{item.price,jdbcType=DECIMAL},	#{item.preferential,jdbcType=DECIMAL},	#{item.preferentialType,jdbcType=VARCHAR},	#{item.preferentialHintType,jdbcType=VARCHAR},	#{item.expiration,jdbcType=BIGINT},	#{item.sortt,jdbcType=BIGINT},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.delFlag,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.CoursePrice">
+UPDATE
+	tb_course_price
+	<set>
+		<if test="courseId != null">
+			course_id = #{courseId,jdbcType=BIGINT},
+		</if>
+		<if test="price != null">
+			price = #{price,jdbcType=DECIMAL},
+		</if>
+		<if test="preferential != null">
+			preferential = #{preferential,jdbcType=DECIMAL},
+		</if>
+		<if test="preferentialType != null">
+			preferential_type = #{preferentialType,jdbcType=VARCHAR},
+		</if>
+		<if test="preferentialHintType != null">
+			preferential_hint_type = #{preferentialHintType,jdbcType=VARCHAR},
+		</if>
+		<if test="expiration != null">
+			expiration = #{expiration,jdbcType=BIGINT},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=BIGINT},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_course_price
+	<set>
+		<if test="item.courseId != null">
+			course_id = #{item.courseId,jdbcType=BIGINT},
+		</if>
+		<if test="item.price != null">
+			price = #{item.price,jdbcType=DECIMAL},
+		</if>
+		<if test="item.preferential != null">
+			preferential = #{item.preferential,jdbcType=DECIMAL},
+		</if>
+		<if test="item.preferentialType != null">
+			preferential_type = #{item.preferentialType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.preferentialHintType != null">
+			preferential_hint_type = #{item.preferentialHintType,jdbcType=VARCHAR},
+		</if>
+		<if test="item.expiration != null">
+			expiration = #{item.expiration,jdbcType=BIGINT},
+		</if>
+		<if test="item.sortt != null">
+			sortt = #{item.sortt,jdbcType=BIGINT},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_course_price
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_course_price
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="courseId != null">
+			 AND course_id = #{courseId,jdbcType=BIGINT}
+		</if>
+		<if test="price != null">
+			 AND price = #{price,jdbcType=DECIMAL}
+		</if>
+		<if test="preferential != null">
+			 AND preferential = #{preferential,jdbcType=DECIMAL}
+		</if>
+		<if test="preferentialType != null">
+			 AND preferential_type = #{preferentialType,jdbcType=VARCHAR}
+		</if>
+		<if test="preferentialHintType != null">
+			 AND preferential_hint_type = #{preferentialHintType,jdbcType=VARCHAR}
+		</if>
+		<if test="expiration != null">
+			 AND expiration = #{expiration,jdbcType=BIGINT}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="CoursePrice_Result">
+	SELECT 
+		sid,	course_id,	price,	preferential,	preferential_type,	preferential_hint_type,	expiration,	sortt,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_course_price
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_course_price
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

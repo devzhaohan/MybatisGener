@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.Zhibo">
+	
+<resultMap id="Zhibo_Result"  type="com.loveart.post.entity.Zhibo">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="intro" column="intro" jdbcType="LONGVARCHAR"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="tags" column="tags" jdbcType="VARCHAR"/>
+	<result property="coverImg" column="cover_img" jdbcType="VARCHAR"/>
+	<result property="coverImgThumb" column="cover_img_thumb" jdbcType="VARCHAR"/>
+	<result property="isPublish" column="is_publish" jdbcType="VARCHAR"/>
+	<result property="liveStarted" column="live_started" jdbcType="VARCHAR"/>
+	<result property="liveFinished" column="live_finished" jdbcType="VARCHAR"/>
+	<result property="isPublic" column="is_public" jdbcType="VARCHAR"/>
+	<result property="startDt" column="start_dt" jdbcType="TIMESTAMP"/>
+	<result property="adStartDt" column="ad_start_dt" jdbcType="TIMESTAMP"/>
+	<result property="adStartDtAlias" column="ad_start_dt_alias" jdbcType="VARCHAR"/>
+	<result property="finishDt" column="finish_dt" jdbcType="TIMESTAMP"/>
+	<result property="liveType" column="live_type" jdbcType="VARCHAR"/>
+	<result property="accessAlias" column="access_alias" jdbcType="VARCHAR"/>
+	<result property="fee" column="fee" jdbcType="INTEGER"/>
+	<result property="appName" column="app_name" jdbcType="VARCHAR"/>
+	<result property="streamName" column="stream_name" jdbcType="VARCHAR"/>
+	<result property="isPushingStream" column="is_pushing_stream" jdbcType="VARCHAR"/>
+	<result property="isFinishRecord" column="is_finish_record" jdbcType="VARCHAR"/>
+	<result property="historyUserNum" column="history_user_num" jdbcType="BIGINT"/>
+	<result property="chatRoomId" column="chat_room_id" jdbcType="VARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImgThumb != null">
+			 AND cover_img_thumb = #{coverImgThumb,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="liveStarted != null">
+			 AND live_started = #{liveStarted,jdbcType=VARCHAR}
+		</if>
+		<if test="liveFinished != null">
+			 AND live_finished = #{liveFinished,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublic != null">
+			 AND is_public = #{isPublic,jdbcType=VARCHAR}
+		</if>
+		<if test="startDt != null">
+			 AND start_dt = #{startDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="adStartDt != null">
+			 AND ad_start_dt = #{adStartDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="adStartDtAlias != null">
+			 AND ad_start_dt_alias = #{adStartDtAlias,jdbcType=VARCHAR}
+		</if>
+		<if test="finishDt != null">
+			 AND finish_dt = #{finishDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="liveType != null">
+			 AND live_type = #{liveType,jdbcType=VARCHAR}
+		</if>
+		<if test="accessAlias != null">
+			 AND access_alias = #{accessAlias,jdbcType=VARCHAR}
+		</if>
+		<if test="fee != null">
+			 AND fee = #{fee,jdbcType=INTEGER}
+		</if>
+		<if test="appName != null">
+			 AND app_name = #{appName,jdbcType=VARCHAR}
+		</if>
+		<if test="streamName != null">
+			 AND stream_name = #{streamName,jdbcType=VARCHAR}
+		</if>
+		<if test="isPushingStream != null">
+			 AND is_pushing_stream = #{isPushingStream,jdbcType=VARCHAR}
+		</if>
+		<if test="isFinishRecord != null">
+			 AND is_finish_record = #{isFinishRecord,jdbcType=VARCHAR}
+		</if>
+		<if test="historyUserNum != null">
+			 AND history_user_num = #{historyUserNum,jdbcType=BIGINT}
+		</if>
+		<if test="chatRoomId != null">
+			 AND chat_room_id = #{chatRoomId,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Zhibo">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_zhibo (
+			sid,
+			uid,		title,		intro,		remark,		tags,
+			cover_img,		cover_img_thumb,		is_publish,		live_started,		live_finished,
+			is_public,		start_dt,		ad_start_dt,		ad_start_dt_alias,		finish_dt,
+			live_type,		access_alias,		fee,		app_name,		stream_name,
+			is_pushing_stream,		is_finish_record,		history_user_num,		chat_room_id,		sortt,
+			del_flag,		create_dt,		update_dt,		update_by,		versionn
+	)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{title,jdbcType=VARCHAR},	#{intro,jdbcType=LONGVARCHAR},	#{remark,jdbcType=VARCHAR},	#{tags,jdbcType=VARCHAR},	#{coverImg,jdbcType=VARCHAR},	#{coverImgThumb,jdbcType=VARCHAR},	#{isPublish,jdbcType=VARCHAR},	#{liveStarted,jdbcType=VARCHAR},	#{liveFinished,jdbcType=VARCHAR},	#{isPublic,jdbcType=VARCHAR},	#{startDt,jdbcType=TIMESTAMP},	#{adStartDt,jdbcType=TIMESTAMP},	#{adStartDtAlias,jdbcType=VARCHAR},	#{finishDt,jdbcType=TIMESTAMP},	#{liveType,jdbcType=VARCHAR},	#{accessAlias,jdbcType=VARCHAR},	#{fee,jdbcType=INTEGER},	#{appName,jdbcType=VARCHAR},	#{streamName,jdbcType=VARCHAR},	#{isPushingStream,jdbcType=VARCHAR},	#{isFinishRecord,jdbcType=VARCHAR},	#{historyUserNum,jdbcType=BIGINT},	#{chatRoomId,jdbcType=VARCHAR},	#{sortt,jdbcType=INTEGER},	#{delFlag,jdbcType=VARCHAR},	#{createDt,jdbcType=TIMESTAMP},	#{updateDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Zhibo">
+UPDATE
+	tb_zhibo
+	<set>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="intro != null">
+			intro = #{intro,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="tags != null">
+			tags = #{tags,jdbcType=VARCHAR},
+		</if>
+		<if test="coverImg != null">
+			cover_img = #{coverImg,jdbcType=VARCHAR},
+		</if>
+		<if test="coverImgThumb != null">
+			cover_img_thumb = #{coverImgThumb,jdbcType=VARCHAR},
+		</if>
+		<if test="isPublish != null">
+			is_publish = #{isPublish,jdbcType=VARCHAR},
+		</if>
+		<if test="liveStarted != null">
+			live_started = #{liveStarted,jdbcType=VARCHAR},
+		</if>
+		<if test="liveFinished != null">
+			live_finished = #{liveFinished,jdbcType=VARCHAR},
+		</if>
+		<if test="isPublic != null">
+			is_public = #{isPublic,jdbcType=VARCHAR},
+		</if>
+		<if test="startDt != null">
+			start_dt = #{startDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="adStartDt != null">
+			ad_start_dt = #{adStartDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="adStartDtAlias != null">
+			ad_start_dt_alias = #{adStartDtAlias,jdbcType=VARCHAR},
+		</if>
+		<if test="finishDt != null">
+			finish_dt = #{finishDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="liveType != null">
+			live_type = #{liveType,jdbcType=VARCHAR},
+		</if>
+		<if test="accessAlias != null">
+			access_alias = #{accessAlias,jdbcType=VARCHAR},
+		</if>
+		<if test="fee != null">
+			fee = #{fee,jdbcType=INTEGER},
+		</if>
+		<if test="appName != null">
+			app_name = #{appName,jdbcType=VARCHAR},
+		</if>
+		<if test="streamName != null">
+			stream_name = #{streamName,jdbcType=VARCHAR},
+		</if>
+		<if test="isPushingStream != null">
+			is_pushing_stream = #{isPushingStream,jdbcType=VARCHAR},
+		</if>
+		<if test="isFinishRecord != null">
+			is_finish_record = #{isFinishRecord,jdbcType=VARCHAR},
+		</if>
+		<if test="historyUserNum != null">
+			history_user_num = #{historyUserNum,jdbcType=BIGINT},
+		</if>
+		<if test="chatRoomId != null">
+			chat_room_id = #{chatRoomId,jdbcType=VARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_zhibo
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_zhibo
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="tags != null">
+			 AND tags = #{tags,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImg != null">
+			 AND cover_img = #{coverImg,jdbcType=VARCHAR}
+		</if>
+		<if test="coverImgThumb != null">
+			 AND cover_img_thumb = #{coverImgThumb,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="liveStarted != null">
+			 AND live_started = #{liveStarted,jdbcType=VARCHAR}
+		</if>
+		<if test="liveFinished != null">
+			 AND live_finished = #{liveFinished,jdbcType=VARCHAR}
+		</if>
+		<if test="isPublic != null">
+			 AND is_public = #{isPublic,jdbcType=VARCHAR}
+		</if>
+		<if test="startDt != null">
+			 AND start_dt = #{startDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="adStartDt != null">
+			 AND ad_start_dt = #{adStartDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="adStartDtAlias != null">
+			 AND ad_start_dt_alias = #{adStartDtAlias,jdbcType=VARCHAR}
+		</if>
+		<if test="finishDt != null">
+			 AND finish_dt = #{finishDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="liveType != null">
+			 AND live_type = #{liveType,jdbcType=VARCHAR}
+		</if>
+		<if test="accessAlias != null">
+			 AND access_alias = #{accessAlias,jdbcType=VARCHAR}
+		</if>
+		<if test="fee != null">
+			 AND fee = #{fee,jdbcType=INTEGER}
+		</if>
+		<if test="appName != null">
+			 AND app_name = #{appName,jdbcType=VARCHAR}
+		</if>
+		<if test="streamName != null">
+			 AND stream_name = #{streamName,jdbcType=VARCHAR}
+		</if>
+		<if test="isPushingStream != null">
+			 AND is_pushing_stream = #{isPushingStream,jdbcType=VARCHAR}
+		</if>
+		<if test="isFinishRecord != null">
+			 AND is_finish_record = #{isFinishRecord,jdbcType=VARCHAR}
+		</if>
+		<if test="historyUserNum != null">
+			 AND history_user_num = #{historyUserNum,jdbcType=BIGINT}
+		</if>
+		<if test="chatRoomId != null">
+			 AND chat_room_id = #{chatRoomId,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Zhibo_Result">
+	SELECT 
+		sid,	uid,	title,	intro,	remark,	tags,	cover_img,	cover_img_thumb,	is_publish,	live_started,	live_finished,	is_public,	start_dt,	ad_start_dt,	ad_start_dt_alias,	finish_dt,	live_type,	access_alias,	fee,	app_name,	stream_name,	is_pushing_stream,	is_finish_record,	history_user_num,	chat_room_id,	sortt,	del_flag,	create_dt,	update_dt,	update_by,	versionn
+	FROM 	tb_zhibo
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

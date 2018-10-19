@@ -1,0 +1,15 @@
+#查询方面的资源文件
+${model.entityName}.title.Shift=班次
+${model.entityName}.title.teamTime=班时
+${model.entityName}.title.startDate=开始时间
+${model.entityName}.title.endDate=截止时间
+
+#编辑页面国际化
+#foreach($item in $model.propList)
+${model.entityName}.label.${item.name}=:
+#end
+
+#列表页面国际化
+#foreach($item in $model.propList)
+${model.entityName}.table.${item.name}=
+#end

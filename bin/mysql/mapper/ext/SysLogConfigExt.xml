@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.SysLogConfig">
+	
+<resultMap id="SysLogConfig_Result"  type="com.loveart.post.entity.SysLogConfig">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="sysCode" column="sys_code" jdbcType="VARCHAR"/>
+	<result property="type" column="type" jdbcType="VARCHAR"/>
+	<result property="name" column="name" jdbcType="VARCHAR"/>
+	<result property="jsonType" column="json_type" jdbcType="VARCHAR"/>
+	<result property="field1" column="field1" jdbcType="VARCHAR"/>
+	<result property="fieldDesc1" column="field_desc1" jdbcType="VARCHAR"/>
+	<result property="field2" column="field2" jdbcType="VARCHAR"/>
+	<result property="fieldDesc2" column="field_desc2" jdbcType="VARCHAR"/>
+	<result property="field3" column="field3" jdbcType="VARCHAR"/>
+	<result property="fieldDesc3" column="field_desc3" jdbcType="VARCHAR"/>
+	<result property="field4" column="field4" jdbcType="VARCHAR"/>
+	<result property="fieldDesc4" column="field_desc4" jdbcType="VARCHAR"/>
+	<result property="field5" column="field5" jdbcType="VARCHAR"/>
+	<result property="fieldDesc5" column="field_desc5" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="sysCode != null">
+			 AND sys_code = #{sysCode,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null">
+			 AND type = #{type,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+			 AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="jsonType != null">
+			 AND json_type = #{jsonType,jdbcType=VARCHAR}
+		</if>
+		<if test="field1 != null">
+			 AND field1 = #{field1,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc1 != null">
+			 AND field_desc1 = #{fieldDesc1,jdbcType=VARCHAR}
+		</if>
+		<if test="field2 != null">
+			 AND field2 = #{field2,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc2 != null">
+			 AND field_desc2 = #{fieldDesc2,jdbcType=VARCHAR}
+		</if>
+		<if test="field3 != null">
+			 AND field3 = #{field3,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc3 != null">
+			 AND field_desc3 = #{fieldDesc3,jdbcType=VARCHAR}
+		</if>
+		<if test="field4 != null">
+			 AND field4 = #{field4,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc4 != null">
+			 AND field_desc4 = #{fieldDesc4,jdbcType=VARCHAR}
+		</if>
+		<if test="field5 != null">
+			 AND field5 = #{field5,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc5 != null">
+			 AND field_desc5 = #{fieldDesc5,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.SysLogConfig">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_sys_log_config (
+			sid,
+			sys_code,		type,		name,		json_type,		field1,
+			field_desc1,		field2,		field_desc2,		field3,		field_desc3,
+			field4,		field_desc4,		field5,		field_desc5)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{sysCode,jdbcType=VARCHAR},	#{type,jdbcType=VARCHAR},	#{name,jdbcType=VARCHAR},	#{jsonType,jdbcType=VARCHAR},	#{field1,jdbcType=VARCHAR},	#{fieldDesc1,jdbcType=VARCHAR},	#{field2,jdbcType=VARCHAR},	#{fieldDesc2,jdbcType=VARCHAR},	#{field3,jdbcType=VARCHAR},	#{fieldDesc3,jdbcType=VARCHAR},	#{field4,jdbcType=VARCHAR},	#{fieldDesc4,jdbcType=VARCHAR},	#{field5,jdbcType=VARCHAR},	#{fieldDesc5,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.SysLogConfig">
+UPDATE
+	tb_sys_log_config
+	<set>
+		<if test="sysCode != null">
+			sys_code = #{sysCode,jdbcType=VARCHAR},
+		</if>
+		<if test="type != null">
+			type = #{type,jdbcType=VARCHAR},
+		</if>
+		<if test="name != null">
+			name = #{name,jdbcType=VARCHAR},
+		</if>
+		<if test="jsonType != null">
+			json_type = #{jsonType,jdbcType=VARCHAR},
+		</if>
+		<if test="field1 != null">
+			field1 = #{field1,jdbcType=VARCHAR},
+		</if>
+		<if test="fieldDesc1 != null">
+			field_desc1 = #{fieldDesc1,jdbcType=VARCHAR},
+		</if>
+		<if test="field2 != null">
+			field2 = #{field2,jdbcType=VARCHAR},
+		</if>
+		<if test="fieldDesc2 != null">
+			field_desc2 = #{fieldDesc2,jdbcType=VARCHAR},
+		</if>
+		<if test="field3 != null">
+			field3 = #{field3,jdbcType=VARCHAR},
+		</if>
+		<if test="fieldDesc3 != null">
+			field_desc3 = #{fieldDesc3,jdbcType=VARCHAR},
+		</if>
+		<if test="field4 != null">
+			field4 = #{field4,jdbcType=VARCHAR},
+		</if>
+		<if test="fieldDesc4 != null">
+			field_desc4 = #{fieldDesc4,jdbcType=VARCHAR},
+		</if>
+		<if test="field5 != null">
+			field5 = #{field5,jdbcType=VARCHAR},
+		</if>
+		<if test="fieldDesc5 != null">
+			field_desc5 = #{fieldDesc5,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_sys_log_config
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_sys_log_config
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="sysCode != null">
+			 AND sys_code = #{sysCode,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null">
+			 AND type = #{type,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+			 AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="jsonType != null">
+			 AND json_type = #{jsonType,jdbcType=VARCHAR}
+		</if>
+		<if test="field1 != null">
+			 AND field1 = #{field1,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc1 != null">
+			 AND field_desc1 = #{fieldDesc1,jdbcType=VARCHAR}
+		</if>
+		<if test="field2 != null">
+			 AND field2 = #{field2,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc2 != null">
+			 AND field_desc2 = #{fieldDesc2,jdbcType=VARCHAR}
+		</if>
+		<if test="field3 != null">
+			 AND field3 = #{field3,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc3 != null">
+			 AND field_desc3 = #{fieldDesc3,jdbcType=VARCHAR}
+		</if>
+		<if test="field4 != null">
+			 AND field4 = #{field4,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc4 != null">
+			 AND field_desc4 = #{fieldDesc4,jdbcType=VARCHAR}
+		</if>
+		<if test="field5 != null">
+			 AND field5 = #{field5,jdbcType=VARCHAR}
+		</if>
+		<if test="fieldDesc5 != null">
+			 AND field_desc5 = #{fieldDesc5,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="SysLogConfig_Result">
+	SELECT 
+		sid,	sys_code,	type,	name,	json_type,	field1,	field_desc1,	field2,	field_desc2,	field3,	field_desc3,	field4,	field_desc4,	field5,	field_desc5
+	FROM 	tb_sys_log_config
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

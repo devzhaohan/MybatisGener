@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loveart.post.entity.Tribe">
+	
+<resultMap id="Tribe_Result"  type="com.loveart.post.entity.Tribe">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="intro" column="intro" jdbcType="VARCHAR"/>
+	<result property="userNum" column="user_num" jdbcType="INTEGER"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="homeTpl" column="home_tpl" jdbcType="BIGINT"/>
+	<result property="contentPublic" column="content_public" jdbcType="VARCHAR"/>
+	<result property="bgImg" column="bg_img" jdbcType="VARCHAR"/>
+	<result property="allowPublicJoin" column="allow_public_join" jdbcType="VARCHAR"/>
+	<result property="allowPornCollection" column="allow_porn_collection" jdbcType="VARCHAR"/>
+	<result property="expireDays" column="expire_days" jdbcType="INTEGER"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=VARCHAR}
+		</if>
+		<if test="userNum != null">
+			 AND user_num = #{userNum,jdbcType=INTEGER}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="homeTpl != null">
+			 AND home_tpl = #{homeTpl,jdbcType=BIGINT}
+		</if>
+		<if test="contentPublic != null">
+			 AND content_public = #{contentPublic,jdbcType=VARCHAR}
+		</if>
+		<if test="bgImg != null">
+			 AND bg_img = #{bgImg,jdbcType=VARCHAR}
+		</if>
+		<if test="allowPublicJoin != null">
+			 AND allow_public_join = #{allowPublicJoin,jdbcType=VARCHAR}
+		</if>
+		<if test="allowPornCollection != null">
+			 AND allow_porn_collection = #{allowPornCollection,jdbcType=VARCHAR}
+		</if>
+		<if test="expireDays != null">
+			 AND expire_days = #{expireDays,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Tribe">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_tribe (
+			sid,
+			uid,		title,		intro,		user_num,		remark,
+			home_tpl,		content_public,		bg_img,		allow_public_join,		allow_porn_collection,
+			expire_days,		del_flag,		split_db_key,		create_by,		create_dt,
+			update_dt,		update_by,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{uid,jdbcType=BIGINT},	#{title,jdbcType=VARCHAR},	#{intro,jdbcType=VARCHAR},	#{userNum,jdbcType=INTEGER},	#{remark,jdbcType=VARCHAR},	#{homeTpl,jdbcType=BIGINT},	#{contentPublic,jdbcType=VARCHAR},	#{bgImg,jdbcType=VARCHAR},	#{allowPublicJoin,jdbcType=VARCHAR},	#{allowPornCollection,jdbcType=VARCHAR},	#{expireDays,jdbcType=INTEGER},	#{delFlag,jdbcType=VARCHAR},	#{splitDbKey,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+
+<insert id="insertBatch" parameterType="java.util.List">
+	<selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+		 SELECT @@IDENTITY
+	 </selectKey>
+		INSERT INTO  tb_tribe (
+			sid,
+			uid,		title,		intro,		user_num,		remark,
+			home_tpl,		content_public,		bg_img,		allow_public_join,		allow_porn_collection,
+			expire_days,		del_flag,		split_db_key,		create_by,		create_dt,
+			update_dt,		update_by,		versionn)
+ values 
+<foreach collection="list" item="item" index="index" separator="," >
+ ( 	#{item.sid,jdbcType=BIGINT},	#{item.uid,jdbcType=BIGINT},	#{item.title,jdbcType=VARCHAR},	#{item.intro,jdbcType=VARCHAR},	#{item.userNum,jdbcType=INTEGER},	#{item.remark,jdbcType=VARCHAR},	#{item.homeTpl,jdbcType=BIGINT},	#{item.contentPublic,jdbcType=VARCHAR},	#{item.bgImg,jdbcType=VARCHAR},	#{item.allowPublicJoin,jdbcType=VARCHAR},	#{item.allowPornCollection,jdbcType=VARCHAR},	#{item.expireDays,jdbcType=INTEGER},	#{item.delFlag,jdbcType=VARCHAR},	#{item.splitDbKey,jdbcType=VARCHAR},	#{item.createBy,jdbcType=BIGINT},	#{item.createDt,jdbcType=TIMESTAMP},	#{item.updateDt,jdbcType=TIMESTAMP},	#{item.updateBy,jdbcType=BIGINT},	#{item.versionn,jdbcType=VARCHAR} ) 
+</foreach>
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Tribe">
+UPDATE
+	tb_tribe
+	<set>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="intro != null">
+			intro = #{intro,jdbcType=VARCHAR},
+		</if>
+		<if test="userNum != null">
+			user_num = #{userNum,jdbcType=INTEGER},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="homeTpl != null">
+			home_tpl = #{homeTpl,jdbcType=BIGINT},
+		</if>
+		<if test="contentPublic != null">
+			content_public = #{contentPublic,jdbcType=VARCHAR},
+		</if>
+		<if test="bgImg != null">
+			bg_img = #{bgImg,jdbcType=VARCHAR},
+		</if>
+		<if test="allowPublicJoin != null">
+			allow_public_join = #{allowPublicJoin,jdbcType=VARCHAR},
+		</if>
+		<if test="allowPornCollection != null">
+			allow_porn_collection = #{allowPornCollection,jdbcType=VARCHAR},
+		</if>
+		<if test="expireDays != null">
+			expire_days = #{expireDays,jdbcType=INTEGER},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<update id="updateBatch" parameterType="java.util.List">
+<foreach collection="list" item="item" index="index" separator="," >
+UPDATE
+	tb_tribe
+	<set>
+		<if test="item.uid != null">
+			uid = #{item.uid,jdbcType=BIGINT},
+		</if>
+		<if test="item.title != null">
+			title = #{item.title,jdbcType=VARCHAR},
+		</if>
+		<if test="item.intro != null">
+			intro = #{item.intro,jdbcType=VARCHAR},
+		</if>
+		<if test="item.userNum != null">
+			user_num = #{item.userNum,jdbcType=INTEGER},
+		</if>
+		<if test="item.remark != null">
+			remark = #{item.remark,jdbcType=VARCHAR},
+		</if>
+		<if test="item.homeTpl != null">
+			home_tpl = #{item.homeTpl,jdbcType=BIGINT},
+		</if>
+		<if test="item.contentPublic != null">
+			content_public = #{item.contentPublic,jdbcType=VARCHAR},
+		</if>
+		<if test="item.bgImg != null">
+			bg_img = #{item.bgImg,jdbcType=VARCHAR},
+		</if>
+		<if test="item.allowPublicJoin != null">
+			allow_public_join = #{item.allowPublicJoin,jdbcType=VARCHAR},
+		</if>
+		<if test="item.allowPornCollection != null">
+			allow_porn_collection = #{item.allowPornCollection,jdbcType=VARCHAR},
+		</if>
+		<if test="item.expireDays != null">
+			expire_days = #{item.expireDays,jdbcType=INTEGER},
+		</if>
+		<if test="item.delFlag != null">
+			del_flag = #{item.delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="item.splitDbKey != null">
+			split_db_key = #{item.splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="item.createBy != null">
+			create_by = #{item.createBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.createDt != null">
+			create_dt = #{item.createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateDt != null">
+			update_dt = #{item.updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="item.updateBy != null">
+			update_by = #{item.updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="item.versionn != null">
+			versionn = #{item.versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{item.sid,jdbcType=BIGINT}
+</foreach>
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_tribe
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_tribe
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="intro != null">
+			 AND intro = #{intro,jdbcType=VARCHAR}
+		</if>
+		<if test="userNum != null">
+			 AND user_num = #{userNum,jdbcType=INTEGER}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="homeTpl != null">
+			 AND home_tpl = #{homeTpl,jdbcType=BIGINT}
+		</if>
+		<if test="contentPublic != null">
+			 AND content_public = #{contentPublic,jdbcType=VARCHAR}
+		</if>
+		<if test="bgImg != null">
+			 AND bg_img = #{bgImg,jdbcType=VARCHAR}
+		</if>
+		<if test="allowPublicJoin != null">
+			 AND allow_public_join = #{allowPublicJoin,jdbcType=VARCHAR}
+		</if>
+		<if test="allowPornCollection != null">
+			 AND allow_porn_collection = #{allowPornCollection,jdbcType=VARCHAR}
+		</if>
+		<if test="expireDays != null">
+			 AND expire_days = #{expireDays,jdbcType=INTEGER}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Tribe_Result">
+	SELECT 
+		sid,	uid,	title,	intro,	user_num,	remark,	home_tpl,	content_public,	bg_img,	allow_public_join,	allow_porn_collection,	expire_days,	del_flag,	split_db_key,	create_by,	create_dt,	update_dt,	update_by,	versionn
+	FROM 	tb_tribe
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+<select id="findCount" parameterType="map" resultType="int">
+	select count(*) from tb_tribe
+		<if test="_parameter != null">
+			<include refid="baseWhereClause" />
+		</if>
+</select>
+</mapper>

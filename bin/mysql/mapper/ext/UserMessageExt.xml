@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.UserMessage">
+	
+<resultMap id="UserMessage_Result"  type="com.loveart.post.entity.UserMessage">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="msgObjId" column="msg_obj_id" jdbcType="BIGINT"/>
+	<result property="msgText" column="msg_text" jdbcType="LONGVARCHAR"/>
+	<result property="msgImg" column="msg_img" jdbcType="LONGVARCHAR"/>
+	<result property="msgEmoji" column="msg_emoji" jdbcType="VARCHAR"/>
+	<result property="msgUid" column="msg_uid" jdbcType="BIGINT"/>
+	<result property="msgType" column="msg_type" jdbcType="VARCHAR"/>
+	<result property="msgDt" column="msg_dt" jdbcType="TIMESTAMP"/>
+	<result property="rootId" column="root_id" jdbcType="BIGINT"/>
+	<result property="rootUid" column="root_uid" jdbcType="BIGINT"/>
+	<result property="rootType" column="root_type" jdbcType="VARCHAR"/>
+	<result property="objId" column="obj_id" jdbcType="BIGINT"/>
+	<result property="objUid" column="obj_uid" jdbcType="BIGINT"/>
+	<result property="objType" column="obj_type" jdbcType="VARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="BIGINT"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="msgObjId != null">
+			 AND msg_obj_id = #{msgObjId,jdbcType=BIGINT}
+		</if>
+		<if test="msgText != null">
+			 AND msg_text = #{msgText,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="msgImg != null">
+			 AND msg_img = #{msgImg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="msgEmoji != null">
+			 AND msg_emoji = #{msgEmoji,jdbcType=VARCHAR}
+		</if>
+		<if test="msgUid != null">
+			 AND msg_uid = #{msgUid,jdbcType=BIGINT}
+		</if>
+		<if test="msgType != null">
+			 AND msg_type = #{msgType,jdbcType=VARCHAR}
+		</if>
+		<if test="msgDt != null">
+			 AND msg_dt = #{msgDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="rootId != null">
+			 AND root_id = #{rootId,jdbcType=BIGINT}
+		</if>
+		<if test="rootUid != null">
+			 AND root_uid = #{rootUid,jdbcType=BIGINT}
+		</if>
+		<if test="rootType != null">
+			 AND root_type = #{rootType,jdbcType=VARCHAR}
+		</if>
+		<if test="objId != null">
+			 AND obj_id = #{objId,jdbcType=BIGINT}
+		</if>
+		<if test="objUid != null">
+			 AND obj_uid = #{objUid,jdbcType=BIGINT}
+		</if>
+		<if test="objType != null">
+			 AND obj_type = #{objType,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.UserMessage">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_user_message (
+			sid,
+			msg_obj_id,		msg_text,		msg_img,		msg_emoji,		msg_uid,
+			msg_type,		msg_dt,		root_id,		root_uid,		root_type,
+			obj_id,		obj_uid,		obj_type,		sortt,		split_db_key,
+			del_flag,		create_by,		create_dt,		update_by,		update_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{msgObjId,jdbcType=BIGINT},	#{msgText,jdbcType=LONGVARCHAR},	#{msgImg,jdbcType=LONGVARCHAR},	#{msgEmoji,jdbcType=VARCHAR},	#{msgUid,jdbcType=BIGINT},	#{msgType,jdbcType=VARCHAR},	#{msgDt,jdbcType=TIMESTAMP},	#{rootId,jdbcType=BIGINT},	#{rootUid,jdbcType=BIGINT},	#{rootType,jdbcType=VARCHAR},	#{objId,jdbcType=BIGINT},	#{objUid,jdbcType=BIGINT},	#{objType,jdbcType=VARCHAR},	#{sortt,jdbcType=BIGINT},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.UserMessage">
+UPDATE
+	tb_user_message
+	<set>
+		<if test="msgObjId != null">
+			msg_obj_id = #{msgObjId,jdbcType=BIGINT},
+		</if>
+		<if test="msgText != null">
+			msg_text = #{msgText,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="msgImg != null">
+			msg_img = #{msgImg,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="msgEmoji != null">
+			msg_emoji = #{msgEmoji,jdbcType=VARCHAR},
+		</if>
+		<if test="msgUid != null">
+			msg_uid = #{msgUid,jdbcType=BIGINT},
+		</if>
+		<if test="msgType != null">
+			msg_type = #{msgType,jdbcType=VARCHAR},
+		</if>
+		<if test="msgDt != null">
+			msg_dt = #{msgDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="rootId != null">
+			root_id = #{rootId,jdbcType=BIGINT},
+		</if>
+		<if test="rootUid != null">
+			root_uid = #{rootUid,jdbcType=BIGINT},
+		</if>
+		<if test="rootType != null">
+			root_type = #{rootType,jdbcType=VARCHAR},
+		</if>
+		<if test="objId != null">
+			obj_id = #{objId,jdbcType=BIGINT},
+		</if>
+		<if test="objUid != null">
+			obj_uid = #{objUid,jdbcType=BIGINT},
+		</if>
+		<if test="objType != null">
+			obj_type = #{objType,jdbcType=VARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=BIGINT},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_user_message
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_user_message
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="msgObjId != null">
+			 AND msg_obj_id = #{msgObjId,jdbcType=BIGINT}
+		</if>
+		<if test="msgText != null">
+			 AND msg_text = #{msgText,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="msgImg != null">
+			 AND msg_img = #{msgImg,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="msgEmoji != null">
+			 AND msg_emoji = #{msgEmoji,jdbcType=VARCHAR}
+		</if>
+		<if test="msgUid != null">
+			 AND msg_uid = #{msgUid,jdbcType=BIGINT}
+		</if>
+		<if test="msgType != null">
+			 AND msg_type = #{msgType,jdbcType=VARCHAR}
+		</if>
+		<if test="msgDt != null">
+			 AND msg_dt = #{msgDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="rootId != null">
+			 AND root_id = #{rootId,jdbcType=BIGINT}
+		</if>
+		<if test="rootUid != null">
+			 AND root_uid = #{rootUid,jdbcType=BIGINT}
+		</if>
+		<if test="rootType != null">
+			 AND root_type = #{rootType,jdbcType=VARCHAR}
+		</if>
+		<if test="objId != null">
+			 AND obj_id = #{objId,jdbcType=BIGINT}
+		</if>
+		<if test="objUid != null">
+			 AND obj_uid = #{objUid,jdbcType=BIGINT}
+		</if>
+		<if test="objType != null">
+			 AND obj_type = #{objType,jdbcType=VARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="UserMessage_Result">
+	SELECT 
+		sid,	msg_obj_id,	msg_text,	msg_img,	msg_emoji,	msg_uid,	msg_type,	msg_dt,	root_id,	root_uid,	root_type,	obj_id,	obj_uid,	obj_type,	sortt,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_user_message
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

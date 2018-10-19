@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:flex="http://www.springframework.org/schema/flex" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/flex
+       http://www.springframework.org/schema/flex/spring-flex-1.0.xsd">
+
+	<!-- 为了把请求路由给 MessageBroker，添加以下 tag-->
+	<flex:message-broker />
+
+#foreach($item in $model.entityList)
+	<!-- ${item.name}Mapper  -->
+	<bean id="${item.firstName}Mapper" class="common.dao.mybatis.BaseMyBatisMapper">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<constructor-arg>
+			<value>${model.entityPackage}.${item.name}</value>
+		</constructor-arg>
+	</bean>
+	<!-- ${item.name} end  -->
+	
+	<!-- ${item.name}Service  -->
+	<bean id="${item.firstName}ServiceTarget" class="${model.servicePackage}.${item.name}Service">
+			<property name="${item.firstName}Mapper" ref="${item.firstName}Mapper" />
+	</bean>
+	<bean id="${item.firstName}Service" parent="baseTxService">
+		<flex:remoting-destination />
+		<property name="target">
+		<ref local="${item.firstName}ServiceTarget" />
+		</property>
+	</bean>
+	<!-- ${item.name}Service end -->
+	
+#end
+</beans>

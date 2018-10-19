@@ -1,0 +1,66 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="q" uri="/query-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title></title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="${pageContext.request.contextPath}/styles/general.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/styles/main.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/transport.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/prototype.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/common.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/pageset.js"></script>
+</head>
+<s:i18n name="i18n">
+<div class="list-div" id="listDiv" style="width:100%">
+<s:form action="delete" theme="simple" method="post" id="listForm">
+	<table cellpadding="3" cellspacing="1">
+	<tbody>
+		<tr>
+			<th width="3%"><input  onclick="selectItem(this,'_sid');"  type="checkbox"><a >编号</a><img src="${pageContext.request.contextPath}/images/sort_desc.gif"></th>
+		  #foreach($item in $model.propList)
+				<th><s:text name="${model.entityName}.table.${item.name}" /></th>
+		   #end
+		   <th>操作</th>
+			</tr>
+			<s:if test="#request.page.totalPages == 0">
+			  <tr><td style="background-color: rgb(255, 255, 255);" class="no-records" colspan="11">没有找到任何记录</td></tr>
+			</tbody></table>
+		</s:if>
+		<s:else>
+		<tr>
+          	<s:iterator value="entities" status="status">
+				<td style="background-color:rgb(255, 255, 255);text-align:center;" width="3%">
+				<input type="checkbox" name="_sid" value="<s:property value="sid" />" />
+			   #foreach($item in $model.propList)
+			    #if(${item.type}=="class java.util.Date")
+			    <td style="background-color: rgb(255, 255, 255);text-align:center;" nowrap><s:date name="${item.name}" format="%{getText('global.format.datetime')}" /></td>
+			    #else
+			    <td style="background-color: rgb(255, 255, 255);text-align:center;" nowrap><s:property value="${item.name}" /></td>
+			    #end
+			   #end
+			   <td style="background-color: rgb(255, 255, 255);" align="center" nowrap>
+			   	<a href="show.action?sid=<s:property value="sid"/>" title="查看">
+      			<img src="${pageContext.request.contextPath}/images/icon_view.gif" border="0" width="16" height="16">
+      		</a>
+      		<a href="input.action?sid=<s:property value="sid"/>" title="编辑">
+      			<img src="${pageContext.request.contextPath}/images/icon_edit.gif" border="0" width="16" height="16">
+      		<a>
+      		<a href="javascript:;" onclick="if(confirm('确定要删除该记录?')){window.location='delete.action?_sid=<s:property value="sid"/>';}" title="回收站">
+      			<img src="${pageContext.request.contextPath}/images/icon_trash.gif" border="0" width="16" height="16">
+      		</a>
+    </td>
+    </tr>
+    </s:iterator>
+		</tbody></table>
+		<q:page targets="${model.entityFirstName}ResultsDiv" />
+		</s:else>
+	</s:form></div>
+	<script type="text/javascript">
+var content = dojo.widget.byId("${model.entityFirstName}ResultsDiv");
+var pageURL="<%= (String)request.getAttribute("pageURL") %>";
+content.href = pageURL;	
+</script>
+</s:i18n>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.Archive">
+	
+<resultMap id="Archive_Result"  type="com.loveart.post.entity.Archive">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="name" column="name" jdbcType="VARCHAR"/>
+	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	<result property="storagePlatform" column="storage_platform" jdbcType="VARCHAR"/>
+	<result property="mimeType" column="mime_type" jdbcType="VARCHAR"/>
+	<result property="objectId" column="object_id" jdbcType="VARCHAR"/>
+	<result property="objectKey" column="object_key" jdbcType="VARCHAR"/>
+	<result property="ossBucket" column="oss_bucket" jdbcType="VARCHAR"/>
+	<result property="cateId" column="cate_id" jdbcType="BIGINT"/>
+	<result property="duration" column="duration" jdbcType="BIGINT"/>
+	<result property="size" column="size" jdbcType="BIGINT"/>
+	<result property="coverUrl" column="cover_url" jdbcType="VARCHAR"/>
+	<result property="views" column="views" jdbcType="BIGINT"/>
+	<result property="sortt" column="sortt" jdbcType="BIGINT"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="name != null">
+			 AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="storagePlatform != null">
+			 AND storage_platform = #{storagePlatform,jdbcType=VARCHAR}
+		</if>
+		<if test="mimeType != null">
+			 AND mime_type = #{mimeType,jdbcType=VARCHAR}
+		</if>
+		<if test="objectId != null">
+			 AND object_id = #{objectId,jdbcType=VARCHAR}
+		</if>
+		<if test="objectKey != null">
+			 AND object_key = #{objectKey,jdbcType=VARCHAR}
+		</if>
+		<if test="ossBucket != null">
+			 AND oss_bucket = #{ossBucket,jdbcType=VARCHAR}
+		</if>
+		<if test="cateId != null">
+			 AND cate_id = #{cateId,jdbcType=BIGINT}
+		</if>
+		<if test="duration != null">
+			 AND duration = #{duration,jdbcType=BIGINT}
+		</if>
+		<if test="size != null">
+			 AND size = #{size,jdbcType=BIGINT}
+		</if>
+		<if test="coverUrl != null">
+			 AND cover_url = #{coverUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=VARCHAR}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Archive">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_archive (
+			sid,
+			name,		remark,		storage_platform,		mime_type,		object_id,
+			object_key,		oss_bucket,		cate_id,		duration,		size,
+			cover_url,		views,		sortt,		split_db_key,		del_flag,
+			create_by,		create_dt,		update_by,		update_dt,		versionn
+	)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{name,jdbcType=VARCHAR},	#{remark,jdbcType=VARCHAR},	#{storagePlatform,jdbcType=VARCHAR},	#{mimeType,jdbcType=VARCHAR},	#{objectId,jdbcType=VARCHAR},	#{objectKey,jdbcType=VARCHAR},	#{ossBucket,jdbcType=VARCHAR},	#{cateId,jdbcType=BIGINT},	#{duration,jdbcType=BIGINT},	#{size,jdbcType=BIGINT},	#{coverUrl,jdbcType=VARCHAR},	#{views,jdbcType=BIGINT},	#{sortt,jdbcType=BIGINT},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=VARCHAR},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Archive">
+UPDATE
+	tb_archive
+	<set>
+		<if test="name != null">
+			name = #{name,jdbcType=VARCHAR},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+		<if test="storagePlatform != null">
+			storage_platform = #{storagePlatform,jdbcType=VARCHAR},
+		</if>
+		<if test="mimeType != null">
+			mime_type = #{mimeType,jdbcType=VARCHAR},
+		</if>
+		<if test="objectId != null">
+			object_id = #{objectId,jdbcType=VARCHAR},
+		</if>
+		<if test="objectKey != null">
+			object_key = #{objectKey,jdbcType=VARCHAR},
+		</if>
+		<if test="ossBucket != null">
+			oss_bucket = #{ossBucket,jdbcType=VARCHAR},
+		</if>
+		<if test="cateId != null">
+			cate_id = #{cateId,jdbcType=BIGINT},
+		</if>
+		<if test="duration != null">
+			duration = #{duration,jdbcType=BIGINT},
+		</if>
+		<if test="size != null">
+			size = #{size,jdbcType=BIGINT},
+		</if>
+		<if test="coverUrl != null">
+			cover_url = #{coverUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="views != null">
+			views = #{views,jdbcType=BIGINT},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=BIGINT},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=VARCHAR},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_archive
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_archive
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="name != null">
+			 AND name = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="remark != null">
+			 AND remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="storagePlatform != null">
+			 AND storage_platform = #{storagePlatform,jdbcType=VARCHAR}
+		</if>
+		<if test="mimeType != null">
+			 AND mime_type = #{mimeType,jdbcType=VARCHAR}
+		</if>
+		<if test="objectId != null">
+			 AND object_id = #{objectId,jdbcType=VARCHAR}
+		</if>
+		<if test="objectKey != null">
+			 AND object_key = #{objectKey,jdbcType=VARCHAR}
+		</if>
+		<if test="ossBucket != null">
+			 AND oss_bucket = #{ossBucket,jdbcType=VARCHAR}
+		</if>
+		<if test="cateId != null">
+			 AND cate_id = #{cateId,jdbcType=BIGINT}
+		</if>
+		<if test="duration != null">
+			 AND duration = #{duration,jdbcType=BIGINT}
+		</if>
+		<if test="size != null">
+			 AND size = #{size,jdbcType=BIGINT}
+		</if>
+		<if test="coverUrl != null">
+			 AND cover_url = #{coverUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="views != null">
+			 AND views = #{views,jdbcType=BIGINT}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=BIGINT}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=VARCHAR}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Archive_Result">
+	SELECT 
+		sid,	name,	remark,	storage_platform,	mime_type,	object_id,	object_key,	oss_bucket,	cate_id,	duration,	size,	cover_url,	views,	sortt,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_archive
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

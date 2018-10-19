@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.RcObjShareReach">
+	
+<resultMap id="RcObjShareReach_Result"  type="com.loveart.post.entity.RcObjShareReach">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="shareSerialNo" column="share_serial_no" jdbcType="VARCHAR"/>
+	<result property="shareUid" column="share_uid" jdbcType="BIGINT"/>
+	<result property="shareTime" column="share_time" jdbcType="TIMESTAMP"/>
+	<result property="objType" column="obj_type" jdbcType="VARCHAR"/>
+	<result property="objId" column="obj_id" jdbcType="BIGINT"/>
+	<result property="reachUid" column="reach_uid" jdbcType="BIGINT"/>
+	<result property="reachTime" column="reach_time" jdbcType="TIMESTAMP"/>
+	<result property="reachChannel" column="reach_channel" jdbcType="VARCHAR"/>
+	<result property="reachChannelId" column="reach_channel_id" jdbcType="VARCHAR"/>
+	<result property="ipAddr" column="ip_addr" jdbcType="VARCHAR"/>
+	<result property="locProvince" column="loc_province" jdbcType="VARCHAR"/>
+	<result property="locCity" column="loc_city" jdbcType="VARCHAR"/>
+	<result property="locAdcode" column="loc_adcode" jdbcType="VARCHAR"/>
+	<result property="locRectangle" column="loc_rectangle" jdbcType="VARCHAR"/>
+	<result property="dClientType" column="d_client_type" jdbcType="VARCHAR"/>
+	<result property="dClientTypeName" column="d_client_type_name" jdbcType="VARCHAR"/>
+	<result property="dId" column="d_id" jdbcType="VARCHAR"/>
+	<result property="dSystem" column="d_system" jdbcType="VARCHAR"/>
+	<result property="dBrand" column="d_brand" jdbcType="VARCHAR"/>
+	<result property="dModel" column="d_model" jdbcType="VARCHAR"/>
+	<result property="dPlatform" column="d_platform" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="shareSerialNo != null">
+			 AND share_serial_no = #{shareSerialNo,jdbcType=VARCHAR}
+		</if>
+		<if test="shareUid != null">
+			 AND share_uid = #{shareUid,jdbcType=BIGINT}
+		</if>
+		<if test="shareTime != null">
+			 AND share_time = #{shareTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="objType != null">
+			 AND obj_type = #{objType,jdbcType=VARCHAR}
+		</if>
+		<if test="objId != null">
+			 AND obj_id = #{objId,jdbcType=BIGINT}
+		</if>
+		<if test="reachUid != null">
+			 AND reach_uid = #{reachUid,jdbcType=BIGINT}
+		</if>
+		<if test="reachTime != null">
+			 AND reach_time = #{reachTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="reachChannel != null">
+			 AND reach_channel = #{reachChannel,jdbcType=VARCHAR}
+		</if>
+		<if test="reachChannelId != null">
+			 AND reach_channel_id = #{reachChannelId,jdbcType=VARCHAR}
+		</if>
+		<if test="ipAddr != null">
+			 AND ip_addr = #{ipAddr,jdbcType=VARCHAR}
+		</if>
+		<if test="locProvince != null">
+			 AND loc_province = #{locProvince,jdbcType=VARCHAR}
+		</if>
+		<if test="locCity != null">
+			 AND loc_city = #{locCity,jdbcType=VARCHAR}
+		</if>
+		<if test="locAdcode != null">
+			 AND loc_adcode = #{locAdcode,jdbcType=VARCHAR}
+		</if>
+		<if test="locRectangle != null">
+			 AND loc_rectangle = #{locRectangle,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientType != null">
+			 AND d_client_type = #{dClientType,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientTypeName != null">
+			 AND d_client_type_name = #{dClientTypeName,jdbcType=VARCHAR}
+		</if>
+		<if test="dId != null">
+			 AND d_id = #{dId,jdbcType=VARCHAR}
+		</if>
+		<if test="dSystem != null">
+			 AND d_system = #{dSystem,jdbcType=VARCHAR}
+		</if>
+		<if test="dBrand != null">
+			 AND d_brand = #{dBrand,jdbcType=VARCHAR}
+		</if>
+		<if test="dModel != null">
+			 AND d_model = #{dModel,jdbcType=VARCHAR}
+		</if>
+		<if test="dPlatform != null">
+			 AND d_platform = #{dPlatform,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.RcObjShareReach">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_rc_obj_share_reach (
+			sid,
+			share_serial_no,		share_uid,		share_time,		obj_type,		obj_id,
+			reach_uid,		reach_time,		reach_channel,		reach_channel_id,		ip_addr,
+			loc_province,		loc_city,		loc_adcode,		loc_rectangle,		d_client_type,
+			d_client_type_name,		d_id,		d_system,		d_brand,		d_model,
+			d_platform,		del_flag,		create_by,		create_dt,		update_by,
+			update_dt,		versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{shareSerialNo,jdbcType=VARCHAR},	#{shareUid,jdbcType=BIGINT},	#{shareTime,jdbcType=TIMESTAMP},	#{objType,jdbcType=VARCHAR},	#{objId,jdbcType=BIGINT},	#{reachUid,jdbcType=BIGINT},	#{reachTime,jdbcType=TIMESTAMP},	#{reachChannel,jdbcType=VARCHAR},	#{reachChannelId,jdbcType=VARCHAR},	#{ipAddr,jdbcType=VARCHAR},	#{locProvince,jdbcType=VARCHAR},	#{locCity,jdbcType=VARCHAR},	#{locAdcode,jdbcType=VARCHAR},	#{locRectangle,jdbcType=VARCHAR},	#{dClientType,jdbcType=VARCHAR},	#{dClientTypeName,jdbcType=VARCHAR},	#{dId,jdbcType=VARCHAR},	#{dSystem,jdbcType=VARCHAR},	#{dBrand,jdbcType=VARCHAR},	#{dModel,jdbcType=VARCHAR},	#{dPlatform,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.RcObjShareReach">
+UPDATE
+	tb_rc_obj_share_reach
+	<set>
+		<if test="shareSerialNo != null">
+			share_serial_no = #{shareSerialNo,jdbcType=VARCHAR},
+		</if>
+		<if test="shareUid != null">
+			share_uid = #{shareUid,jdbcType=BIGINT},
+		</if>
+		<if test="shareTime != null">
+			share_time = #{shareTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="objType != null">
+			obj_type = #{objType,jdbcType=VARCHAR},
+		</if>
+		<if test="objId != null">
+			obj_id = #{objId,jdbcType=BIGINT},
+		</if>
+		<if test="reachUid != null">
+			reach_uid = #{reachUid,jdbcType=BIGINT},
+		</if>
+		<if test="reachTime != null">
+			reach_time = #{reachTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="reachChannel != null">
+			reach_channel = #{reachChannel,jdbcType=VARCHAR},
+		</if>
+		<if test="reachChannelId != null">
+			reach_channel_id = #{reachChannelId,jdbcType=VARCHAR},
+		</if>
+		<if test="ipAddr != null">
+			ip_addr = #{ipAddr,jdbcType=VARCHAR},
+		</if>
+		<if test="locProvince != null">
+			loc_province = #{locProvince,jdbcType=VARCHAR},
+		</if>
+		<if test="locCity != null">
+			loc_city = #{locCity,jdbcType=VARCHAR},
+		</if>
+		<if test="locAdcode != null">
+			loc_adcode = #{locAdcode,jdbcType=VARCHAR},
+		</if>
+		<if test="locRectangle != null">
+			loc_rectangle = #{locRectangle,jdbcType=VARCHAR},
+		</if>
+		<if test="dClientType != null">
+			d_client_type = #{dClientType,jdbcType=VARCHAR},
+		</if>
+		<if test="dClientTypeName != null">
+			d_client_type_name = #{dClientTypeName,jdbcType=VARCHAR},
+		</if>
+		<if test="dId != null">
+			d_id = #{dId,jdbcType=VARCHAR},
+		</if>
+		<if test="dSystem != null">
+			d_system = #{dSystem,jdbcType=VARCHAR},
+		</if>
+		<if test="dBrand != null">
+			d_brand = #{dBrand,jdbcType=VARCHAR},
+		</if>
+		<if test="dModel != null">
+			d_model = #{dModel,jdbcType=VARCHAR},
+		</if>
+		<if test="dPlatform != null">
+			d_platform = #{dPlatform,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_rc_obj_share_reach
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_rc_obj_share_reach
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="shareSerialNo != null">
+			 AND share_serial_no = #{shareSerialNo,jdbcType=VARCHAR}
+		</if>
+		<if test="shareUid != null">
+			 AND share_uid = #{shareUid,jdbcType=BIGINT}
+		</if>
+		<if test="shareTime != null">
+			 AND share_time = #{shareTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="objType != null">
+			 AND obj_type = #{objType,jdbcType=VARCHAR}
+		</if>
+		<if test="objId != null">
+			 AND obj_id = #{objId,jdbcType=BIGINT}
+		</if>
+		<if test="reachUid != null">
+			 AND reach_uid = #{reachUid,jdbcType=BIGINT}
+		</if>
+		<if test="reachTime != null">
+			 AND reach_time = #{reachTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="reachChannel != null">
+			 AND reach_channel = #{reachChannel,jdbcType=VARCHAR}
+		</if>
+		<if test="reachChannelId != null">
+			 AND reach_channel_id = #{reachChannelId,jdbcType=VARCHAR}
+		</if>
+		<if test="ipAddr != null">
+			 AND ip_addr = #{ipAddr,jdbcType=VARCHAR}
+		</if>
+		<if test="locProvince != null">
+			 AND loc_province = #{locProvince,jdbcType=VARCHAR}
+		</if>
+		<if test="locCity != null">
+			 AND loc_city = #{locCity,jdbcType=VARCHAR}
+		</if>
+		<if test="locAdcode != null">
+			 AND loc_adcode = #{locAdcode,jdbcType=VARCHAR}
+		</if>
+		<if test="locRectangle != null">
+			 AND loc_rectangle = #{locRectangle,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientType != null">
+			 AND d_client_type = #{dClientType,jdbcType=VARCHAR}
+		</if>
+		<if test="dClientTypeName != null">
+			 AND d_client_type_name = #{dClientTypeName,jdbcType=VARCHAR}
+		</if>
+		<if test="dId != null">
+			 AND d_id = #{dId,jdbcType=VARCHAR}
+		</if>
+		<if test="dSystem != null">
+			 AND d_system = #{dSystem,jdbcType=VARCHAR}
+		</if>
+		<if test="dBrand != null">
+			 AND d_brand = #{dBrand,jdbcType=VARCHAR}
+		</if>
+		<if test="dModel != null">
+			 AND d_model = #{dModel,jdbcType=VARCHAR}
+		</if>
+		<if test="dPlatform != null">
+			 AND d_platform = #{dPlatform,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="RcObjShareReach_Result">
+	SELECT 
+		sid,	share_serial_no,	share_uid,	share_time,	obj_type,	obj_id,	reach_uid,	reach_time,	reach_channel,	reach_channel_id,	ip_addr,	loc_province,	loc_city,	loc_adcode,	loc_rectangle,	d_client_type,	d_client_type_name,	d_id,	d_system,	d_brand,	d_model,	d_platform,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_rc_obj_share_reach
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>

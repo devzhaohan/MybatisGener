@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sqlmapper.Customization">
+	
+<resultMap id="Customization_Result"  type="com.loveart.post.entity.Customization">
+	<result property="sid" column="sid" jdbcType="BIGINT"/>
+	<result property="title" column="title" jdbcType="VARCHAR"/>
+	<result property="keyWords" column="key_words" jdbcType="VARCHAR"/>
+	<result property="uid" column="uid" jdbcType="BIGINT"/>
+	<result property="cover" column="cover" jdbcType="VARCHAR"/>
+	<result property="introMediaType" column="intro_media_type" jdbcType="VARCHAR"/>
+	<result property="introVideoId" column="intro_video_id" jdbcType="BIGINT"/>
+	<result property="introImgUrl" column="intro_img_url" jdbcType="BIGINT"/>
+	<result property="isPublish" column="is_publish" jdbcType="VARCHAR"/>
+	<result property="participates" column="participates" jdbcType="INTEGER"/>
+	<result property="ratingNum" column="rating_num" jdbcType="FLOAT"/>
+	<result property="introduction" column="introduction" jdbcType="LONGTEXT"/>
+	<result property="serviceGreementGroupId" column="service_greement_group_id" jdbcType="BIGINT"/>
+	<result property="infoShoppingNotice" column="info_shopping_notice" jdbcType="LONGVARCHAR"/>
+	<result property="sortt" column="sortt" jdbcType="INTEGER"/>
+	<result property="splitDbKey" column="split_db_key" jdbcType="VARCHAR"/>
+	<result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+	<result property="createBy" column="create_by" jdbcType="BIGINT"/>
+	<result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+	<result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+	<result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+	<result property="versionn" column="versionn" jdbcType="VARCHAR"/>
+</resultMap>
+
+<sql id="baseWhereClause">
+<where>
+		<if test="sids != null and sids.size()>0 "> 
+			AND SID IN
+			<foreach collection="sids" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sid != null">
+			 AND sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="keyWords != null">
+			 AND key_words = #{keyWords,jdbcType=VARCHAR}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="cover != null">
+			 AND cover = #{cover,jdbcType=VARCHAR}
+		</if>
+		<if test="introMediaType != null">
+			 AND intro_media_type = #{introMediaType,jdbcType=VARCHAR}
+		</if>
+		<if test="introVideoId != null">
+			 AND intro_video_id = #{introVideoId,jdbcType=BIGINT}
+		</if>
+		<if test="introImgUrl != null">
+			 AND intro_img_url = #{introImgUrl,jdbcType=BIGINT}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="participates != null">
+			 AND participates = #{participates,jdbcType=INTEGER}
+		</if>
+		<if test="ratingNum != null">
+			 AND rating_num = #{ratingNum,jdbcType=FLOAT}
+		</if>
+		<if test="introduction != null">
+			 AND introduction = #{introduction,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="serviceGreementGroupId != null">
+			 AND service_greement_group_id = #{serviceGreementGroupId,jdbcType=BIGINT}
+		</if>
+		<if test="infoShoppingNotice != null">
+			 AND info_shopping_notice = #{infoShoppingNotice,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</where>
+	<if test="orderBy != null">
+		 ORDER BY ${orderBy} 
+	</if>
+	<if test="orderBy == null">
+		 ORDER BY sid ASC 
+	</if>
+	<if test="limitt != null">
+		 limit ${limitt} 
+	</if>
+</sql>
+
+<insert id="insert" parameterType="com.loveart.post.entity.Customization">
+ <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Long">
+ SELECT @@IDENTITY
+ </selectKey>
+		INSERT INTO  tb_customization (
+			sid,
+			title,		key_words,		uid,		cover,		intro_media_type,
+			intro_video_id,		intro_img_url,		is_publish,		participates,		rating_num,
+			introduction,		service_greement_group_id,		info_shopping_notice,		sortt,		split_db_key,
+			del_flag,		create_by,		create_dt,		update_by,		update_dt,
+			versionn)
+ values( 
+	#{sid,jdbcType=BIGINT},	#{title,jdbcType=VARCHAR},	#{keyWords,jdbcType=VARCHAR},	#{uid,jdbcType=BIGINT},	#{cover,jdbcType=VARCHAR},	#{introMediaType,jdbcType=VARCHAR},	#{introVideoId,jdbcType=BIGINT},	#{introImgUrl,jdbcType=BIGINT},	#{isPublish,jdbcType=VARCHAR},	#{participates,jdbcType=INTEGER},	#{ratingNum,jdbcType=FLOAT},	#{introduction,jdbcType=LONGVARCHAR},	#{serviceGreementGroupId,jdbcType=BIGINT},	#{infoShoppingNotice,jdbcType=LONGVARCHAR},	#{sortt,jdbcType=INTEGER},	#{splitDbKey,jdbcType=VARCHAR},	#{delFlag,jdbcType=VARCHAR},	#{createBy,jdbcType=BIGINT},	#{createDt,jdbcType=TIMESTAMP},	#{updateBy,jdbcType=BIGINT},	#{updateDt,jdbcType=TIMESTAMP},	#{versionn,jdbcType=VARCHAR} ) 
+</insert>
+
+<update id="update" parameterType="com.loveart.post.entity.Customization">
+UPDATE
+	tb_customization
+	<set>
+		<if test="title != null">
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="keyWords != null">
+			key_words = #{keyWords,jdbcType=VARCHAR},
+		</if>
+		<if test="uid != null">
+			uid = #{uid,jdbcType=BIGINT},
+		</if>
+		<if test="cover != null">
+			cover = #{cover,jdbcType=VARCHAR},
+		</if>
+		<if test="introMediaType != null">
+			intro_media_type = #{introMediaType,jdbcType=VARCHAR},
+		</if>
+		<if test="introVideoId != null">
+			intro_video_id = #{introVideoId,jdbcType=BIGINT},
+		</if>
+		<if test="introImgUrl != null">
+			intro_img_url = #{introImgUrl,jdbcType=BIGINT},
+		</if>
+		<if test="isPublish != null">
+			is_publish = #{isPublish,jdbcType=VARCHAR},
+		</if>
+		<if test="participates != null">
+			participates = #{participates,jdbcType=INTEGER},
+		</if>
+		<if test="ratingNum != null">
+			rating_num = #{ratingNum,jdbcType=FLOAT},
+		</if>
+		<if test="introduction != null">
+			introduction = #{introduction,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="serviceGreementGroupId != null">
+			service_greement_group_id = #{serviceGreementGroupId,jdbcType=BIGINT},
+		</if>
+		<if test="infoShoppingNotice != null">
+			info_shopping_notice = #{infoShoppingNotice,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="sortt != null">
+			sortt = #{sortt,jdbcType=INTEGER},
+		</if>
+		<if test="splitDbKey != null">
+			split_db_key = #{splitDbKey,jdbcType=VARCHAR},
+		</if>
+		<if test="delFlag != null">
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null">
+			create_by = #{createBy,jdbcType=BIGINT},
+		</if>
+		<if test="createDt != null">
+			create_dt = #{createDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateBy != null">
+			update_by = #{updateBy,jdbcType=BIGINT},
+		</if>
+		<if test="updateDt != null">
+			update_dt = #{updateDt,jdbcType=TIMESTAMP},
+		</if>
+		<if test="versionn != null">
+			versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+	</set>
+	 WHERE 
+		 sid = #{sid,jdbcType=BIGINT}
+</update>
+
+<delete id="delete"  parameterType="java.lang.Long">
+DELETE FROM
+	tb_customization
+WHERE  sid = #{sid,jdbcType=DECIMAL}
+</delete>
+
+<delete id="deleteByParams"  parameterType="map">
+DELETE FROM
+	tb_customization
+<where>
+		<if test="sid != null">
+			sid = #{sid,jdbcType=BIGINT}
+		</if>
+		<if test="title != null">
+			 AND title = #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="keyWords != null">
+			 AND key_words = #{keyWords,jdbcType=VARCHAR}
+		</if>
+		<if test="uid != null">
+			 AND uid = #{uid,jdbcType=BIGINT}
+		</if>
+		<if test="cover != null">
+			 AND cover = #{cover,jdbcType=VARCHAR}
+		</if>
+		<if test="introMediaType != null">
+			 AND intro_media_type = #{introMediaType,jdbcType=VARCHAR}
+		</if>
+		<if test="introVideoId != null">
+			 AND intro_video_id = #{introVideoId,jdbcType=BIGINT}
+		</if>
+		<if test="introImgUrl != null">
+			 AND intro_img_url = #{introImgUrl,jdbcType=BIGINT}
+		</if>
+		<if test="isPublish != null">
+			 AND is_publish = #{isPublish,jdbcType=VARCHAR}
+		</if>
+		<if test="participates != null">
+			 AND participates = #{participates,jdbcType=INTEGER}
+		</if>
+		<if test="ratingNum != null">
+			 AND rating_num = #{ratingNum,jdbcType=FLOAT}
+		</if>
+		<if test="introduction != null">
+			 AND introduction = #{introduction,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="serviceGreementGroupId != null">
+			 AND service_greement_group_id = #{serviceGreementGroupId,jdbcType=BIGINT}
+		</if>
+		<if test="infoShoppingNotice != null">
+			 AND info_shopping_notice = #{infoShoppingNotice,jdbcType=LONGVARCHAR}
+		</if>
+		<if test="sortt != null">
+			 AND sortt = #{sortt,jdbcType=INTEGER}
+		</if>
+		<if test="splitDbKey != null">
+			 AND split_db_key = #{splitDbKey,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null">
+			 AND del_flag = #{delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="createBy != null">
+			 AND create_by = #{createBy,jdbcType=BIGINT}
+		</if>
+		<if test="createDt != null">
+			 AND create_dt = #{createDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateBy != null">
+			 AND update_by = #{updateBy,jdbcType=BIGINT}
+		</if>
+		<if test="updateDt != null">
+			 AND update_dt = #{updateDt,jdbcType=TIMESTAMP}
+		</if>
+		<if test="versionn != null">
+			 AND versionn = #{versionn,jdbcType=VARCHAR}
+		</if>
+</where>
+</delete>
+
+<select id="find" parameterType="map" resultMap="Customization_Result">
+	SELECT 
+		sid,	title,	key_words,	uid,	cover,	intro_media_type,	intro_video_id,	intro_img_url,	is_publish,	participates,	rating_num,	introduction,	service_greement_group_id,	info_shopping_notice,	sortt,	split_db_key,	del_flag,	create_by,	create_dt,	update_by,	update_dt,	versionn
+	FROM 	tb_customization
+<if test="_parameter != null">
+	<include refid="baseWhereClause" />
+</if>
+</select>
+
+
+</mapper>
